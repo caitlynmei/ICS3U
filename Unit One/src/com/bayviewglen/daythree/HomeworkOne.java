@@ -10,7 +10,7 @@ public class HomeworkOne {
 		
 		radius = 5;
 					
-		area = 3.1415926535 * radius * radius;
+		area = Math.PI * radius * radius;
 
 		System.out.println("The area of the circle with radius " + radius + " is about " + area + " units squared.");
 		

@@ -10,7 +10,7 @@ public class HomeworkTwo {
 		
 		radius = 5;
 		
-		volume = 4 / 3 * radius * radius * radius * 3.14159;
+		volume = 4 / 3 * radius * radius * radius * Math.PI;
 
 		System.out.println("The volume of the sphere with radius of " + radius + " is about " + volume + " units squared.");
 	}
