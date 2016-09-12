@@ -6,20 +6,23 @@ public class HomeworkSix {
 	
 		// Find the roots
 		
-		double x, a, b, c, y;
-		
+		double x_plus, x_minus;
+		double a, b, c;
+	
 		a = 3;
-		b = 4;
-		c = 5;
+		b = 44;
+		c = -1;
 		
-		y = a * (x * x) + (b * x) + c;
+		x_plus = (-b + Math.sqrt(b*b - (4*a*c)))/(2*a); 
 		
-		// Figure out how to use Math.sqrt(x)
+		x_minus = (-b - Math.sqrt(b*b - (4*a*c)))/(2*a); 
 		
-		System.out.println("");
+		// y = a * (x * x) + (b * x) + c;
 		
-		System.out.println("The answer to the equation y = ax2 + bx + c given variables a(" + a + "), b(" + b  + "), c(" + c + "), and x(" + x + ") is " + y + ".");
 		
+		// System.out.println("The answer to the equation y = ax2 + bx + c given variables a(" + a + "), b(" + b  + "), c(" + c + "), and is.");
+		
+		System.out.println("The roots are: " + x_plus + " and " + x_minus + ".");
 
 	}
 

@@ -8,7 +8,7 @@ public class HomeworkOne {
 		
 		double radius, area;
 		
-		radius = 5;
+		radius = 6;
 					
 		area = Math.PI * radius * radius;
 
