@@ -12,16 +12,21 @@ public class ExampleTwo {
 		int age2 = 17;
 		int age3 = 16;
 		
+		
 		int numberOfStudents = 3;
 		double averageAge = (age1 + age2 + age3)/(double)numberOfStudents;	// int/double
 		System.out.println(averageAge);
 		
+		
 		System.out.println((int)((age1 + age2 + age3)/(double)numberOfStudents));
+		
 		
 		averageAge = (int)((age1 + age2 + age3)/(double)numberOfStudents);
 		
 		// We are explicitly casting twice
 		// Java performs an implicit cast
+		
+		// **Boolean is for true and false
 		
 		System.out.println(averageAge);
 		
