@@ -10,7 +10,7 @@ public class HomeworkFour {
 		
 		double vf = vi + (a * t);
 		
-		System.out.println("If your initial velocity was " + vi + "m/s, acceleration was " + a + "m/s, and time elapsed was " + t + " hours, your final velocity");
+		System.out.println("If your initial velocity was " + vi + "m/s, acceleration was " + a + "m/s^2, and time elapsed was " + t + " seconds, your final velocity");
 		System.out.println("would be " + vf + "m/s.");
 
 	}
