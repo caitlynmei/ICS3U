@@ -4,7 +4,7 @@ public class HomeworkTwo {
 
 	public static void main(String[] args) {
 	
-		double studentMark = 36.5;
+		double studentMark = 46.5;
 		
 		int totalMarks = 50;
 		

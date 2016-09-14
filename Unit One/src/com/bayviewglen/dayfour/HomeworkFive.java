@@ -4,17 +4,57 @@ public class HomeworkFive {
 
 	public static void main(String[] args) {
 	
-		double s = 5.5, y = 3.0, z = -2.0;
+		double x = 5.5, y = 3.0, z = -2.0;
 		int i = 5, j = 4, k = 3;
 		
-		// 5.a
+		double term1 = x - y;
+		double term2 = i - j;
+		double term3 = x + term2;
+		double term4 = -1 * term1;
+		double term5 = i + j;
+		double term6 = i - j;
+		double term7 = i * j;
+		double term8 = i / j;
+		double term9 = i + k;
+		double term10 = i - k;
+		double term11 = j / k;
+
+
 		
 		// System.out.println(i - (i - (i - (i - j))));
-
-		System.out.println(i - i + j);
+		System.out.println((int) (i - term2)); // 5.a
 
 		
+		// System.out.println((x - y) * (x + (i - j)));
+		System.out.println(term1 * term3); // 5.b
+		
+		
+		// System.out.println((x - y) - (y - x) - (x - y) - (y - x));
+		System.out.println(-2 * term4); // 5.c
+		
+		
+		// System.out.println((x - y) - ((y - x) - ((x - y) - (y - x))));
+		System.out.println(2 * (term1 - term4)); // 5.d
+		
+		
+		// System.out.println(i + j - k * i / j);
+		System.out.println((int) (term5 - k * term8)); // 5.e
+		
+		
+		// System.out.println(i * j / k + i - j);
+		System.out.println((int) (term7 / k + term6));
+		
 
+		System.out.println(((i + k) * (i - k) / ((i + j) * (i - j))));
+		System.out.println((int)(term9 * term10 / (term5 * term6))); // can this be simplified?
+
+		
+		// System.out.println((double) i + j / k);
+		System.out.println(i + term11); // 5.g
+
+		
+		//System.out.println();
+		
 	}
 
 }
