@@ -35,7 +35,7 @@ public class ExampleTwo {
 		
 		System.out.println("The surface area of a box with (width, length, height) of (" + width + ", " + length + ", "+ height + ") is "  + surfaceArea);
 		
-		
+		in.close(); // to close
 		
 
 	}
