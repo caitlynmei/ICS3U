@@ -15,7 +15,7 @@ public class HomeworkFive {
 		double term6 = i - j;
 		double term7 = i * j;
 		int term8 = i / j;
-		double term8B = i / j;
+		double term8B = (double) i / j;
 		double term9 = i + k;
 		double term10 = i - k;
 		double term11 = j / k;
@@ -76,8 +76,8 @@ public class HomeworkFive {
 		System.out.println((int) term12 - x / k + "."); // 5.i
 		System.out.println("");
 
-		
-		System.out.println((double) i / j - (double) (i / j)); 
+
+		// System.out.println((double) i / j - (double) (i / j)); 
 		System.out.print("The answer to 5.j) is ");
 		System.out.println(term8B - (double) (term8) + "."); // 5.j
 		
