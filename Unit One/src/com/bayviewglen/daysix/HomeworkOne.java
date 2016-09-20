@@ -10,6 +10,8 @@ public class HomeworkOne {
 		double tax = 1.055;
 		
 		double total = (computer * tax);
+		total = (int)(total * 100);
+		total = (double)(total / 100);
 		
 		System.out.println("The total price of a computer at the cost of $" + computer + " is $" + total + ".");
 

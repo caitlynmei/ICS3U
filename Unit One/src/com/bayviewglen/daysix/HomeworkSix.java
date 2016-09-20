@@ -13,7 +13,7 @@ public class HomeworkSix {
 		
 		momentum = object * 12;
 		
-		System.out.println("With a " + object + " kg object travelling at " + meters + " m/s, its momentum is " + momentum + " m/s.");
+		System.out.println("With an object that is " + object + " kg is travelling at " + meters + " m/s, its momentum is " + momentum + " m/s.");
 
 	}
 
