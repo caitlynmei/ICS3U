@@ -18,7 +18,7 @@ public class ExampleOne{
 	int minutesPerYear = 365 * 24 * 60;	// uses 3 magic numbers 
 	
 	// The following line of code is a little confusing and the number 6 has no meaning to me - it actually returns a number between 1 and 6
-	int side = (int)(Math.random() * 6) + 1;
+	int side = (int)(Math.random() * 6 + 1);
 	
 	// This makes more sense and lets me know that the number 6 refers to the number of sides on a die
 	side = (int)(Math.random() * SIDES_PER_DIE + 1);
