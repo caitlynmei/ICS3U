@@ -57,7 +57,7 @@ public class BvgPools {
 		System.out.println("");	
 		
 		
-		// ----- Measurement Overview -----
+		// ----- Measurement/Cost Overview -----
 		
 		System.out.println("Okay, so this is an overview of your answers.");
 		System.out.println("Length of pool: " + length + "m");
@@ -66,21 +66,25 @@ public class BvgPools {
 		System.out.println("Depth of deep end: " + depthDeep + "m");
 		System.out.println("Length of transition between shallow and deep end: " + transition + "m");
 		System.out.println("Lenth of shallow end: " + lengthShallow + "m");
-
+		System.out.println("The price of the first liner is $" + priceOne + ".");
+		System.out.println("The price of the two liner is $" + priceTwo + ".");
+		System.out.println("The price of the third liner is $" + priceThree + ".");
+		
 	
 		// ----- Volume Calculations -----
 		
 		double volumeShallow, volumeDeep, volumeTransitionOne, volumeTransitionTwo, finalVolume;
+		double lengthDeep = length - lengthShallow - transition;
 		double volumeDesirable; // at 90% full
-		
+				
 		volumeShallow = lengthShallow * width * depthShallow;
-		volumeDeep = (length - lengthShallow - transition) * width * depthDeep;
+		volumeDeep = lengthDeep * width * depthDeep;
 		volumeTransitionOne = depthShallow * width * transition;
 		volumeTransitionTwo = (depthDeep - depthShallow) * transition * width / 2;
 		
 		finalVolume = volumeShallow + volumeDeep + volumeTransitionOne + volumeTransitionTwo;
 		
-		volumeDesirable = (finalVolume * 0.9) * 100;
+		volumeDesirable = finalVolume * 0.9;
 		volumeDesirable = (int)(volumeDesirable * 100);
 		volumeDesirable = (double)(volumeDesirable /100);
 		
@@ -91,13 +95,58 @@ public class BvgPools {
 		System.out.println("Since the volume of the pool is " + finalVolume + "m cubed, and the pool is to be filled up 90% full, the amount of water");
 		System.out.println("needed is " + volumeDesirable + "m cubed.");
 		
-	
-		/*
-		double areaSideDeep = width * depthDeep;
-		double areaSideShallow = width * depthShallow;
-		*/
+		// ------ Surface Area Calculations ------
+		
+		double areaSideDeep, areaSideShallow, areaBottom, areaShallow, areaDeep, areaTransitionOne, areaTransitionTwo;
+		double finalSA;
+		
+		areaSideDeep = width * depthDeep;
+		areaSideShallow = width * depthShallow;
+		areaBottom = width * length;
+		areaShallow = 2 * (lengthShallow * depthShallow);
+		areaDeep = 2 * (lengthDeep * depthDeep);
+		areaTransitionOne = 2 * (depthShallow * transition);
+		areaTransitionTwo = transition * (depthShallow * depthDeep);
+		
+		finalSA = areaSideDeep + areaSideShallow + areaBottom + areaShallow + areaDeep + areaTransitionOne + areaTransitionTwo;
+		finalSA = (int)(finalSA * 100);
+		finalSA = (double)(finalSA /100);
+		
+		System.out.println("");	
+		System.out.println("-----------------------------------------------------");
+		System.out.println("");	
+				
+		System.out.println("The total amount of liner needed is " + finalSA + "m squared.");
 		
 		
-	}
+		// ------ Cost of Liner Calculations ------
+		
+		double linerOne, linerTwo, linerThree;
+		
+		linerOne = finalSA * priceOne;
+		linerOne = (int)(linerOne * 100);
+		linerOne = (double)(linerOne / 100);
+		
+		linerTwo = finalSA * priceTwo;
+		linerTwo = (int)(linerTwo * 100);
+		linerTwo = (double)(linerTwo / 100);
+		
+		linerThree = finalSA * priceThree;
+		linerThree = (int)(linerThree * 100);
+		linerThree = (double)(linerThree / 100);
+		
+		System.out.println("");	
+		System.out.println("-----------------------------------------------------");
+		System.out.println("");	
+				
+		System.out.println("The following are the comparitive costs of the three different liners.");
+		System.out.println("The total costs of the first liner is $" + linerOne + ".");
+		System.out.println("The total costs of the second liner is $" + linerTwo + ".");
+		System.out.println("The total costs of the third liner is $" + linerThree + ".");
+		
+		System.out.println("");
+		System.out.println("Thank you for using this program. Have a nice day. : ) ");
+		
+		}
 
 }
