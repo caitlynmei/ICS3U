@@ -74,13 +74,16 @@ public class BvgPools {
 		// ----- Volume Calculations -----
 		
 		double volumeShallow, volumeDeep, volumeTransitionOne, volumeTransitionTwo, finalVolume;
-		double lengthDeep = length - lengthShallow - transition;
+		double transitionB = depthDeep - depthShallow;
+		double transitionA = Math.sqrt((transition * transition) - (transitionB * transitionB));
+		double lengthDeep = length - lengthShallow - transitionA;
+		
 		double volumeDesirable; // at 90% full
 				
 		volumeShallow = lengthShallow * width * depthShallow;
 		volumeDeep = lengthDeep * width * depthDeep;
-		volumeTransitionOne = depthShallow * width * transition;
-		volumeTransitionTwo = (depthDeep - depthShallow) * transition * width / 2;
+		volumeTransitionOne = depthShallow * width * transitionA; // Top half of transition area 
+		volumeTransitionTwo = transitionA * transitionB * width / 2; // Bottom half of transition area, the triangular prism
 		
 		finalVolume = volumeShallow + volumeDeep + volumeTransitionOne + volumeTransitionTwo;
 		
@@ -105,8 +108,8 @@ public class BvgPools {
 		areaBottom = width * length;
 		areaShallow = 2 * (lengthShallow * depthShallow);
 		areaDeep = 2 * (lengthDeep * depthDeep);
-		areaTransitionOne = 2 * (depthShallow * transition);
-		areaTransitionTwo = transition * (depthShallow * depthDeep);
+		areaTransitionOne = 2 * (depthShallow * transitionA);
+		areaTransitionTwo = transitionA * transitionB;
 		
 		finalSA = areaSideDeep + areaSideShallow + areaBottom + areaShallow + areaDeep + areaTransitionOne + areaTransitionTwo;
 		finalSA = (int)(finalSA * 100);
