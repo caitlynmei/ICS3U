@@ -16,6 +16,9 @@ public class CrossCountryAssignment {
 		// E.g. I would use name1 for Runner 1
 		
 		// Runner 1:
+		System.out.println("Runner One: ");
+		System.out.println("");
+		
 		// First and Last Name
 		System.out.print("Please enter you first and last name: ");
 		String name1 = keyboard.nextLine();
@@ -74,6 +77,9 @@ public class CrossCountryAssignment {
 		
 		
 		// Runner 2:
+		System.out.println("Runner Two: ");
+		System.out.println("");
+		
 		// First and Last Name
 		System.out.print("Please enter you first and last name: ");
 		String name2 = keyboard.nextLine();
@@ -133,6 +139,9 @@ public class CrossCountryAssignment {
 
 		
 		// Runner 3:
+		System.out.println("Runner Three: ");
+		System.out.println("");
+		
 		// First and Last Name
 		System.out.print("Please enter you first and last name: ");
 		String name3 = keyboard.nextLine();
@@ -191,6 +200,9 @@ public class CrossCountryAssignment {
 
 		
 		// Runner 4:
+		System.out.println("Runner Four: ");
+		System.out.println("");
+		
 		// First and Last Name
 		System.out.print("Please enter you first and last name: ");
 		String name4 = keyboard.nextLine();
@@ -250,6 +262,9 @@ public class CrossCountryAssignment {
 
 		
 		// Runner 5:
+		System.out.println("Runner Five: ");
+		System.out.println("");
+		
 		// First and Last Name
 		System.out.print("Please enter you first and last name: ");
 		String name5 = keyboard.nextLine();
