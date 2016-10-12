@@ -15,6 +15,8 @@ public class CrossCountryAssignment {
 		// For the following variables (for String, int, and double), I have placed numbers at the end of each one to represent which runner they are referring too. 
 		// E.g. I would use name1 for Runner 1
 		
+		System.out.println("This program will organise your following information regarding the 5 km race into a chart. \n" );
+		 
 		// Runner 1:
 		System.out.println("Runner One: ");
 		System.out.println("");
@@ -74,7 +76,8 @@ public class CrossCountryAssignment {
 		System.out.println("Split Two: " + splitTwoMinutes1 + ":" + formatter.format(splitTwoSeconds1));
 		System.out.println("Split Three: " + splitThreeMinutes1 + ":" + formatter.format(splitThreeSeconds1));
 		System.out.println("Total: " + totalMinutes1 + ":" + formatter.format(totalSeconds1));
-		
+		System.out.println("");
+		System.out.println("----------------------------------------------------- \n");
 		
 		// Runner 2:
 		System.out.println("Runner Two: ");
@@ -124,8 +127,7 @@ public class CrossCountryAssignment {
 		// The amount of minutes and seconds entered from user for Runner 2's time at the end of the race is the same as the ones for total time
 		int totalMinutes2 = minutesThree2;
 		double totalSeconds2 = secondsThree2;
-		
-	
+			
 		// Runner 2 Summary
 		System.out.println("");
 		System.out.println("Runner Two Summary");
@@ -136,7 +138,8 @@ public class CrossCountryAssignment {
 		System.out.println("Split Two: " + splitTwoMinutes2 + ":" + formatter.format(splitTwoSeconds2));
 		System.out.println("Split Three: " + splitThreeMinutes2 + ":" + formatter.format(splitThreeSeconds2));
 		System.out.println("Total: " + totalMinutes2 + ":" + formatter.format(totalSeconds2));
-
+		System.out.println("");
+		System.out.println("----------------------------------------------------- \n");
 		
 		// Runner 3:
 		System.out.println("Runner Three: ");
@@ -197,7 +200,8 @@ public class CrossCountryAssignment {
 		System.out.println("Split Two: " + splitTwoMinutes3 + ":" + formatter.format(splitTwoSeconds3));
 		System.out.println("Split Three: " + splitThreeMinutes3 + ":" + formatter.format(splitThreeSeconds3));
 		System.out.println("Total: " + totalMinutes3 + ":" + formatter.format(totalSeconds3));
-
+		System.out.println("");
+		System.out.println("----------------------------------------------------- \n");
 		
 		// Runner 4:
 		System.out.println("Runner Four: ");
@@ -247,8 +251,7 @@ public class CrossCountryAssignment {
 		// The amount of minutes and seconds entered from user for Runner 4's time at the end of the race is the same as the ones for total time
 		int totalMinutes4 = minutesThree4;
 		double totalSeconds4 = secondsThree4;
-		
-	
+			
 		// Runner 4 Summary
 		System.out.println("");
 		System.out.println("Runner Four Summary");
@@ -259,7 +262,8 @@ public class CrossCountryAssignment {
 		System.out.println("Split Two: " + splitTwoMinutes4 + ":" + formatter.format(splitTwoSeconds4));
 		System.out.println("Split Three: " + splitThreeMinutes4 + ":" + formatter.format(splitThreeSeconds4));
 		System.out.println("Total: " + totalMinutes4 + ":" + formatter.format(totalSeconds4));
-
+		System.out.println("");
+		System.out.println("----------------------------------------------------- \n");
 		
 		// Runner 5:
 		System.out.println("Runner Five: ");
@@ -309,8 +313,7 @@ public class CrossCountryAssignment {
 		// The amount of minutes and seconds entered from user for Runner 5's time at the end of the race is the same as the ones for total time
 		int totalMinutes5 = minutesThree2;
 		double totalSeconds5 = secondsThree2;
-		
-	
+			
 		// Runner 5 Summary
 		System.out.println("");
 		System.out.println("Runner Five Summary");
@@ -321,7 +324,60 @@ public class CrossCountryAssignment {
 		System.out.println("Split Two: " + splitTwoMinutes5 + ":" + formatter.format(splitTwoSeconds5));
 		System.out.println("Split Three: " + splitThreeMinutes5 + ":" + formatter.format(splitThreeSeconds5));
 		System.out.println("Total: " + totalMinutes5 + ":" + formatter.format(totalSeconds5));
+		System.out.println("");
+		System.out.println("----------------------------------------------------- \n");
+		
+		// -------------------- Overall Summary ----------------------------
 
+		// Runner 1
+		String splitOne1 = splitOneMinutes1 + ":" + formatter.format(splitOneSeconds1);
+		String splitTwo1 = splitTwoMinutes1 + ":" + formatter.format(splitTwoSeconds1);
+		String splitThree1 = splitThreeMinutes1 + ":" + formatter.format(splitThreeSeconds1);
+		String total1 = totalMinutes1 + ":" + formatter.format(totalSeconds1);
+		
+		// Runner 2
+		String splitOne2 = splitOneMinutes2 + ":" + formatter.format(splitOneSeconds2);
+		String splitTwo2 = splitTwoMinutes2 + ":" + formatter.format(splitTwoSeconds2);
+		String splitThree2 = splitThreeMinutes2 + ":" + formatter.format(splitThreeSeconds2);
+		String total2 = totalMinutes2 + ":" + formatter.format(totalSeconds2);	
+		
+		// Runner 3
+		String splitOne3 = splitOneMinutes3 + ":" + formatter.format(splitOneSeconds3);
+		String splitTwo3 = splitTwoMinutes3 + ":" + formatter.format(splitTwoSeconds3);
+		String splitThree3 = splitThreeMinutes3 + ":" + formatter.format(splitThreeSeconds3);
+		String total3 = totalMinutes3 + ":" + formatter.format(totalSeconds3);
+		
+		// Runner 4
+		String splitOne4 = splitOneMinutes4 + ":" + formatter.format(splitOneSeconds4);
+		String splitTwo4 = splitTwoMinutes4 + ":" + formatter.format(splitTwoSeconds4);
+		String splitThree4 = splitThreeMinutes4 + ":" + formatter.format(splitThreeSeconds4);
+		String total4 = totalMinutes4 + ":" + formatter.format(totalSeconds4);
+		
+		// Runner 5
+		String splitOne5 = splitOneMinutes5 + ":" + formatter.format(splitOneSeconds5);
+		String splitTwo5 = splitTwoMinutes5 + ":" + formatter.format(splitTwoSeconds5);
+		String splitThree5 = splitThreeMinutes5 + ":" + formatter.format(splitThreeSeconds5);
+		String total5 = totalMinutes5 + ":" + formatter.format(totalSeconds5);
+		
+		// Summary Chart Headings
+		String runnerFirstName = "First Name:";
+		String runnerLastName = "Last Name: ";
+		String splitOne = "Split One:";
+		String splitTwo = "Split Two:";
+		String splitThree = "Split Three:";
+		String totalTime = "Total Time:";
+		
+		// Summary Chart
+		System.out.println("");
+		System.out.printf("Runner Number: %16s %16s %15s %15s %15s %15s \n \n", runnerLastName, runnerFirstName, splitOne, splitTwo, splitThree, totalTime);
+		System.out.printf("Runner One: %18s, %16s %15s %15s %15s %15s \n", lastName1, firstName1, splitOne1, splitTwo1, splitThree1, total1);
+		System.out.printf("Runner Two: %18s, %16s %15s %15s %15s %15s \n", lastName2, firstName2, splitOne2, splitTwo2, splitThree2, total2);
+		System.out.printf("Runner Three: %16s, %16s %15s %15s %15s %15s \n", lastName3, firstName3, splitOne3, splitTwo3, splitThree3, total3);
+		System.out.printf("Runner Four: %17s, %16s %15s %15s %15s %15s \n", lastName4, firstName4, splitOne4, splitTwo4, splitThree4, total4);
+		System.out.printf("Runner Five: %17s, %16s %15s %15s %15s %15s \n", lastName5, firstName5, splitOne5, splitTwo5, splitThree5, total5);
+		System.out.println("");
+		System.out.println("Thank you for using this program. Have a nice day. : ) ");
 		
 		}
+	
 }
