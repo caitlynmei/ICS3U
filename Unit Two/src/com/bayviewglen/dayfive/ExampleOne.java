@@ -22,7 +22,6 @@ public class ExampleOne {
 		x = 4544654.33;
 		formatter = new DecimalFormat("###,###.000");
 		System.out.println(formatter.format(x));
-		
 
 	}
 
