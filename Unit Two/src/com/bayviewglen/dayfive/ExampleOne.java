@@ -23,6 +23,7 @@ public class ExampleOne {
 		formatter = new DecimalFormat("###,###.000");
 		System.out.println(formatter.format(x));
 
+		
 	}
 
 }
