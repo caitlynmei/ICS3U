@@ -150,6 +150,8 @@ public class BvgPools {
 		System.out.println("");
 		System.out.println("Thank you for using this program. Have a nice day. : ) ");
 		
+		keyboard.close();
+		
 		}
 
 }
