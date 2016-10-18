@@ -13,8 +13,14 @@ public class ExampleOne {
 		
 		char letter = (char)((int)(Math.random()*NUM_OF_LETTERS)+UPPER_CASE_A);
 
-		System.out.println("The random letter is: " + letter);
+		System.out.println("The random letter is: " + letter); 
 
+		/*String please = "Happy";
+		
+		System.out.println(please.charAt(please.length()/2));
+		System.out.println(please.indexOf("appy"));
+		*/
+		
 	}
 
 }
