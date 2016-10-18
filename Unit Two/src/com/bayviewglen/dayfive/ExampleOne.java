@@ -23,7 +23,8 @@ public class ExampleOne {
 		formatter = new DecimalFormat("###,###.000");
 		System.out.println(formatter.format(x));
 
-		
+		formatter = new DecimalFormat("Happy####.000");
+		System.out.println(formatter.format(x));
 	}
 
 }
