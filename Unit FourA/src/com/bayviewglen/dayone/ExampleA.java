@@ -13,7 +13,7 @@ public class ExampleA {
 		
 	}
 	
-	System.out.println("The sume of the numbers from 1 to 1000 is: " + sum);
+	System.out.println("The sum of the numbers from 1 to 1000 is: " + sum);
 	
 	}*/
 	
