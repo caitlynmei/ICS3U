@@ -76,7 +76,7 @@ public class AssignmentTwo {
 		while (!valid){ //doesn't work
 			valid = true;
 			for (int i = 0; i < choiceTotal && valid; i++){
-				if(VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == -1){
+				if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == -1){
 					valid = false;
 					System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character: ");
 					guessChoice = keyboard.nextLine(); // for either choice 1 or 2
@@ -85,19 +85,21 @@ public class AssignmentTwo {
 		}
 		
 		System.out.println("Yay");
-	
-		while (!valid){
-			if (guessChoice == 1){
-				valid = true;
-				System.out.println(playerTwo + ", please enter your solution: ");
-			} else if (guessChoice == 2){
-				valid = true;
-				for (int i = 0; i < VALID_CHARACTERS.length(); i++){
-					unusedCharacters += VALID_CHARACTERS.charAt(i) + " ";
+		
+		while (!valid){ 
+			for (int i = 0; i < phraseOne.length(); i++){
+				if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == 1){
+					valid = true;
+					System.out.println(playerTwo + ", please enter your solution: ");
+				} else if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == 2){
+					valid = true;
+					for (int j = 0; j < VALID_CHARACTERS.length(); j++){
+						unusedCharacters += VALID_CHARACTERS.charAt(j) + " ";
+					}
+					System.out.println("Unused Characters: ");
+					System.out.println(unusedCharacters + " ");
+					System.out.println(playerTwo + ", please enter a single character: "); // need to continue this part
 				}
-				System.out.println("Unused Characters: ");
-				System.out.println(unusedCharacters + " ");
-				System.out.println(playerTwo + ", please enter a single character: "); // need to continue this part
 			}
 		}
 		
@@ -164,6 +166,6 @@ public class AssignmentTwo {
 		}
 		*/
 		
-	}
+		}
 
 }
