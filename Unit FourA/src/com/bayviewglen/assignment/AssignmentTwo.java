@@ -36,7 +36,7 @@ public class AssignmentTwo {
 			valid = true;
 			phraseOne = keyboard.nextLine().toUpperCase(); // changing to upper case
 			for (int i = 0; i < phraseOne.length() && valid; i++){
-				if(VALID_CHARACTERS_SPACE.indexOf(phraseOne.charAt(i)) == -1){ //explain!!
+				if(VALID_CHARACTERS_SPACE.indexOf(phraseOne.charAt(i)) == -1){ 
 					valid = false;
 					System.out.println("Please enter a phrase containing only alphanumeric characters.");
 				} 
@@ -69,42 +69,44 @@ public class AssignmentTwo {
 		System.out.println(playerTwo + ", you have used " + guessUsed + " guesses would you like to (1) solve or (2) guess a character: ");
 		
 		String guessChoice = "";
-		guessChoice = keyboard.nextLine(); // for either choice 1 or 2
 		String unusedCharacters = "";
-		valid = false; // reassigning valid boolean to false
+		boolean invalidChoice = true; 
 		
-		while (!valid){ //doesn't work
-			valid = true;
-			for (int i = 0; i < choiceTotal && valid; i++){
-				if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == -1){
-					valid = false;
-					System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character: ");
-					guessChoice = keyboard.nextLine(); // for either choice 1 or 2
-				} 
-			}
+		while (invalidChoice){ 
+			guessChoice = keyboard.nextLine(); // for either choice 1 or 2
+			if (guessChoice.equals("1") || guessChoice.equals("2")){
+				invalidChoice = false;
+			} else { 
+				System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character: ");
+				//guessChoice = keyboard.nextLine(); // for either choice 1 or 2
+			} 
 		}
 		
-		System.out.println("Yay");
+		boolean isSolution = true;
 		
-		while (!valid){ 
-			for (int i = 0; i < phraseOne.length(); i++){
-				if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == 1){
-					valid = true;
+		while (isSolution){
+			if (guessChoice.equals("1")){
+				System.out.println(playerTwo + ", please enter your solution: ");
+				if ()
+			} else {
+				if (guessChoice.equals("1")){
 					System.out.println(playerTwo + ", please enter your solution: ");
-				} else if (VALID_GUESS_CHOICES.indexOf(guessChoice.charAt(i)) == 2){
-					valid = true;
-					for (int j = 0; j < VALID_CHARACTERS.length(); j++){
-						unusedCharacters += VALID_CHARACTERS.charAt(j) + " ";
-					}
-					System.out.println("Unused Characters: ");
-					System.out.println(unusedCharacters + " ");
-					System.out.println(playerTwo + ", please enter a single character: "); // need to continue this part
-				}
+					if ()		
 			}
 		}
 		
+		if (guessChoice.equals("2")){
+			for (int j = 0; j < VALID_CHARACTERS.length(); j++){
+				unusedCharacters += VALID_CHARACTERS.charAt(j) + " ";
+			}
+		
+		System.out.println("Unused Characters: ");
+		System.out.println(unusedCharacters + " ");
+		System.out.println(playerTwo + ", please enter a single character: "); // need to continue this part
+	
 		
 		//------------------If Player Entered Correct Character (True)---------------------
+		
 		/*
 		for (int j = 0; j < choiceTotal; j++){
 			if (guessChoice == 1){
