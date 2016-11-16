@@ -10,8 +10,10 @@ public class AssignmentTwo {
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // indexOf (6 - 7 loops per)
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-	
-		System.out.println("------------HANG MAN------------");
+		final int guessTotal = 7; // number of total guesses
+		final int choiceTotal = 2; // number of choices: (1) and (2)
+		
+		System.out.println("------------HANGMAN------------");
 		
 		System.out.println("Get ready to play a two player game of Hangman!!");
 		System.out.println();
@@ -22,29 +24,84 @@ public class AssignmentTwo {
 		String playerTwo = keyboard.nextLine();
 		System.out.println();	
 		
-		System.out.println(playerOne + " and " + playerTwo + ", are you ready for a little competition?\n");
+		System.out.println(playerOne + " and " + playerTwo + ", are you ready for a little competition? Let's begin a game of Hangman. \n");
 		
-		System.out.println(playerOne + " will go first. " + playerOne + ", please enter a phrase containg only alphanumeric characters: ");
+		System.out.println(playerOne + " will go first. " + playerOne + ", please enter a phrase for " + playerTwo + " to solve: ");
 		String phraseOne = "";
-		
-		String capPhraseOne = phraseOne.toUpperCase(); //Changing all characters into upper case
-		
-		String x = "";
 		
 		boolean valid = false;
 		
 		while (!valid){
 			valid = true;
-			phraseOne = keyboard.nextLine().toUpperCase();
+			phraseOne = keyboard.nextLine().toUpperCase(); // changing to upper case
 			for (int i = 0; i < phraseOne.length() && valid; i++){
-				if(VALID_CHARACTERS.indexOf(phraseOne.charAt(i))==-1){
+				if(VALID_CHARACTERS_SPACE.indexOf(phraseOne.charAt(i)) == -1){ //explain!!
 					valid = false;
 					System.out.println("Please enter a phrase containing only alphanumeric characters.");
 				} 
 			}
 		}
 		
-		System.out.println("Happy!");
+		//--------------------------Guessing Time----------------------------
+		
+		System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.println("Great! " + playerTwo + ", let's start guessing.");
+		System.out.println();
+		
+		for (int i = 0; i < phraseOne.length(); i++){
+			if (VALID_CHARACTERS.indexOf(phraseOne.charAt(i)) != -1){
+				System.out.print("_ ");
+			} else {
+				System.out.print("/ ");
+			}
+		}
+		
+		int guessUsed = 0; // number of guesses used
+		
+		/*
+		for (int j = 0; guessUsed < guessTotal; j++){
+			guessUsed += j;
+		}
+		*/
+			
+		System.out.println();
+		System.out.println(playerTwo + ", you have used " + guessUsed + " guesses would you like to (1) solve or (2) guess a character: ");
+		
+		int guessChoice = keyboard.nextInt(); // for either choice 1 or 2
+		String unusedCharacters = "";
+		valid = false; // reassigning valid boolean to false
+		
+		if (guessChoice == 1){
+			valid = true;
+			System.out.println(playerTwo + ", please enter your solution: ");
+		} else if (guessChoice == 2){
+			valid = true;
+			for (int i = 0; i < VALID_CHARACTERS.length(); i++){
+				unusedCharacters += VALID_CHARACTERS.charAt(i) + " ";
+			}
+			System.out.println("Unused Characters: ");
+			System.out.println(unusedCharacters + " ");
+			System.out.println(playerTwo + ", please enter a single character: "); // need to continue this part
+		} else {
+			valid = false;
+			System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character: ");
+		} // need something for here
+		
+		//------------------If Player Entered Correct Character (True)---------------------
+	
+		for (int j = 0; j < choiceTotal; j++){
+			if (guessChoice == 1){
+				System.out.println(playerTwo + ", please enter your solution: ");
+				String solutionOne = keyboard.nextLine(); // Player's solution guess 
+				if (solutionOne.charAt(j) != phraseOne.charAt(j)){
+					System.out.println(playerTwo + ", you are unfortunately incorrect.");
+				} else {
+					System.out.println("Congratulations " + playerTwo + "! You are correct.");
+				}
+			}
+		}
+		
+		//should continue back into "what do you want 1 or 2
 		
 		/*
 		
@@ -91,6 +148,7 @@ public class AssignmentTwo {
 			}
 		}
 		*/
+		
 	}
 
 }
