@@ -45,6 +45,9 @@ public class AssignmentTwoBrainstorm {
 		System.out.println(playerTwo + ", you have used 0 guesses would you like to (1) solve or (2) guess a character: ");
 		int guessChoice = keyboard.nextInt(); // for either choice 1 or 2
 		
+		boolean valid = false;
+		
+		/*
 		if (guessChoice == 1){
 			System.out.println(playerTwo + ", please enter your solution: ");
 		} else if (guessChoice == 2){
@@ -55,7 +58,7 @@ public class AssignmentTwoBrainstorm {
 		} else {
 			System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character:");
 		}
-		
+		*/
 		/*
 		 while (!valid){
 			if (guessChoice == 1){
@@ -86,7 +89,7 @@ public class AssignmentTwoBrainstorm {
 				}
 			} 
 		}
-		
+		*/
 		while (valid = true){
 			if (guessChoice == 1){
 				System.out.println(playerTwo + ", please enter your solution: ");
@@ -100,7 +103,7 @@ public class AssignmentTwoBrainstorm {
 		}
 		
 			
-		*/
+		
 		
 		
 		
