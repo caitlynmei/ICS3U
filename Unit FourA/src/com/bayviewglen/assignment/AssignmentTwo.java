@@ -37,8 +37,8 @@ public class AssignmentTwo {
 		
 		// ------------Setting Player Scores------------
 		
-		int playerOneScore = 0;
-		int playerTwoScore = 0;
+		int playerOneScore = 7;
+		int playerTwoScore = 7;
 		
 		for (int z = 0; z < 40; z++){
 					
@@ -53,7 +53,7 @@ public class AssignmentTwo {
 				String phraseMaker = ""; // to assign phrase making role to one player
 				String guesser = ""; // to assign guesser role to one player
 				
-				for (int a = 0; a < 2; a++){ // for 2 half rounds
+				for (int a = 0; a <= 1; a++){ // for 2 half rounds
 					if (a == 0){
 						phraseMaker = playerOne; // assigning phraseMaker to a player
 						guesser = playerTwo; // assigning guesser to other player
@@ -82,13 +82,14 @@ public class AssignmentTwo {
 					// ------------Guesser Starts Guessing------------
 					
 					boolean roundOver = false; // for 1 half round
+					while (roundOver){
+						System.out.println(playerOne + ": " + playerOneScore);
+						System.out.println(playerTwo + ": " + playerTwoScore);
+					}
+					
 					while (!roundOver){
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-						/*
-						System.out.println("Great! " + guesser + ", let's start guessing.");
-						System.out.println();
-						*/
-						
+																		
 						// ------------For Each Guess------------
 						
 						boolean guessOver = false; // for end of each guess
@@ -102,12 +103,9 @@ public class AssignmentTwo {
 								// ------------To Show Encrypted Message------------
 								
 								for (int c = 0; c < phraseOne.length(); c++){ 
-									for (int y = 0; y < c; y++){
-										if (phraseOne.substring(c,c+1).equals(correctChars)){
-											System.out.print(correctChars);
-										}
-									}
-									if (VALID_CHARACTERS.indexOf(phraseOne.charAt(c)) != -1){
+									if (correctChars.indexOf(phraseOne.charAt(c)) != -1){
+										System.out.print(correctChars + " ");
+									} else if (VALID_CHARACTERS.indexOf(phraseOne.charAt(c)) != -1){
 										System.out.print("_ ");
 									} else {
 										System.out.print("/ ");
@@ -136,15 +134,25 @@ public class AssignmentTwo {
 								if (guessChoice.equals("1")){ // for choice (1) solution guess
 									System.out.println(playerTwo + ", please enter your solution: ");
 									phraseOneSolution = keyboard.nextLine();
-									if (phraseOneSolution.substring(phraseOneSolution.length()).equals(phraseOne)){ //must come back to end this 1/2 round!!!!!!
+									if (phraseOneSolution.substring(phraseOneSolution.length()).equals(phraseOne.substring(phraseOne.length()))){ //must come back to end this 1/2 round!!!!!!
 										System.out.println("Congratulations " + playerTwo + "! You are correct."); // this doesn't work
+										if (a == 0){
+											playerTwoScore++;
+										} else {
+											playerOneScore++;
+										}
 										guessOver = false;
 										roundOver = false;
 									} else {
 										System.out.println(playerTwo + ", you are unfortunately incorrect."); 
-										guessOver = false;
+										if (a == 0){
+											playerTwoScore--;
+										} else {
+											playerOneScore--;
+										}
 										guessCounter++;
-									}
+										guessOver = false;
+									}	
 									
 								} else { // for choice (2) character guess
 									System.out.println("Unused Characters: ");
@@ -187,16 +195,28 @@ public class AssignmentTwo {
 									for (int f = 0; f < guessedCharLen; f++){
 										if (phraseOne.indexOf(guessedCharacter.charAt(f)) != -1){
 											System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is in the phrase.");
-											guessOver = false;	
 											guessCounter++;	
+											if (a == 0){
+												playerTwoScore++;
+											} else {
+												playerOneScore++;
+											}
 											usedChars += guessedCharacter;
 											correctChars += guessedCharacter;
+											//System.out.println(playerTwoScore); just checking
+											guessOver = false;	
 																				
 										} else {
 											System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
 											usedChars += guessedCharacter;
-											guessOver = false;	
 											guessCounter++;
+											guessCounter++;	
+											if (a == 0){
+												playerTwoScore--;
+											} else {
+												playerOneScore--;
+											}
+											guessOver = false;	
 										}
 																	
 									} 

@@ -36,7 +36,7 @@ public class AssignmentTwoBrainstorm {
 		*/
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		
+		/*
 		Scanner keyboard = new Scanner (System.in);
 		
 		String playerTwo = "Bob";
@@ -46,6 +46,11 @@ public class AssignmentTwoBrainstorm {
 		int guessChoice = keyboard.nextInt(); // for either choice 1 or 2
 		
 		boolean valid = false;
+		*/
+		
+		String phraseOne = "SMILE";
+		String correctChars = "IM";
+		String currentChar = "";
 		
 		/*
 		if (guessChoice == 1){
@@ -89,17 +94,19 @@ public class AssignmentTwoBrainstorm {
 				}
 			} 
 		}
-		*/
-		while (valid = true){
-			if (guessChoice == 1){
-				System.out.println(playerTwo + ", please enter your solution: ");
-			} else if (guessChoice == 2){
-				for (int i = 0; i < VALID_CHARACTERS.length(); i++){
-					unusedCharacters += VALID_CHARACTERS.charAt(i) + " ";
+	
+	*/
+		
+		for (int c = 0; c < phraseOne.length(); c++){ 
+			//for (int a = 0; a < phraseOne.length(); a++){
+				if (correctChars.indexOf(phraseOne.charAt(c)) != -1){
+					System.out.print(correctChars + " ");
+				} else if (VALID_CHARACTERS.indexOf(phraseOne.charAt(c)) != -1){
+					System.out.print("_ ");
+				} else {
+					System.out.print("/ ");
 				}
-				System.out.println("Unused Characters: ");
-				System.out.println(unusedCharacters + " ");
-			}
+			//}
 		}
 		
 			
