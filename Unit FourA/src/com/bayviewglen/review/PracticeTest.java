@@ -6,6 +6,13 @@ public class PracticeTest {
 
 	public static void main(String[] args) {
 		
+		String motto = "May the force be with you.";
+		int firstSpace = motto.indexOf(" ");
+		int secondSpace = motto.indexOf(" ", firstSpace + 1);
+		String word = motto.substring(firstSpace + 1, secondSpace);
+		System.out.println(word);
+		
+		
 		Scanner keyboard = new Scanner (System.in);
 		/*
 		// Section 1: 6
@@ -70,16 +77,15 @@ public class PracticeTest {
 		*/
 
 		// Section 4: 1
-		/*
-		for (int i = 0; i<5; i++){
+		
+		for (int i = 0; i<4; i++){
 			System.out.println("******");
 		}
-		 */
 		
+				
 		//2
 		System.out.println("How many numbers will be inputed?");
 		int amount = keyboard.nextInt();
-		int limit = 0;
 		int sum = 0;
 		double average = 0;
 		int maximum = 0;
@@ -90,19 +96,25 @@ public class PracticeTest {
 			int num = keyboard.nextInt();
 			
 			sum += num;
-			average = (double)sum / amount;
+			average = (double) sum / amount;
 			average = (int)(average*100);
 			average = (double)(average/100);
-						
-			
+			if(i == 0){
+				maximum = num;
+				minimum = num;
+			}else {
+				maximum = Math.max (maximum, num);
+				minimum = Math.min(minimum, num);
+
+			}
 		}
 		
 		int sumFinal = sum;
 		
 		System.out.println("The sum of the integers is: " + sumFinal);
 		System.out.println("The average of the integers is: " + average);
-		System.out.println("The maximum integer is: ");
-		System.out.println("The minimum integer is: ");
+		System.out.println("The maximum integer is: " + maximum);
+		System.out.println("The minimum integer is: " + minimum);
 		
 		keyboard.close();
 	}
