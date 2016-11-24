@@ -12,13 +12,15 @@ public class AssignmentTwo {
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // notes: indexOf (6 - 7 loops per)
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-		final int guessTotal = 7; // number of total guesses
+		final int MAX_GUESSES = 7; // number of total guesses
 		final int guessedCharLen = 1; // length of choice (2) character
 		String phraseOneSolution = null; // the guesser's solution in choice (1)
 		String guessedCharacter = null; // for a character that was guessed in choice (2)
 		String usedChars = ""; // for all characters that were guessed
 		String correctChars = ""; // for correct guesses in choice (2)
 		
+		int round = 1;			// defines which round we are currently on - a round has both players taking a turn (phrase and guessing)
+		final int ROUND_LIMIT = 5;
 		boolean gameOver = false; // for when entire game ends
 		//boolean gotSolution = true; // for when guesser has guessed solution correctly
 
@@ -37,10 +39,10 @@ public class AssignmentTwo {
 		
 		// ------------Setting Player Scores------------
 		
-		int playerOneScore = 7;
-		int playerTwoScore = 7;
+		int playerOneScore = 0;		// was 7 changed by KD 11/24/2016
+		int playerTwoScore = 0;
 		
-		for (int z = 0; z < 40; z++){
+		//for (int z = 0; z < 40; z++){		// removed by KD 11/24/2016
 					
 			// ------------Starting Game------------
 			
@@ -80,25 +82,26 @@ public class AssignmentTwo {
 					}
 					
 					// ------------Guesser Starts Guessing------------
-					
+					/*
 					boolean roundOver = false; // for 1 half round
 					while (roundOver){
 						System.out.println(playerOne + ": " + playerOneScore);
 						System.out.println(playerTwo + ": " + playerTwoScore);
 					}
-					
-					while (!roundOver){
+					*/ // removed by KD because no one knows what it does 11/24/2016
+					boolean halfRoundOver = false;
+					while (!halfRoundOver){
 						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 																		
 						// ------------For Each Guess------------
 						
-						boolean guessOver = false; // for end of each guess
-						while (!guessOver){
+						//boolean guessOver = false; // for end of each guess
+						//while (!guessOver){
 						
 							// ------------One Guess------------
 							
-							int guessCounter = 0; // to count number of guesses
-							for (int i = 0; i < guessTotal; i++){ // to limit number of guesses at 7
+							for (int i = 0; i < MAX_GUESSES; i++){ // to limit number of guesses at 7
+								int guessCounter = 0; // to count number of guesses -- I need to use this or else i will increment a lot	
 																								
 								// ------------To Show Encrypted Message------------
 								
@@ -115,7 +118,7 @@ public class AssignmentTwo {
 								// ------------Choosing Between Choice (1) or (2)------------
 								
 								System.out.println();
-								System.out.println(playerTwo + ", you have used " + guessCounter + " guess(es), would you like to (1) solve or (2) guess a character: ");
+								System.out.println(playerTwo + ", you have used " + i + " guess" + ((i > 1) || (i == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
 								String guessChoice = ""; 
 								boolean invalidChoice = true; 
@@ -141,8 +144,8 @@ public class AssignmentTwo {
 										} else {
 											playerOneScore++;
 										}
-										guessOver = false;
-										roundOver = false;
+										//guessOver = false;
+										halfRoundOver = false;
 									} else {
 										System.out.println(playerTwo + ", you are unfortunately incorrect."); 
 										if (a == 0){
@@ -151,7 +154,7 @@ public class AssignmentTwo {
 											playerOneScore--;
 										}
 										guessCounter++;
-										guessOver = false;
+										//guessOver = false;
 									}	
 									
 								} else { // for choice (2) character guess
@@ -204,30 +207,32 @@ public class AssignmentTwo {
 											usedChars += guessedCharacter;
 											correctChars += guessedCharacter;
 											//System.out.println(playerTwoScore); just checking
-											guessOver = false;	
+											//guessOver = false;	
 																				
 										} else {
 											System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
 											usedChars += guessedCharacter;
 											guessCounter++;
-											guessCounter++;	
 											if (a == 0){
 												playerTwoScore--;
 											} else {
 												playerOneScore--;
 											}
-											guessOver = false;	
+											//guessOver = false;	
 										}
 																	
 									} 
 																
 								} // end of choice (2) character guess
-							} // end limit for 7 guesses
-						} // end of each guess 
+							} // end of half round
+						//} // end of each guess 
 					} // end of 1 half round
+					round++;
 				} // end of 2 half rounds
+				
+				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
 			} // end of the whole entire game
-		} // end of score keeping
+	//	} // end of score keeping	removed by KD 11/24/2016
 		
 		keyboard.close();
 		

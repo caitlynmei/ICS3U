@@ -15,11 +15,11 @@ public class ExampleOne {
 
 		System.out.println("The random letter is: " + letter); 
 
-		/*String please = "Happy";
+		String please = "Happy";
 		
 		System.out.println(please.charAt(please.length()/2));
 		System.out.println(please.indexOf("appy"));
-		*/
+		
 		
 	}
 
