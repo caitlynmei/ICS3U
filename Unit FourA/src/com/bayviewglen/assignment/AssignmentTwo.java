@@ -94,24 +94,24 @@ public class AssignmentTwo {
 						// ------------To Show Encrypted Message------------
 						
 						//int phraseCharLen = 0; // to count how many times a character appears in phraseMaker's phrase
-											
-						for (int c = 0; c < phrase.length(); c++){ 
-							
-							/* to count how many times a character appears in phraseMaker's phrase (e.g hiiiiiii)
-							for (int k = 0; k < phrase.length(); k++){
-								if (phrase.indexOf(correctCharacter.charAt(c)) != -1){
-									phraseCharLen++;
-								}
+						/* to count how many times a character appears in phraseMaker's phrase (e.g hiiiiiii)
+						for (int k = 0; k < phrase.length(); k++){
+							if (phrase.indexOf(correctCharacter.charAt(c)) != -1){
+								phraseCharLen++;
 							}
-							*/
-							if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
+						}
+						*/
+						
+						for (int c = 0; c < phrase.length(); c++){ 
+							if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
+								System.out.print(correctCharacter + " ");
+							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
 								System.out.print("_ ");
 							} else {
 								System.out.print("/ ");
-							}	
-					
+							}						
 						}
-						/*
+						
 						if (correctChars.length() == phrase.length()){
 							if (a == 0){
 								playerTwoScore++;
@@ -120,7 +120,9 @@ public class AssignmentTwo {
 							}
 							solved = true;
 						}
-						*/
+						
+						//System.out.println(correctChars); checking, need to figure out how to get repeating chars in too
+						
 						// ------------Choosing Between Choice (1) or (2)------------
 								
 						System.out.println();
@@ -231,7 +233,7 @@ public class AssignmentTwo {
 								
 						if (i == MAX_GUESSES){
 							System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
-							String finalSolution = keyboard.nextLine();
+							String finalSolution = keyboard.nextLine().toUpperCase();
 							if (finalSolution.equals(phrase)){ 
 								System.out.println("Congratulations " + guesser + "! You are correct."); 
 								solved = true;
@@ -257,7 +259,16 @@ public class AssignmentTwo {
 										
 				} // end of 2 half rounds
 				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
+				
 			} // end of the whole entire game
+		
+		if (playerOneScore > playerTwoScore){
+			System.out.println(playerOne + " is the winner!!");
+		} else {
+			System.out.println(playerTwo + " is the winner!!");
+		}
+		
+		System.out.println("Game is now over. Thanks for playing! :)");
 		
 		keyboard.close();
 		
