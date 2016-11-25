@@ -180,12 +180,30 @@ public class AssignmentTwo {
 							
 							// Choice (2): character guess	
 						} else { 
+							
 							System.out.println("Unused Characters: ");
 							String unusedCharacters = ""; // the displayed unused/guessed characters
 							for (int d = 0; d < VALID_CHARACTERS.length(); d++){
 								unusedCharacters += VALID_CHARACTERS.charAt(d) + " ";
 							}
 							System.out.println(unusedCharacters);
+														
+							/*
+							System.out.println("Unused Characters: ");
+							String characterList = "A B C D E F G H I J K L M  N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9";
+							int index = characterList.indexOf("A");// do something
+							String unusedCharacters = ""; // the displayed unused/guessed characters
+										
+							for (int d = 0; d < characterList.length(); d++){
+								if (d == index){
+									unusedCharacters += "_ ";
+								} else {
+									unusedCharacters += VALID_CHARACTERS.charAt(index) + " ";
+								}
+							}
+							characterList = unusedCharacters;
+							*/
+												
 							System.out.println(guesser + ", please enter a single character: "); // need to continue this part
 														
 							guessedCharacter = "";								
@@ -200,22 +218,13 @@ public class AssignmentTwo {
 									} else if (guessedCharacter.length() != 1){ 
 										validGuessedCharacter = false; 
 										System.out.println(guesser + ", please enter a \'single\' valid alphanumeric character (don't use spaces):");
+									} else if (usedChars.indexOf(guessedCharacter) != -1){
+										validGuessedCharacter = false;
+										System.out.println(guesser + ", you have already guessed the character \'" + guessedCharacter + "\', please select again: "); // to check if guessed character was already used
 									} 
 								}
 							}
-									
-							/*
-							boolean alreadyGuessed = false; // to check if guessed character was already used
-							while (!alreadyGuessed){
-								for (int x = 0; x < usedChars.length(); x++){
-									if (usedChars.indexOf(guessedCharacter.charAt(x)) != -1){
-										System.out.println(guesser + ", you have already guessed the character \'" + guessedCharacter + "\', please select again: ");
-										alreadyGuessed = true;
-									}
-								}
-							}
-							*/
-									
+								
 							//boolean validMessageChar = false; // to update encrypted message
 							for (int f = 0; f < GUESSED_CHAR_LENGTH; f++){
 								if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
@@ -229,12 +238,12 @@ public class AssignmentTwo {
 									correctCharacter = guessedCharacter;
 									correctChars += guessedCharacter;
 									//System.out.println(playerTwoScore); just checking
-											
 								} else {
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
 									usedChars += guessedCharacter;
 								}
-							} 
+							}
+								
 						} // end of choice (2) character guess
 						guessCount++;
 						halfRoundOver = guessCount > MAX_GUESSES-1 || solved;
@@ -266,8 +275,7 @@ public class AssignmentTwo {
 					} // end of one half round
 					round++;
 																					
-					System.out.println();
-					System.out.println();
+					System.out.println("\n\n");
 					System.out.println("Current Scores: ");
 					System.out.println("---------------");
 					System.out.println(playerOne + ": " + playerOneScore);
