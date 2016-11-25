@@ -46,11 +46,14 @@ public class AssignmentTwo {
 		
 			// ------------Starting Game------------
 			
+			// Introduction to rules of game
 			System.out.println(playerOne + " and " + playerTwo + ", are you ready for a little competition? Let's begin a game of Hangman... \n");
-			System.out.println("You will take turns giving each a phrase to solve. Each player is allowed 7 guesses. Once all the guesses are");
-			System.out.println("used up, the guesser for that round will be given one final chance to guess the solution to the phrase. The ");
-			System.out.println("The player with highest score at the end of 5 rounds (unless there's a tie, then winner of the tie-breaking");
-			System.out.println("round) will win!");
+			System.out.println("You will take turns giving each other a phrase to solve. Each player is allowed 7 guesses. During your turn as");
+			System.out.println("guesser, you will be given the choice to either guess the solution to your friend's phrase at once or to guess");
+			System.out.println("each individual character. Once all the 7 guesses are used up, the guesser for that round will be given one");
+			System.out.println("final chance to guess the solution to the phrase. The player with highest score at the end of 5 rounds (unless");
+			System.out.println("there's a tie, then winner of the tie-breaking round) will win!");
+			System.out.println();
 			
 			while (!gameOver){ // for when the whole entire game ends
 				
@@ -116,15 +119,17 @@ public class AssignmentTwo {
 						}
 						
 						// to end half round if guesser has guessed all characters of phraseMaker's phrase
-						if (correctChars.length() == phrase.length()){
-							if (a == 0){
-								playerTwoScore++;
-							} else {
-								playerOneScore++;
+						for (int p = 0; p < phrase.length(); p++){
+							if (correctChars.indexOf(phrase.charAt(p)) != -1){
+								if (a == 0){
+									playerTwoScore++;
+								} else {
+									playerOneScore++;
+								}
+								solved = true;
 							}
-							solved = true;
 						}
-						
+												
 						//System.out.println(correctChars); checking, need to figure out how to get repeating chars in too
 						
 						// ------------Choosing Between Choice (1) or (2)------------
@@ -249,9 +254,18 @@ public class AssignmentTwo {
 								System.out.println(guesser + ", you are unfortunately incorrect."); 
 							}
 						}
+						
+						/* how to stop previous stored info from being carried on??
+						if (guessCount > MAX_GUESSES){
+							guessCount = 0; // to re-establish the number of guesses used as 0 for new round
+							correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
+							correctCharacter = ""; // same as line above
+						}
+						*/
+											
 					} // end of one half round
 					round++;
-					
+																					
 					System.out.println();
 					System.out.println();
 					System.out.println("Current Scores: ");
