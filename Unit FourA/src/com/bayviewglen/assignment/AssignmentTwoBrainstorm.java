@@ -82,6 +82,50 @@ public class AssignmentTwoBrainstorm {
 				//guessOver = false;
 			}	
 		
+			/*
+			// one times
+			if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
+				System.out.print(correctCharacter + " ");
+			} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
+				System.out.print("_ ");
+			} else {
+				System.out.print("/ ");
+			}
+			
+			
+			// multiple times
+			 	for (int c = 0; c < phrase.length(); c++){ 
+							
+							/* to count how many times a character appears in phraseMaker's phrase (e.g hiiiiiii)
+							for (int k = 0; k < phrase.length(); k++){
+								if (phrase.indexOf(correctCharacter.charAt(c)) != -1){
+									phraseCharLen++;
+								}
+							}
+							
+							
+							if (i == 0){
+								if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
+									System.out.print("_ ");
+								} else {
+									System.out.print("/ ");
+								}	
+							} 
+							if (i > 0){
+								if (phrase.indexOf(correctChars.charAt(c)) != -1){
+									//for (int m = 0; m < phraseCharLen; m++){
+									System.out.print(correctCharacter.charAt(c));
+									//System.out.print(correctChars.charAt(c) + " ");
+									//}
+								} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
+									System.out.print("_ ");
+								} else {
+									System.out.print("/ ");
+								}
+							}
+						}
+			 
+			
 		/*
 		 while (!valid){
 			if (guessChoice == 1){
