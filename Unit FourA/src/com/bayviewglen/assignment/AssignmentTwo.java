@@ -14,8 +14,9 @@ public class AssignmentTwo {
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
 		final int MAX_GUESSES = 7; // number of total guesses
 		final int guessedCharLen = 1; // length of choice (2) character
-		String phraseOneSolution = null; // the guesser's solution in choice (1)
-		String guessedCharacter = null; // for a character that was guessed in choice (2)
+		String phrase = ""; // the phraseMaker's message
+		String phraseSolution = ""; // the guesser's solution in choice (1)
+		String guessedCharacter = ""; // for a character that was guessed in choice (2)
 		String usedChars = ""; // for all characters that were guessed
 		String correctChars = ""; // for correct guesses in choice (2)
 		
@@ -42,8 +43,6 @@ public class AssignmentTwo {
 		int playerOneScore = 0;		// was 7 changed by KD 11/24/2016
 		int playerTwoScore = 0;
 		
-		//for (int z = 0; z < 40; z++){		// removed by KD 11/24/2016
-					
 			// ------------Starting Game------------
 			
 			System.out.println(playerOne + " and " + playerTwo + ", are you ready for a little competition? Let's begin a game of Hangman... \n");
@@ -64,19 +63,21 @@ public class AssignmentTwo {
 						guesser = playerOne;
 					}
 					
+					boolean solved = false; // to end when guesser has guessed the solution correctly
+					
 					// ------------Phrase Maker Inputs Phrase------------
 					
 					System.out.println(phraseMaker + ", please enter a phrase for " + guesser + " to solve: ");
-					String phraseOne = "";
-				
+									
 					boolean validPhrase = false;
 					while (!validPhrase){
 						validPhrase = true; 
-						phraseOne = keyboard.nextLine().toUpperCase(); // changing phrase to upper case
-						for (int b = 0; b < phraseOne.length() && validPhrase; b++){
-							if(VALID_CHARACTERS_SPACE.indexOf(phraseOne.charAt(b)) == -1){ 
+						phrase = keyboard.nextLine().toUpperCase(); // changing phrase to upper case
+						for (int b = 0; b < phrase.length() && validPhrase; b++){
+							if(VALID_CHARACTERS_SPACE.indexOf(phrase.charAt(b)) == -1){ 
 								validPhrase = false;
-								System.out.println("Please enter a phrase containing only alphanumeric characters.");
+								System.out.println("Please enter a phrase containing only alphanumeric characters:");
+								System.out.println("(*Hint: \'alphanumeric\' characters are: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9)");
 							} 
 						}
 					}
@@ -89,9 +90,12 @@ public class AssignmentTwo {
 						System.out.println(playerTwo + ": " + playerTwoScore);
 					}
 					*/ // removed by KD because no one knows what it does 11/24/2016
-					boolean halfRoundOver = false;
+					
+					boolean halfRoundOver = false; // to end when one half round is over
+					int i = 0; // to count number of guesses
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
 					while (!halfRoundOver){
-						System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 																		
 						// ------------For Each Guess------------
 						
@@ -100,15 +104,14 @@ public class AssignmentTwo {
 						
 							// ------------One Guess------------
 							
-							for (int i = 0; i < MAX_GUESSES; i++){ // to limit number of guesses at 7
-								int guessCounter = 0; // to count number of guesses -- I need to use this or else i will increment a lot	
-																								
+							//for (int i = 0; i < MAX_GUESSES; i++){ // to limit number of guesses at 7
+																																
 								// ------------To Show Encrypted Message------------
 								
-								for (int c = 0; c < phraseOne.length(); c++){ 
-									if (correctChars.indexOf(phraseOne.charAt(c)) != -1){
+								for (int c = 0; c < phrase.length(); c++){ 
+									if (correctChars.indexOf(phrase.charAt(c)) != -1){
 										System.out.print(correctChars + " ");
-									} else if (VALID_CHARACTERS.indexOf(phraseOne.charAt(c)) != -1){
+									} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
 										System.out.print("_ ");
 									} else {
 										System.out.print("/ ");
@@ -120,46 +123,54 @@ public class AssignmentTwo {
 								System.out.println();
 								System.out.println(playerTwo + ", you have used " + i + " guess" + ((i > 1) || (i == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
-								String guessChoice = ""; 
-								boolean invalidChoice = true; 
-								
+								String guessChoice = ""; // for guesser's decision in choice (1) or choice (2)
+								boolean invalidChoice = true; // to check if the entered choice is (1) or (2)
 								while (invalidChoice){ 
 									guessChoice = keyboard.nextLine(); 
 									if (guessChoice.equals("1") || guessChoice.equals("2")){
 										invalidChoice = false;
 									} else { 
-										System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character: ");
+										System.out.println(guesser + ", you must enter (1) to solve or (2) to guess a character: ");
 									} 
 								}
-										
-								phraseOneSolution = ""; // the guesser's solution
-																			
-								if (guessChoice.equals("1")){ // for choice (1) solution guess
-									System.out.println(playerTwo + ", please enter your solution: ");
-									phraseOneSolution = keyboard.nextLine();
-									if (phraseOneSolution.substring(phraseOneSolution.length()).equals(phraseOne.substring(phraseOne.length()))){ //must come back to end this 1/2 round!!!!!!
-										System.out.println("Congratulations " + playerTwo + "! You are correct."); // this doesn't work
+								
+								// Choice (1): solution guess
+								phraseSolution = ""; // the guesser's solution
+								if (guessChoice.equals("1")){ // for choice (1)
+									System.out.println(guesser + ", please enter your solution: ");
+									
+									phraseSolution = "";								
+									boolean validGuessedSolution = false; // to check if guessed character is a single alphanumeric character
+									while (!validGuessedSolution){
+										validGuessedSolution = true;
+										phraseSolution = keyboard.nextLine().toUpperCase(); // changing guess of character to upper case
+										for (int e = 0; e < guessedCharacter.length() && validGuessedSolution; e++){
+											if (VALID_CHARACTERS_SPACE.indexOf(phraseSolution.charAt(e)) == -1){ 
+												validGuessedSolution = false; 
+												System.out.println(guesser + ", please enter a valid phrase with only alphanumeric characters (you can use spaces): ");
+											} 
+										}
+									}
+									
+									if (phraseSolution.equals(phrase)){ 
+										System.out.println("Congratulations " + guesser + "! You are correct."); // this doesn't work
 										if (a == 0){
 											playerTwoScore++;
 										} else {
 											playerOneScore++;
 										}
+										solved = true;
 										//guessOver = false;
-										halfRoundOver = false;
+										//halfRoundOver = false;
 									} else {
 										System.out.println(playerTwo + ", you are unfortunately incorrect."); 
-										if (a == 0){
-											playerTwoScore--;
-										} else {
-											playerOneScore--;
-										}
-										guessCounter++;
 										//guessOver = false;
 									}	
-									
-								} else { // for choice (2) character guess
+							
+								// Choice (2): character guess	
+								} else { 
 									System.out.println("Unused Characters: ");
-									String unusedCharacters = ""; // the displayed unused / guessed characters
+									String unusedCharacters = ""; // the displayed unused/guessed characters
 									for (int d = 0; d < VALID_CHARACTERS.length(); d++){
 										unusedCharacters += VALID_CHARACTERS.charAt(d) + " ";
 									}
@@ -174,10 +185,10 @@ public class AssignmentTwo {
 										for (int e = 0; e < guessedCharacter.length() && validGuessedCharacter; e++){
 											if (guessedCharacter.length() != 1 && VALID_CHARACTERS.indexOf(guessedCharacter.charAt(e)) == -1){ 
 												validGuessedCharacter = false; 
-												System.out.println(guesser + ", please enter a single valid character (from \'Unused Characters\', not including spaces):");
+												System.out.println(guesser + ", please enter a single valid alphanumberic character (don't use spaces):");
 											} else if (guessedCharacter.length() != 1){ 
 												validGuessedCharacter = false; 
-												System.out.println(guesser + ", please enter a \'single valid\' character (from \'Unused Characters\', not including spaces):");
+												System.out.println(guesser + ", please enter a \'single\' valid alphanumeric character (don't use spaces):");
 											} 
 										}
 									}
@@ -196,9 +207,9 @@ public class AssignmentTwo {
 									
 									//boolean validMessageChar = false; // to update encrypted message
 									for (int f = 0; f < guessedCharLen; f++){
-										if (phraseOne.indexOf(guessedCharacter.charAt(f)) != -1){
+										if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
 											System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is in the phrase.");
-											guessCounter++;	
+											//i++;	
 											if (a == 0){
 												playerTwoScore++;
 											} else {
@@ -212,24 +223,43 @@ public class AssignmentTwo {
 										} else {
 											System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
 											usedChars += guessedCharacter;
-											guessCounter++;
-											if (a == 0){
-												playerTwoScore--;
-											} else {
-												playerOneScore--;
-											}
+											//i++;
 											//guessOver = false;	
 										}
-																	
 									} 
-																
 								} // end of choice (2) character guess
-							} // end of half round
+								i++;
+								halfRoundOver = i > MAX_GUESSES-1 || solved;
+								
+								if (i == MAX_GUESSES){
+									System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
+									String finalSolution = keyboard.nextLine();
+									if (finalSolution.equals(phrase)){ 
+										System.out.println("Congratulations " + guesser + "! You are correct."); 
+										solved = true;
+										if (a == 0){
+											playerTwoScore++;
+										} else {
+											playerOneScore++;
+										}
+									} else {
+										System.out.println(guesser + ", you are unfortunately incorrect."); 
+									}
+								}
+								//} // end of half round - for loop gone bye by by KD 
 						//} // end of each guess 
-					} // end of 1 half round
+					} // end of one half round
 					round++;
+					
+					System.out.println();
+					System.out.println();
+					System.out.println("Current Scores: ");
+					System.out.println("---------------");
+					System.out.println(playerOne + ": " + playerOneScore);
+					System.out.println(playerTwo + ": " + playerTwoScore);
+					System.out.println();
+										
 				} // end of 2 half rounds
-				
 				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
 			} // end of the whole entire game
 	//	} // end of score keeping	removed by KD 11/24/2016

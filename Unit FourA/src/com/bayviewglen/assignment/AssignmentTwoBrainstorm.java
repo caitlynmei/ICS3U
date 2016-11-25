@@ -6,6 +6,9 @@ public class AssignmentTwoBrainstorm {
 
 	public static void main(String[] args) {
 	
+		boolean solved = false;
+		Scanner keyboard = new Scanner (System.in);
+		
 		/*
 		String str = "Hello";
 		
@@ -36,10 +39,11 @@ public class AssignmentTwoBrainstorm {
 		*/
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		/*
-		Scanner keyboard = new Scanner (System.in);
 		
+		String phraseOne = "SMILE";
+		String phraseOneSolution = "";
 		String playerTwo = "Bob";
+		/*
 		String unusedCharacters = "";
 		
 		System.out.println(playerTwo + ", you have used 0 guesses would you like to (1) solve or (2) guess a character: ");
@@ -48,7 +52,7 @@ public class AssignmentTwoBrainstorm {
 		boolean valid = false;
 		*/
 		
-		String phraseOne = "SMILE";
+	/*
 		String correctChars = "IM";
 		String currentChar = "";
 		
@@ -64,6 +68,20 @@ public class AssignmentTwoBrainstorm {
 			System.out.println(playerTwo + ", you must enter (1) to solve or (2) to guess a character:");
 		}
 		*/
+		
+		phraseOneSolution = "";
+			System.out.println(playerTwo + ", please enter your solution: ");
+			phraseOneSolution = keyboard.nextLine();
+			if (phraseOneSolution.equals(phraseOne)){ 
+				System.out.println("Congratulations " + playerTwo + "! You are correct."); // this doesn't work
+				solved = true;
+				//guessOver = false;
+				//halfRoundOver = false;
+			} else {
+				System.out.println(playerTwo + ", you are unfortunately incorrect."); 
+				//guessOver = false;
+			}	
+		
 		/*
 		 while (!valid){
 			if (guessChoice == 1){
@@ -83,6 +101,8 @@ public class AssignmentTwoBrainstorm {
 				} System.out.println();
 			}
 		}
+		8?
+		/*
 		//--------------------
 		valid = false;
 		
@@ -96,7 +116,7 @@ public class AssignmentTwoBrainstorm {
 		}
 	
 	*/
-		
+	/*	
 		for (int c = 0; c < phraseOne.length(); c++){ 
 			//for (int a = 0; a < phraseOne.length(); a++){
 				if (correctChars.indexOf(phraseOne.charAt(c)) != -1){
@@ -109,7 +129,7 @@ public class AssignmentTwoBrainstorm {
 			//}
 		}
 		
-			
+		*/	
 		
 		
 		
