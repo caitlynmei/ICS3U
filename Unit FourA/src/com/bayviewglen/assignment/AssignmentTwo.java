@@ -12,23 +12,22 @@ public class AssignmentTwo {
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // notes: indexOf (6 - 7 loops per)
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-		final int MAX_GUESSES = 7; // number of total guesses
-		final int guessedCharLen = 1; // length of choice (2) character
-		String phrase = ""; // the phraseMaker's message
-		String phraseSolution = ""; // the guesser's solution in choice (1)
-		String guessedCharacter = ""; // for a character that was guessed in choice (2)
-		String usedChars = ""; // for all characters that were guessed
-		String correctCharacter = ""; // stores 1 correct guess in choice (2)
-		String correctChars = ""; // stores all correct guesses in choice (2)
-		
-		int round = 1;			// defines which round we are currently on - a round has both players taking a turn (phrase and guessing)
 		final int ROUND_LIMIT = 5;
+		final int MAX_GUESSES = 7; // number of total guesses
+		final int GUESSED_CHAR_LENGTH = 1; // choice (2): length of guessed character (which has to be 1)
+		String phrase = ""; // the phraseMaker's message
+		String phraseSolution = ""; // choice (1): the guesser's solution 
+		String guessedCharacter = ""; // choice (1): a character that was guessed
+		String usedChars = ""; // stores all characters that have been guessed
+		String correctCharacter = ""; // choice (2): stores 1 correct guess
+		String correctChars = ""; // choice (2): stores all correct guesses
+		int round = 1;			// keeps track of which round we are currently on - a round has both players taking a turn (phrase and guessing)
+		int guessCount = 0; // to count number of guesses
 		boolean gameOver = false; // for when entire game ends
-		//boolean gotSolution = true; // for when guesser has guessed solution correctly
-
+		
 		System.out.println("------------HANGMAN------------");
 		
-		// Getting Player Names
+		// ------------Getting Player Names------------
 		
 		System.out.println("Get ready to play a two player game of Hangman!!");
 		System.out.println();
@@ -41,12 +40,17 @@ public class AssignmentTwo {
 		
 		// ------------Setting Player Scores------------
 		
-		int playerOneScore = 0;		// was 7 changed by KD 11/24/2016
-		int playerTwoScore = 0;
+		int playerOneScore = 0;	// player one's score
+		int playerTwoScore = 0; // player two's score
+		int leftOverGuesses = MAX_GUESSES - guessCount; // number of guesses left over
 		
 			// ------------Starting Game------------
 			
 			System.out.println(playerOne + " and " + playerTwo + ", are you ready for a little competition? Let's begin a game of Hangman... \n");
+			System.out.println("You will take turns giving each a phrase to solve. Each player is allowed 7 guesses. Once all the guesses are");
+			System.out.println("used up, the guesser for that round will be given one final chance to guess the solution to the phrase. The ");
+			System.out.println("The player with highest score at the end of 5 rounds (unless there's a tie, then winner of the tie-breaking");
+			System.out.println("round) will win!");
 			
 			while (!gameOver){ // for when the whole entire game ends
 				
@@ -86,7 +90,6 @@ public class AssignmentTwo {
 					// ------------Guesser Starts Guessing------------
 					
 					boolean halfRoundOver = false; // to end when one half round is over
-					int i = 0; // to count number of guesses
 					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 					while (!halfRoundOver){
@@ -112,6 +115,7 @@ public class AssignmentTwo {
 							}						
 						}
 						
+						// to end half round if guesser has guessed all characters of phraseMaker's phrase
 						if (correctChars.length() == phrase.length()){
 							if (a == 0){
 								playerTwoScore++;
@@ -126,7 +130,7 @@ public class AssignmentTwo {
 						// ------------Choosing Between Choice (1) or (2)------------
 								
 						System.out.println();
-						System.out.println(playerTwo + ", you have used " + i + " guess" + ((i > 1) || (i == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
+						System.out.println(playerTwo + ", you have used " + guessCount + " guess" + ((guessCount > 1) || (guessCount == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
 						String guessChoice = ""; // for guesser's decision in choice (1) or choice (2)
 						boolean invalidChoice = true; // to check if the entered choice is (1) or (2)
@@ -143,8 +147,7 @@ public class AssignmentTwo {
 						phraseSolution = ""; // the guesser's solution
 						if (guessChoice.equals("1")){ // for choice (1)
 							System.out.println(guesser + ", please enter your solution: ");
-									
-							phraseSolution = "";								
+																				
 							boolean validGuessedSolution = false; // to check if guessed character is a single alphanumeric character
 							while (!validGuessedSolution){
 								validGuessedSolution = true;
@@ -209,7 +212,7 @@ public class AssignmentTwo {
 							*/
 									
 							//boolean validMessageChar = false; // to update encrypted message
-							for (int f = 0; f < guessedCharLen; f++){
+							for (int f = 0; f < GUESSED_CHAR_LENGTH; f++){
 								if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is in the phrase.");
 									if (a == 0){
@@ -228,10 +231,10 @@ public class AssignmentTwo {
 								}
 							} 
 						} // end of choice (2) character guess
-						i++;
-						halfRoundOver = i > MAX_GUESSES-1 || solved;
+						guessCount++;
+						halfRoundOver = guessCount > MAX_GUESSES-1 || solved;
 								
-						if (i == MAX_GUESSES){
+						if (guessCount == MAX_GUESSES){
 							System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
 							String finalSolution = keyboard.nextLine().toUpperCase();
 							if (finalSolution.equals(phrase)){ 
