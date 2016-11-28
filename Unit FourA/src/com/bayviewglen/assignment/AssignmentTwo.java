@@ -193,29 +193,13 @@ public class AssignmentTwo {
 								System.out.println(playerTwo + ", you are unfortunately incorrect."); 
 							}	
 							
-							// Choice (2): character guess	
+						// Choice (2): character guess	
 						} else { 
-							// current one for unused chars
+							// to display unused characters
 							System.out.println("Unused Characters: ");
-							String displayedCharacters = ""; // the displayed unused/guessed characters
+							String displayedCharacters = ""; // the displayed unused and guessed characters
 							System.out.println(characterList);
-					
-							/*
-							System.out.println("Unused Characters: ");
-							String characterList = "A B C D E F G H I J K L M  N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9";
-							int index = characterList.indexOf("A");// do something
-							String unusedCharacters = ""; // the displayed unused/guessed characters
-										
-							for (int d = 0; d < characterList.length(); d++){
-								if (d == index){
-									unusedCharacters += "_ ";
-								} else {
-									unusedCharacters += VALID_CHARACTERS.charAt(index) + " ";
-								}
-							}
-							characterList = unusedCharacters;
-							*/
-												
+									
 							System.out.println(guesser + ", please enter a single character: "); // need to continue this part
 														
 							guessedCharacter = "";								
