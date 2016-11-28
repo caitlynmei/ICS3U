@@ -12,7 +12,7 @@ public class AssignmentTwo {
 		
 		final String VALID_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // notes: indexOf (6 - 7 loops per)
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
-		final int ROUND_LIMIT = 5;
+		final int HALF_ROUND_LIMIT = 10; // maximum number of half rounds unless there's a tie
 		final int MAX_GUESSES = 7; // number of total guesses
 		final int MAX_POINTS_PER_ROUND = 8; // maximum points earned per round
 		final int GUESSED_CHAR_LENGTH = 1; // choice (2): length of guessed character (which has to be 1)
@@ -299,7 +299,11 @@ public class AssignmentTwo {
 					correctCharacter = ""; // same as line above
 										
 				} // end of alternate between players for each round
-				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
+				if ((round > HALF_ROUND_LIMIT) && (playerOneScore == playerTwoScore)){
+					round --;
+				} else {
+					gameOver = (round > HALF_ROUND_LIMIT) && (playerOneScore != playerTwoScore);
+				}
 				
 			} // end of the whole entire game
 		
