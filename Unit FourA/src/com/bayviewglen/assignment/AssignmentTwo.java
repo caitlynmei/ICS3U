@@ -6,7 +6,7 @@ public class AssignmentTwo {
 
 	public static void main(String[] args) {
 		
-		// left to do: 1) keep track of scores 2) show used letters 3) if someone gets it one the first guess 4) already used letters, ask to re-enter
+		// left to do: 1) if guessed all chars before end of 7 guesses 2) show used letters
 		
 		Scanner keyboard = new Scanner (System.in);
 		
@@ -92,6 +92,8 @@ public class AssignmentTwo {
 							} 
 						}
 					}
+					
+					// the displayed characters which the guesser may choose from 
 					String characterList = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9"; 
 
 					// ------------Guesser Starts Guessing------------
@@ -103,14 +105,6 @@ public class AssignmentTwo {
 																		
 						// ------------To Show Encrypted Message------------
 						
-						//int phraseCharLen = 0; // to count how many times a character appears in phraseMaker's phrase
-						/* to count how many times a character appears in phraseMaker's phrase (e.g hiiiiiii)
-						for (int k = 0; k < phrase.length(); k++){
-							if (phrase.indexOf(correctCharacter.charAt(c)) != -1){
-								phraseCharLen++;
-							}
-						}
-						*/
 						// figure this out
 						String codedMessage = "";
 						for (int c = 0; c < phrase.length(); c++){ 
@@ -122,7 +116,22 @@ public class AssignmentTwo {
 								codedMessage += "/ ";
 							}						
 						}
+						
 						System.out.println(codedMessage);
+							
+						/*
+						// to print and update the displayed characters guesser may use
+						int index = 0;
+						index = characterList.indexOf(guessedCharacter);
+						for (int r = 0; r < characterList.length(); r++){
+							if (r == index){
+								displayedCharacters += "_";
+								} else {
+									displayedCharacters += characterList.charAt(r);
+								}
+							}
+						characterList = displayedCharacters;
+						*/
 						
 						/*
 						// to end half round if guesser has guessed all characters of phraseMaker's phrase
@@ -177,9 +186,9 @@ public class AssignmentTwo {
 								System.out.println("Congratulations " + guesser + "! You are correct."); // this doesn't work
 								if (guessCount == 0){ // if guesser gets solution on first try
 									if (a == 0){
-										playerTwoScore += MAX_POINTS_PER_ROUND;
+										playerTwoScore = MAX_POINTS_PER_ROUND;
 									} else {
-										playerOneScore += MAX_POINTS_PER_ROUND;
+										playerOneScore = MAX_POINTS_PER_ROUND;
 									}
 								} else { // not on first try
 									if (a == 0){
@@ -231,8 +240,8 @@ public class AssignmentTwo {
 									}
 								}
 							characterList = displayedCharacters;
-						
-							//boolean validMessageChar = false; // to update encrypted message
+							
+							// to check if guessed character is in message
 							for (int f = 0; f < GUESSED_CHAR_LENGTH; f++){
 								if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is in the phrase.");
@@ -251,12 +260,25 @@ public class AssignmentTwo {
 								}
 								usedChars += guessedCharacter;
 							}
+							
+							// to end half round if guesser has guessed all characters of phraseMaker's phrase
+							if (correctChars.length() == phrase.length()){
+								solved = true;
+								if (a == 0){
+									playerTwoScore += MAX_GUESSES - guessCount-1;
+								} else {
+									playerOneScore += MAX_GUESSES - guessCount-1;
+								}
+							}
+							
 								
 						} // end of choice (2) character guess
-						guessCount++;
-						halfRoundOver = guessCount > MAX_GUESSES-1 || solved;
-								
-						if (guessCount == MAX_GUESSES){
+						
+						guessCount++; // to count number of guesses per half round
+						halfRoundOver = guessCount > MAX_GUESSES-1 || solved; // when a half round is finished
+											
+						
+						if (guessCount == MAX_GUESSES){ // final solution guess given
 							System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
 							String finalSolution = keyboard.nextLine().toUpperCase();
 							if (finalSolution.equals(phrase)){ 
@@ -272,15 +294,7 @@ public class AssignmentTwo {
 							}
 							
 						}
-						
-						/* how to stop previous stored info from being carried on??
-						if (guessCount > MAX_GUESSES){
-							guessCount = 0; // to re-establish the number of guesses used as 0 for new round
-							correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
-							correctCharacter = ""; // same as line above
-						}
-						*/
-											
+																	
 					} // end of one half round
 					round++;
 																					
