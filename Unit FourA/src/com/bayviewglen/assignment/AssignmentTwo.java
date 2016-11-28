@@ -14,9 +14,10 @@ public class AssignmentTwo {
 		final String VALID_CHARACTERS_SPACE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ";
 		final int ROUND_LIMIT = 5;
 		final int MAX_GUESSES = 7; // number of total guesses
+		final int MAX_POINTS_PER_ROUND = 8; // maximum points earned per round
 		final int GUESSED_CHAR_LENGTH = 1; // choice (2): length of guessed character (which has to be 1)
 		String phrase = ""; // the phraseMaker's message
-		String phraseSolution = ""; // choice (1): the guesser's solution 
+		String phraseSolution = ""; // choice (1): the guesser's solution
 		String guessedCharacter = ""; // choice (1): a character that was guessed
 		String usedChars = ""; // stores all characters that have been guessed
 		String correctCharacter = ""; // choice (2): stores 1 correct guess
@@ -118,6 +119,7 @@ public class AssignmentTwo {
 							}						
 						}
 						
+						/*
 						// to end half round if guesser has guessed all characters of phraseMaker's phrase
 						for (int p = 0; p < phrase.length(); p++){
 							if (correctChars.indexOf(phrase.charAt(p)) != -1){
@@ -129,7 +131,8 @@ public class AssignmentTwo {
 								solved = true;
 							}
 						}
-												
+						*/
+						
 						//System.out.println(correctChars); checking, need to figure out how to get repeating chars in too
 						
 						// ------------Choosing Between Choice (1) or (2)------------
@@ -167,27 +170,56 @@ public class AssignmentTwo {
 									
 							if (phraseSolution.equals(phrase)){ 
 								System.out.println("Congratulations " + guesser + "! You are correct."); // this doesn't work
-								if (a == 0){
-									playerTwoScore++;
-								} else {
-									playerOneScore++;
-								}
+								if (guessCount == 0){ // if guesser gets solution on first try
+									if (a == 0){
+										playerTwoScore += MAX_POINTS_PER_ROUND;
+									} else {
+										playerOneScore += MAX_POINTS_PER_ROUND;
+									}
+								} else { // not on first try
+									if (a == 0){
+										playerTwoScore += MAX_GUESSES - guessCount;
+									} else {
+										playerOneScore += MAX_GUESSES - guessCount;
+									}
+								} 
 								solved = true;
-							
 							} else {
 								System.out.println(playerTwo + ", you are unfortunately incorrect."); 
 							}	
 							
 							// Choice (2): character guess	
 						} else { 
-							
+							// current one for unused chars
 							System.out.println("Unused Characters: ");
-							String unusedCharacters = ""; // the displayed unused/guessed characters
-							for (int d = 0; d < VALID_CHARACTERS.length(); d++){
-								unusedCharacters += VALID_CHARACTERS.charAt(d) + " ";
+							String characterList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+							String displayedCharacters = ""; // the displayed unused/guessed characters
+							int index = 0;
+							for (int d = 0; d < characterList.length(); d++){
+								index = characterList.indexOf(d);
+								//if (d == index){
+								if (d == usedChars.indexOf(characterList.charAt(d))){
+									displayedCharacters += "_ ";
+								} else {
+									displayedCharacters += characterList.charAt(d) + " ";
+									//displayedCharacters += characterList.charAt(d) + " ";
+								}
 							}
-							System.out.println(unusedCharacters);
-														
+							characterList = displayedCharacters;
+							//System.out.println(characterList);
+							System.out.println(displayedCharacters);
+							/*
+							for (int c = 0; c < phrase.length(); c++){ 
+								if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
+									System.out.print(correctCharacter + " ");
+								} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
+									System.out.print("_ ");
+								} else {
+									System.out.print("/ ");
+								}						
+							}
+							*/
+							
 							/*
 							System.out.println("Unused Characters: ");
 							String characterList = "A B C D E F G H I J K L M  N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9";
@@ -234,7 +266,7 @@ public class AssignmentTwo {
 									} else {
 										playerOneScore++;
 									}
-									usedChars += guessedCharacter;
+									
 									correctCharacter = guessedCharacter;
 									correctChars += guessedCharacter;
 									//System.out.println(playerTwoScore); just checking
@@ -242,6 +274,7 @@ public class AssignmentTwo {
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
 									usedChars += guessedCharacter;
 								}
+								usedChars += guessedCharacter;
 							}
 								
 						} // end of choice (2) character guess
@@ -255,13 +288,14 @@ public class AssignmentTwo {
 								System.out.println("Congratulations " + guesser + "! You are correct."); 
 								solved = true;
 								if (a == 0){
-									playerTwoScore++;
+									playerTwoScore += 1 + (MAX_GUESSES - guessCount);
 								} else {
-									playerOneScore++;
+									playerOneScore += 1 + (MAX_GUESSES - guessCount);
 								}
 							} else {
 								System.out.println(guesser + ", you are unfortunately incorrect."); 
 							}
+							
 						}
 						
 						/* how to stop previous stored info from being carried on??
@@ -281,6 +315,13 @@ public class AssignmentTwo {
 					System.out.println(playerOne + ": " + playerOneScore);
 					System.out.println(playerTwo + ": " + playerTwoScore);
 					System.out.println();
+					
+					// Re-establishing Storing Strings
+					guessCount = 0;
+					guessedCharacter = "";
+					usedChars = "";
+					correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
+					correctCharacter = ""; // same as line above
 										
 				} // end of 2 half rounds
 				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
