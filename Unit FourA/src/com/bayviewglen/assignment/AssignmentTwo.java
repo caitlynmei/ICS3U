@@ -90,7 +90,8 @@ public class AssignmentTwo {
 							} 
 						}
 					}
-					
+					String characterList = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9"; 
+
 					// ------------Guesser Starts Guessing------------
 					
 					boolean halfRoundOver = false; // to end when one half round is over
@@ -192,22 +193,34 @@ public class AssignmentTwo {
 						} else { 
 							// current one for unused chars
 							System.out.println("Unused Characters: ");
-							String characterList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
+							String displayedCharacters = ""; // the displayed unused/guessed characters
+
+							//String characterList = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9"; 
+							/*
 							String displayedCharacters = ""; // the displayed unused/guessed characters
 							int index = 0;
-							for (int d = 0; d < characterList.length(); d++){
-								index = characterList.indexOf(d);
-								//if (d == index){
-								if (d == usedChars.indexOf(characterList.charAt(d))){
-									displayedCharacters += "_ ";
-								} else {
-									displayedCharacters += characterList.charAt(d) + " ";
-									//displayedCharacters += characterList.charAt(d) + " ";
+							//
+							index = characterList.indexOf(usedChars.charAt(d));
+
+								//for (int r = 0; r < characterList.length(); r++){
+								for (int d = 0; d < usedChars.length(); d++){
+										index = characterList.indexOf(usedChars.charAt(d));
+									//if (d == index){
+									if (characterList.charAt(r) == usedChars.charAt(d)){
+										displayedCharacters += "_";
+									} else {
+										displayedCharacters += characterList.charAt(r);
+										//displayedCharacters += characterList.charAt(d) + " ";
+									}
 								}
-							}
-							characterList = displayedCharacters;
+							//}
+							 * */
+						
+							//if (usedChars.length() == 0)
+							//	displayedCharacters = characterList;
+							//characterList = displayedCharacters;
 							//System.out.println(characterList);
-							System.out.println(displayedCharacters);
+							System.out.println(characterList);
 							/*
 							for (int c = 0; c < phrase.length(); c++){ 
 								if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
@@ -256,7 +269,20 @@ public class AssignmentTwo {
 									} 
 								}
 							}
-								
+							
+							int index = 0;
+							//
+							index = characterList.indexOf(guessedCharacter);
+
+							for (int r = 0; r < characterList.length(); r++){
+								if (r == index){
+									displayedCharacters += "_";
+									} else {
+										displayedCharacters += characterList.charAt(r);
+									}
+								}
+							characterList = displayedCharacters;
+						
 							//boolean validMessageChar = false; // to update encrypted message
 							for (int f = 0; f < GUESSED_CHAR_LENGTH; f++){
 								if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
