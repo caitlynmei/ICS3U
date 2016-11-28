@@ -292,9 +292,9 @@ public class AssignmentTwo {
 					System.out.println();
 					
 					// Re-establishing Storing Strings
-					guessCount = 0;
-					guessedCharacter = "";
-					usedChars = "";
+					guessCount = 0; // to re-establish the number of guesses used as 0 for new round
+					guessedCharacter = ""; // to re-establish the string for storing the current guessed character
+					usedChars = ""; // to re-establish the string for storing the used characters
 					correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
 					correctCharacter = ""; // same as line above
 										
