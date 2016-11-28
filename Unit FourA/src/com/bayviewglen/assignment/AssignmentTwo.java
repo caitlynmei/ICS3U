@@ -58,12 +58,14 @@ public class AssignmentTwo {
 			
 			while (!gameOver){ // for when the whole entire game ends
 				
+				//for (round = 1; round < ROUND_LIMIT; round++){
+				
 				// ------------Assigning Roles to Players------------
 				
 				String phraseMaker = ""; // to assign phrase making role to one player
 				String guesser = ""; // to assign guesser role to one player
 				
-				for (int a = 0; a <= 1; a++){ // for 2 half rounds
+				for (int a = 0; a <= 1; a++){ // to alternate between players for each round
 					if (a == 0){
 						phraseMaker = playerOne; // assigning phraseMaker to a player
 						guesser = playerTwo; // assigning guesser to other player
@@ -109,16 +111,18 @@ public class AssignmentTwo {
 							}
 						}
 						*/
-						
+						// figure this out
+						String codedMessage = "";
 						for (int c = 0; c < phrase.length(); c++){ 
 							if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
-								System.out.print(correctCharacter + " ");
+								codedMessage += correctCharacter;
 							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
-								System.out.print("_ ");
+								codedMessage += "_ ";
 							} else {
-								System.out.print("/ ");
+								codedMessage += "/ ";
 							}						
 						}
+						System.out.println(codedMessage);
 						
 						/*
 						// to end half round if guesser has guessed all characters of phraseMaker's phrase
@@ -139,7 +143,7 @@ public class AssignmentTwo {
 						// ------------Choosing Between Choice (1) or (2)------------
 								
 						System.out.println();
-						System.out.println(playerTwo + ", you have used " + guessCount + " guess" + ((guessCount > 1) || (guessCount == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
+						System.out.println(guesser + ", you have used " + guessCount + " guess" + ((guessCount > 1) || (guessCount == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
 						String guessChoice = ""; // for guesser's decision in choice (1) or choice (2)
 						boolean invalidChoice = true; // to check if the entered choice is (1) or (2)
@@ -194,45 +198,8 @@ public class AssignmentTwo {
 							// current one for unused chars
 							System.out.println("Unused Characters: ");
 							String displayedCharacters = ""; // the displayed unused/guessed characters
-
-							//String characterList = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9"; 
-							/*
-							String displayedCharacters = ""; // the displayed unused/guessed characters
-							int index = 0;
-							//
-							index = characterList.indexOf(usedChars.charAt(d));
-
-								//for (int r = 0; r < characterList.length(); r++){
-								for (int d = 0; d < usedChars.length(); d++){
-										index = characterList.indexOf(usedChars.charAt(d));
-									//if (d == index){
-									if (characterList.charAt(r) == usedChars.charAt(d)){
-										displayedCharacters += "_";
-									} else {
-										displayedCharacters += characterList.charAt(r);
-										//displayedCharacters += characterList.charAt(d) + " ";
-									}
-								}
-							//}
-							 * */
-						
-							//if (usedChars.length() == 0)
-							//	displayedCharacters = characterList;
-							//characterList = displayedCharacters;
-							//System.out.println(characterList);
 							System.out.println(characterList);
-							/*
-							for (int c = 0; c < phrase.length(); c++){ 
-								if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
-									System.out.print(correctCharacter + " ");
-								} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
-									System.out.print("_ ");
-								} else {
-									System.out.print("/ ");
-								}						
-							}
-							*/
-							
+					
 							/*
 							System.out.println("Unused Characters: ");
 							String characterList = "A B C D E F G H I J K L M  N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9";
@@ -269,11 +236,9 @@ public class AssignmentTwo {
 									} 
 								}
 							}
-							
+							// to print and update the displayed characters guesser may use
 							int index = 0;
-							//
 							index = characterList.indexOf(guessedCharacter);
-
 							for (int r = 0; r < characterList.length(); r++){
 								if (r == index){
 									displayedCharacters += "_";
@@ -349,7 +314,7 @@ public class AssignmentTwo {
 					correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
 					correctCharacter = ""; // same as line above
 										
-				} // end of 2 half rounds
+				} // end of alternate between players for each round
 				gameOver = (round > ROUND_LIMIT) && (playerOneScore != playerTwoScore);
 				
 			} // end of the whole entire game
