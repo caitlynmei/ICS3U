@@ -25,7 +25,7 @@ public class AssignmentTwo {
 		int round = 1;			// keeps track of which round we are currently on - a round has both players taking a turn (phrase and guessing)
 		int guessCount = 0; // to count number of guesses
 		boolean gameOver = false; // for when entire game ends
-		
+				
 		System.out.println("------------HANGMAN------------");
 		
 		// ------------Getting Player Names------------
@@ -108,8 +108,9 @@ public class AssignmentTwo {
 						// figure this out
 						String codedMessage = "";
 						for (int c = 0; c < phrase.length(); c++){ 
-							if (correctCharacter.indexOf(phrase.charAt(c)) != -1){
-								codedMessage += correctCharacter;
+							if (usedChars.indexOf(phrase.charAt(c)) != -1){
+								//*codedMessage += phrase.charAt(c);
+								codedMessage += usedChars.charAt(usedChars.indexOf(phrase.charAt(c)));
 							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
 								codedMessage += "_ ";
 							} else {
@@ -118,6 +119,25 @@ public class AssignmentTwo {
 						}
 						
 						System.out.println(codedMessage);
+							
+						// to end half round if guesser has guessed all characters of phraseMaker's phrase
+						if (codedMessage.indexOf("_") == -1 && codedMessage.indexOf("/") == -1){
+							//System.out.println(codedMessage);
+							if (a == 0){
+								playerTwoScore += MAX_GUESSES - guessCount-1;
+							} else {
+								playerOneScore += MAX_GUESSES - guessCount-1;
+							}
+						}
+						
+						
+						/*
+						for (int h = 0; h < phrase.length(); h++){
+							if (phrase.substring(h, h+1).equals(guessChoice)){
+								codedMessage = codedMessage.substring(0, h*2) + guessChoice + codedMessage.substring(h*2 + 1);
+							}
+						}
+						*/
 							
 						/*
 						// to print and update the displayed characters guesser may use
@@ -235,10 +255,10 @@ public class AssignmentTwo {
 							for (int r = 0; r < characterList.length(); r++){
 								if (r == index){
 									displayedCharacters += "_";
-									} else {
-										displayedCharacters += characterList.charAt(r);
-									}
+								} else {
+									displayedCharacters += characterList.charAt(r);
 								}
+							}
 							characterList = displayedCharacters;
 							
 							// to check if guessed character is in message
@@ -256,22 +276,12 @@ public class AssignmentTwo {
 									//System.out.println(playerTwoScore); just checking
 								} else {
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
-									usedChars += guessedCharacter;
+									//usedChars += guessedCharacter;
 								}
 								usedChars += guessedCharacter;
 							}
 							
-							// to end half round if guesser has guessed all characters of phraseMaker's phrase
-							if (correctChars.length() == phrase.length()){
-								solved = true;
-								if (a == 0){
-									playerTwoScore += MAX_GUESSES - guessCount-1;
-								} else {
-									playerOneScore += MAX_GUESSES - guessCount-1;
-								}
-							}
-							
-								
+													
 						} // end of choice (2) character guess
 						
 						guessCount++; // to count number of guesses per half round
@@ -311,6 +321,7 @@ public class AssignmentTwo {
 					usedChars = ""; // to re-establish the string for storing the used characters
 					correctChars = ""; // to re-establish the strings for storing the correct guessed characters as empty for new round
 					correctCharacter = ""; // same as line above
+					//counterCorrect = 0;
 										
 				} // end of alternate between players for each round
 				if ((round > HALF_ROUND_LIMIT) && (playerOneScore == playerTwoScore)){
