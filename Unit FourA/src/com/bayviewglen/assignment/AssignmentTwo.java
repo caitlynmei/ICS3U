@@ -120,15 +120,19 @@ public class AssignmentTwo {
 							}
 						}
 						
+						System.out.println(encryptedMessage);
+									
+						/*
 						for (int b = 0; b < phrase.length(); b++){ 
 							if (usedChars.indexOf(phrase.charAt(b)) != -1){
 								if (encryptedMessage.indexOf("_") == -1 && encryptedMessage.indexOf("/") == -1 && encryptedMessage.indexOf(" ") == -1){
 									solved = true;
 								}
+								break;
 							}						
 						}
 						System.out.println(encryptedMessage);
-						
+						*/
 						/*
 						for (int h = 0; h < phrase.length(); h++){
 							if (phrase.substring(h, h+1).equals(guessChoice)){
@@ -136,27 +140,9 @@ public class AssignmentTwo {
 							}
 						}
 						*/
-							
-						/*
-						// to print and update the displayed characters guesser may use
-						int index = 0;
-						index = characterList.indexOf(guessedCharacter);
-						for (int r = 0; r < characterList.length(); r++){
-							if (r == index){
-								displayedCharacters += "_";
-								} else {
-									displayedCharacters += characterList.charAt(r);
-								}
-							}
-						characterList = displayedCharacters;
-						*/
-						
-											
-						//System.out.println(correctChars); checking, need to figure out how to get repeating chars in too
-						
+					
 						// ------------Choosing Between Choice (1) or (2)------------
 								
-						System.out.println();
 						System.out.println(guesser + ", you have used " + guessCount + " guess" + ((guessCount > 1) || (guessCount == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
 						String guessChoice = ""; // for guesser's decision in choice (1) or choice (2)
@@ -270,7 +256,9 @@ public class AssignmentTwo {
 																				
 						} // end of choice (2) character guess
 						guessCount++; // to count number of guesses per half round
-						halfRoundOver = guessCount > MAX_GUESSES-1 || solved; // when a half round is finished
+						if (guessCount > MAX_GUESSES-1 || solved){ // when a half round is finished
+							halfRoundOver = true;
+						}
 					
 						/*
 						// to end half round if guesser has guessed all characters of phraseMaker's phrase
