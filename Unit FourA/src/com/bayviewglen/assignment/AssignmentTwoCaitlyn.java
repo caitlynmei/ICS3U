@@ -6,7 +6,7 @@ public class AssignmentTwoCaitlyn {
 
 	public static void main(String[] args) {
 		
-		// left to do: 1) if guessed all chars before end of 7 guesses 2) show used letters
+		// left to do: 1) if guessed all chars before end of 7 guesses 2) fix scores for that one accordingly
 		
 		Scanner keyboard = new Scanner (System.in);
 		
@@ -20,6 +20,7 @@ public class AssignmentTwoCaitlyn {
 		String phraseSolution = ""; // choice (1): the guesser's solution
 		String guessedCharacter = ""; // choice (1): a character that was guessed
 		String usedChars = ""; // stores all characters that have been guessed
+		String encryptedMessage = ""; // string that stores the encrypted message phraseMaker creates
 		String correctCharacter = ""; // choice (2): stores 1 correct guess
 		String correctChars = ""; // choice (2): stores all correct guesses
 		int round = 1;			// keeps track of which round we are currently on - a round has both players taking a turn (phrase and guessing)
@@ -105,33 +106,33 @@ public class AssignmentTwoCaitlyn {
 																		
 						// ------------To Show Encrypted Message------------
 						
-						// figure this out
-						String codedMessage = "";
-						for (int c = 0; c < phrase.length(); c++){ 
-							if (usedChars.indexOf(phrase.charAt(c)) != -1){
-								//*codedMessage += phrase.charAt(c);
-								codedMessage += usedChars.charAt(usedChars.indexOf(phrase.charAt(c)));
-							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(c)) != -1){
-								codedMessage += "_ ";
+						
+						// to update and show encrypted message
+						encryptedMessage = "";
+						for (int b = 0; b < phrase.length(); b++){ 
+							if (usedChars.indexOf(phrase.charAt(b)) != -1){
+								//*codedMessage += phrase.charAt(b); //same as below, just simpler
+								encryptedMessage += usedChars.charAt(usedChars.indexOf(phrase.charAt(b)));
+							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(b)) != -1){
+								encryptedMessage += "_ ";
 							} else {
-								codedMessage += "/ ";
+								encryptedMessage += "/ ";
+							}
+						}
+						
+						System.out.println(encryptedMessage);
+									
+						/*
+						for (int b = 0; b < phrase.length(); b++){ 
+							if (usedChars.indexOf(phrase.charAt(b)) != -1){
+								if (encryptedMessage.indexOf("_") == -1 && encryptedMessage.indexOf("/") == -1 && encryptedMessage.indexOf(" ") == -1){
+									solved = true;
+								}
+								break;
 							}						
 						}
-						
-						System.out.println(codedMessage);
-							
-						// to end half round if guesser has guessed all characters of phraseMaker's phrase
-						if (codedMessage.indexOf("_") == -1 && codedMessage.indexOf("/") == -1){
-							//System.out.println(codedMessage);
-							if (a == 0){
-								playerTwoScore += MAX_GUESSES - guessCount-1;
-							} else {
-								playerOneScore += MAX_GUESSES - guessCount-1;
-							}
-							
-						}
-						
-						
+						System.out.println(encryptedMessage);
+						*/
 						/*
 						for (int h = 0; h < phrase.length(); h++){
 							if (phrase.substring(h, h+1).equals(guessChoice)){
@@ -139,41 +140,9 @@ public class AssignmentTwoCaitlyn {
 							}
 						}
 						*/
-							
-						/*
-						// to print and update the displayed characters guesser may use
-						int index = 0;
-						index = characterList.indexOf(guessedCharacter);
-						for (int r = 0; r < characterList.length(); r++){
-							if (r == index){
-								displayedCharacters += "_";
-								} else {
-									displayedCharacters += characterList.charAt(r);
-								}
-							}
-						characterList = displayedCharacters;
-						*/
-						
-						/*
-						// to end half round if guesser has guessed all characters of phraseMaker's phrase
-						for (int p = 0; p < phrase.length(); p++){
-							if (correctChars.indexOf(phrase.charAt(p)) != -1){
-								if (a == 0){
-									playerTwoScore++;
-								} else {
-									playerOneScore++;
-								}
-								solved = true;
-							}
-						}
-						*/
-						
-						//System.out.println(correctChars); checking, need to figure out how to get repeating chars in too
-						
+					
 						// ------------Choosing Between Choice (1) or (2)------------
-						if(!solved){
-												
-						System.out.println();
+								
 						System.out.println(guesser + ", you have used " + guessCount + " guess" + ((guessCount > 1) || (guessCount == 0) ? "es" : "") + ", would you like to (1) solve or (2) guess a character: ");
 													
 						String guessChoice = ""; // for guesser's decision in choice (1) or choice (2)
@@ -196,8 +165,8 @@ public class AssignmentTwoCaitlyn {
 							while (!validGuessedSolution){
 								validGuessedSolution = true;
 								phraseSolution = keyboard.nextLine().toUpperCase(); // changing guess of character to upper case
-								for (int e = 0; e < guessedCharacter.length() && validGuessedSolution; e++){
-									if (VALID_CHARACTERS_SPACE.indexOf(phraseSolution.charAt(e)) == -1){ 
+								for (int c = 0; c < guessedCharacter.length() && validGuessedSolution; c++){
+									if (VALID_CHARACTERS_SPACE.indexOf(phraseSolution.charAt(c)) == -1){ 
 										validGuessedSolution = false; 
 										System.out.println(guesser + ", please enter a valid phrase with only alphanumeric characters (you can use spaces): ");
 									} 
@@ -205,14 +174,14 @@ public class AssignmentTwoCaitlyn {
 							}
 									
 							if (phraseSolution.equals(phrase)){ 
-								System.out.println("Congratulations " + guesser + "! You are correct."); 
+								System.out.println("Congratulations " + guesser + "! You are correct."); // this doesn't work
 								if (guessCount == 0){ // if guesser gets solution on first try
 									if (a == 0){
-										playerTwoScore = MAX_POINTS_PER_ROUND;
+										playerTwoScore += MAX_POINTS_PER_ROUND;
 									} else {
-										playerOneScore = MAX_POINTS_PER_ROUND;
+										playerOneScore += MAX_POINTS_PER_ROUND;
 									}
-								} else { // not on first try
+								} else { // if guesser don't get solution on first try
 									if (a == 0){
 										playerTwoScore += MAX_GUESSES - guessCount;
 									} else {
@@ -238,8 +207,8 @@ public class AssignmentTwoCaitlyn {
 							while (!validGuessedCharacter){
 								validGuessedCharacter = true;
 								guessedCharacter = keyboard.nextLine().toUpperCase(); // changing guess of character to upper case
-								for (int e = 0; e < guessedCharacter.length() && validGuessedCharacter; e++){
-									if (guessedCharacter.length() != 1 && VALID_CHARACTERS.indexOf(guessedCharacter.charAt(e)) == -1){ 
+								for (int c = 0; c < guessedCharacter.length() && validGuessedCharacter; c++){
+									if (guessedCharacter.length() != 1 && VALID_CHARACTERS.indexOf(guessedCharacter.charAt(c)) == -1){ 
 										validGuessedCharacter = false; 
 										System.out.println(guesser + ", please enter a single valid alphanumberic character (don't use spaces):");
 									} else if (guessedCharacter.length() != 1){ 
@@ -251,21 +220,22 @@ public class AssignmentTwoCaitlyn {
 									} 
 								}
 							}
+							
 							// to print and update the displayed characters guesser may use
 							int index = 0;
 							index = characterList.indexOf(guessedCharacter);
-							for (int r = 0; r < characterList.length(); r++){
-								if (r == index){
+							for (int c = 0; c < characterList.length(); c++){
+								if (c == index){
 									displayedCharacters += "_";
 								} else {
-									displayedCharacters += characterList.charAt(r);
+									displayedCharacters += characterList.charAt(c);
 								}
 							}
 							characterList = displayedCharacters;
 							
 							// to check if guessed character is in message
-							for (int f = 0; f < GUESSED_CHAR_LENGTH; f++){
-								if (phrase.indexOf(guessedCharacter.charAt(f)) != -1){
+							for (int c = 0; c < GUESSED_CHAR_LENGTH; c++){
+								if (phrase.indexOf(guessedCharacter.charAt(c)) != -1){
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is in the phrase.");
 									if (a == 0){
 										playerTwoScore++;
@@ -278,18 +248,31 @@ public class AssignmentTwoCaitlyn {
 									//System.out.println(playerTwoScore); just checking
 								} else {
 									System.out.println(guesser + ", the character \'" + guessedCharacter + "\' is not in the phrase.");
-									//usedChars += guessedCharacter;
 								}
 								usedChars += guessedCharacter;
 							}
 							
-													
+														
+																				
 						} // end of choice (2) character guess
-						
 						guessCount++; // to count number of guesses per half round
-						halfRoundOver = guessCount > MAX_GUESSES-1 || solved; // when a half round is finished
-											
-						
+						if (guessCount > MAX_GUESSES-1 || solved){ // when a half round is finished
+							halfRoundOver = true;
+						}
+					
+						/*
+						// to end half round if guesser has guessed all characters of phraseMaker's phrase
+						if (encryptedMessage.indexOf("_") == -1 && encryptedMessage.indexOf("/") == -1 && encryptedMessage.indexOf(" ") == -1){
+							System.out.println("Testing " + encryptedMessage);
+							System.out.println("Testing " + guessCount);
+							solved = true;
+							if (a == 0){
+								playerTwoScore += MAX_GUESSES - guessCount;
+							} else {
+								playerOneScore += MAX_GUESSES - guessCount;
+							}
+						}
+						*/
 						if (guessCount == MAX_GUESSES){ // final solution guess given
 							System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
 							String finalSolution = keyboard.nextLine().toUpperCase();
@@ -304,17 +287,7 @@ public class AssignmentTwoCaitlyn {
 							} else {
 								System.out.println(guesser + ", you are unfortunately incorrect."); 
 							}
-							
-						}else{
-							System.out.println("\n\n");
-							System.out.println("Current Scores: ");
-							System.out.println("---------------");
-							System.out.println(playerOne + ": " + playerOneScore);
-							System.out.println(playerTwo + ": " + playerTwoScore);
-							System.out.println();
-							
 						}
-																	
 					} // end of one half round
 					round++;
 																					
@@ -324,7 +297,7 @@ public class AssignmentTwoCaitlyn {
 					System.out.println(playerOne + ": " + playerOneScore);
 					System.out.println(playerTwo + ": " + playerTwoScore);
 					System.out.println();
-					}
+					
 					// Re-establishing Storing Strings
 					guessCount = 0; // to re-establish the number of guesses used as 0 for new round
 					guessedCharacter = ""; // to re-establish the string for storing the current guessed character
@@ -351,6 +324,5 @@ public class AssignmentTwoCaitlyn {
 		System.out.println("Game is now over. Thanks for playing! :)");
 		
 		keyboard.close();
-		
 	}
 }
