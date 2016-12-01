@@ -232,19 +232,19 @@ public class AssignmentTwo {
 					} // end of one half round 
 					round++;
 					
+					// ------------To Update and Show Encrypted Message One Last Time------------
 					if (guessCount == MAX_GUESSES){ // final solution guess given
 						encryptedMessage = "";
 						for (int b = 0; b < phrase.length(); b++){ 
 							if (usedChars.indexOf(phrase.charAt(b)) != -1){
 								encryptedMessage += usedChars.charAt(usedChars.indexOf(phrase.charAt(b))) + " ";
-								//codedMessage += phrase.charAt(b); // simpler version of above line
 							} else if (VALID_CHARACTERS.indexOf(phrase.charAt(b)) != -1){
 								encryptedMessage += "_ ";
 							} else {
 								encryptedMessage += "/ ";
 							}
 						}
-						
+						// ------------To Check if Final Solution is Correct------------
 						System.out.println(encryptedMessage);
 						System.out.println(guesser + ", you have used up your guesses. Please enter your solution: ");
 						String finalSolution = keyboard.nextLine().toUpperCase();
@@ -260,7 +260,7 @@ public class AssignmentTwo {
 							System.out.println(guesser + ", good try but you are unfortunately incorrect. " + phraseMaker + " entered \"" + phrase + "\".");
 						}
 					}
-					
+					// ------------Scores------------
 					System.out.println("\n\n");
 					System.out.println("Current Scores: ");
 					System.out.println("---------------");
