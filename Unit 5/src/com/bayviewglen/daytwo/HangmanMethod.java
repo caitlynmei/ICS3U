@@ -182,7 +182,7 @@ public class HangmanMethod {
 							while (!validGuessedCharacter){
 								validGuessedCharacter = true;
 								guessedCharacter = keyboard.nextLine().toUpperCase(); // changing guess of character to upper case
-								for (int c = 0; c < guessedCharacter.length() && validGuessedCharacter; c++){
+					 			for (int c = 0; c < guessedCharacter.length() && validGuessedCharacter; c++){
 									if (guessedCharacter.length() != 1 && VALID_CHARACTERS.indexOf(guessedCharacter.charAt(c)) == -1){ 
 										validGuessedCharacter = false; 
 										System.out.println(guesser + ", please enter a single valid alphanumberic character (don't use spaces):");

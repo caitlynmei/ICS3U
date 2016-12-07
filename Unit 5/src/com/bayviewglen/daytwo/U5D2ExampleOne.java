@@ -2,7 +2,7 @@ package com.bayviewglen.daytwo;
 
 import java.util.Scanner;
 
-public class ExampleOne {
+public class U5D2ExampleOne {
 
 	public static void main(String[] args) {
 		//int x = 25;

@@ -4,6 +4,10 @@ public class HomeworkOne {
 
 	public static void main(String[] args) {
 	
+		System.out.print("h");
+		System.out.println("i");
+		
+		
 		for (int i=10; i<=50; i++){
 			System.out.printf("%d:%8.4f\n",i, cubedRoot(i));
 		}
