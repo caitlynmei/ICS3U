@@ -95,7 +95,7 @@ public class HangmanMethod {
 					// ------------Guesser Starts Guessing------------
 					
 					boolean halfRoundOver = false; // to end when one half round is over
-					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n");
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 					while (!halfRoundOver){
 																		

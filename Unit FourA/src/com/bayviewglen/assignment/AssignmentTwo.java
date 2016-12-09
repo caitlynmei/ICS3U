@@ -95,7 +95,7 @@ public class AssignmentTwo {
 					// ------------Guesser Starts Guessing------------
 					
 					boolean halfRoundOver = false; // to end when one half round is over
-					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nn\n\n\n\n\n\n\n");
+					System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
 					while (!halfRoundOver){
 																		
@@ -165,7 +165,7 @@ public class AssignmentTwo {
 								} 
 								solved = true;
 							} else {
-								System.out.println(playerTwo + ", you are unfortunately incorrect."); 
+								System.out.println(guesser + ", you are unfortunately incorrect."); 
 							}	
 							
 						// Choice (2): character guess	
