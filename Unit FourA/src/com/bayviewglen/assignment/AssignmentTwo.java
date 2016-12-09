@@ -156,6 +156,12 @@ public class AssignmentTwo {
 									} else {
 										playerOneScore += MAX_POINTS_PER_ROUND;
 									}
+								} else if (guessCount == 6){
+									if (a == 0){
+										playerTwoScore += MAX_GUESSES - guessCount;
+									} else {
+										playerOneScore += MAX_GUESSES - guessCount;
+									}
 								} else { // if guesser don't get solution on first try
 									if (a == 0){
 										playerTwoScore += MAX_GUESSES - guessCount;
@@ -233,7 +239,7 @@ public class AssignmentTwo {
 					round++;
 					
 					// ------------To Update and Show Encrypted Message One Last Time------------
-					if (guessCount == MAX_GUESSES){ // final solution guess given
+					if (guessCount == MAX_GUESSES && !solved){ // final solution guess given
 						encryptedMessage = "";
 						for (int b = 0; b < phrase.length(); b++){ 
 							if (usedChars.indexOf(phrase.charAt(b)) != -1){
