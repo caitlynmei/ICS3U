@@ -6,18 +6,23 @@ public class PartiallyFilledArrayExample {
 	static int howMany = 0;
 	
 	public static void main(String[] args) {
+		
 		display();
+		
+		//A
 		add(6);
 		add(16);
 		add(63);
 		add(23);
 		add(-61);
 		
+		//B
 		display();
 		
 		deleteAtIndex(2);
 		display();
 		
+		//C
 		deleteAtIndex(2);
 		display();
 		
@@ -27,12 +32,13 @@ public class PartiallyFilledArrayExample {
 		insert(-76, 1);
 		display();
 		
-		// D
+		//D
 		deleteAtIndexOrdered(0);
 		display();
 			
 	}
 	
+	//D
 	private static void deleteAtIndexOrdered(int index) {
 		for (int i=index; i<howMany-1; i++){
 			data[i] = data[i+1];
@@ -42,7 +48,7 @@ public class PartiallyFilledArrayExample {
 		
 	}
 
-	// C
+	//C
 	private static void insert(int value, int index) {
 		for (int i = howMany; i > index; i--){
 			data[i] = data[i-1];
@@ -53,14 +59,17 @@ public class PartiallyFilledArrayExample {
 		
 	}
 
+	//B
 	private static void deleteAtIndex(int index) {
 		data[index] = data[--howMany];		
 	}
 
+	//A
 	private static void add(int value) {
 		data[howMany++] = value;		
 	}
 
+	//display
 	private static void display() {
 		System.out.println("The partially filled array with " + howMany + " elements: ");
 		for (int i=0; i<howMany; i++){
