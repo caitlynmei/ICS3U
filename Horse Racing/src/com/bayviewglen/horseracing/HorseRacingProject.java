@@ -192,6 +192,23 @@ public class HorseRacingProject {
 		return players;
 		
 	}
+
+// 
+	public int getvalidInput(int min, int max, Scanner keyboard){ // pass in range (0, wallet)
+		boolean isValid = false;
+		int x = 0;
+		while(!isValid){
+			try{
+				x = Integer.parseInt(keyboard.nextLine());
+				if (x >= min && x <= max) 
+					isValid = true;
+			} catch(Exception ex){
+		
+			}
+		}
+		
+		return x;
+	}
 	
 	
 }
