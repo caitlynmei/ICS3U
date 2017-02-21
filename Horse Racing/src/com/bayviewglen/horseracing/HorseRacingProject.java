@@ -13,7 +13,7 @@ public class HorseRacingProject {
 		
 		introMessage();
 		String[] horses = getHorses();
-		getPlayers();
+		String[] players = getPlayers();
 		String[] playerNames = getPlayerNames(players);
 		int[] playerWallets = getPlayerWallets();
 		
