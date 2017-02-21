@@ -15,7 +15,7 @@ public class HorseRacingProject {
 		String[] horses = getHorses();
 		String[] players = getPlayers();
 		String[] playerNames = getPlayerNames(players);
-		int[] playerWallets = getPlayerWallets();
+		int[] playerWallets = getPlayerWallets(players);
 		
 				
 		// playerNames array
@@ -83,6 +83,8 @@ public class HorseRacingProject {
 		// TODO Auto-generated method stub
 		
 	}
+
+// ---------------- startRace Method --------------------------
 	
 	public static int startRace(int[] horsesInRace) {
 		// TODO Auto-generated method stub
@@ -94,19 +96,24 @@ public class HorseRacingProject {
 		return null;
 	}
 
+// ------------------ getHorsesInRace (selecting horses to compete in the race -----------
+	
 	public static int[] getHorsesInRace(String[] horses) {
 		int numHorsesInRace = 0;
 		int minNumHorsesInRace = 5;
 		int maxNumHorsesInRace = 8;
+		int horsesLength = horses.length;
 		
 		numHorsesInRace = (int)(Math.random() * (maxNumHorsesInRace - minNumHorsesInRace) + minNumHorsesInRace);
 		
-		String[] horsesInRace = new String[numHorsesInRace];
+		int[] horsesInRace = new int[numHorsesInRace]; // holds indices of chosen horses in horse array
 		
 		for (int i=0; i<numHorsesInRace; i++){
-			horsesInRace[i] = horses[(int)(Math.random() * horses.length)+1];
+			horsesInRace[i] = (int)((Math.random() * horsesLength) + 1);
 		}
-			
+		
+		System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
+		
 		return horsesInRace; // ***** Question: Why won't it take it in? 
 							 // ***** Answer: Because indexes are ints silly. Not String. :D
 								
@@ -114,81 +121,7 @@ public class HorseRacingProject {
 		// how to get horse name: horses[horsesInRace[0]]
 	}
 
-	public static int[] getPlayerWallets() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public static String[] getPlayerNames(String[] players) {
-		String[] playerNames = new String[players.length];
-		
-		for (int i=0; i<players.length; i++){
-			int j;
-			for (j=0; j<players[i].length(); j++){
-				char currentChar = players[i].charAt(j);
-				if (currentChar >= '0' && currentChar <= '9')
-					break;
-			}
-			playerNames[i] = players[i].substring(0, j);
-		}
-		
-		System.out.println("playerNames" + Arrays.toString(playerNames));
-		
-		return playerNames;
-		// **** Question: why was there nothing inputed in? Why return null? Why doesn't it take it in above?
-		
-	}
-
-/* ---- don't need -----
-	
-	public static String[] horsesSelection(String[] horses, int numSelectedHorses){
-		
-		String[] selectedHorses = new String[numSelectedHorses];
-		
-		for (int i=0; i<numSelectedHorses; i++){
-			selectedHorses[i] = horses[(int)(Math.random()*horses.length)+1];
-		}
-			
-		return selectedHorses;
-		
-	}
-*/ 
-	
-// ---------- checks if horse is already in the race ---------
-	// sequential search
-	public static boolean alreadyInRace(int horse, int[] horsesInRace){
-		
-		for (int i = 0; i < horsesInRace.length; i++){
-			if (horsesInRace[i] == horse){
-				return true;
-			}
-		}
-			
-		return false;
-	}
-	
-// ----------------- getHorses Method -----------------
-	public static String[] getHorses() {
-		String[] horses = null;
-		try {
-			Scanner keyboard = new Scanner(new File("Input/horses.dat"));
-			int numHorses = Integer.parseInt(keyboard.nextLine()); // take string and turn it into int
-			horses = new String[numHorses];
-			
-			for (int i = 0; i<numHorses; i++){
-				horses[i] = keyboard.nextLine();
-			}
-			
-			
-		} catch (FileNotFoundException e) { // in case file isn't there
-			e.printStackTrace(); 
-		}
-		
-		// System.out.println("here " + Arrays.toString(horses));
-		
-		return horses;
-	}
-	
 // -------------------- getPlayers Method ---------------------------
 	
 	public static String[] getPlayers(){
@@ -212,7 +145,86 @@ public class HorseRacingProject {
 		
 	}
 
-// 
+// ----------------- getHorses Method -----------------
+	
+	public static String[] getHorses() {
+		String[] horses = null;
+		try {
+			Scanner keyboard = new Scanner(new File("Input/horses.dat"));
+			int numHorses = Integer.parseInt(keyboard.nextLine()); // take string and turn it into int
+			horses = new String[numHorses];
+			
+			for (int i = 0; i<numHorses; i++){
+				horses[i] = keyboard.nextLine();
+			}
+				
+		} catch (FileNotFoundException e) { // in case file isn't there
+			e.printStackTrace(); 
+		}
+			
+		// System.out.println("here " + Arrays.toString(horses));
+		
+		return horses;
+	}
+
+
+	// ---------------- getPlayerNames -------------------------
+		
+		public static String[] getPlayerNames(String[] players) {
+			String[] playerNames = new String[players.length];
+			
+			for (int i=0; i<players.length; i++){
+				int j;
+				for (j=0; j<players[i].length(); j++){
+					char currentChar = players[i].charAt(j);
+					if (currentChar >= '0' && currentChar <= '9')
+						break;
+				}
+				playerNames[i] = players[i].substring(0, j-1);
+			}
+			
+			//System.out.println("playerNames" + Arrays.toString(playerNames));
+			
+			return playerNames;
+			
+		}
+		
+		// ------------------ getPlayersWallets ---------------- 
+		
+		public static int[] getPlayerWallets(String[] players) {
+			int[] playerWallets = new int[players.length];	
+			
+			for (int i=0; i<players.length; i++){
+				int j;
+				for (j=0; j<players[i].length(); j++){
+					char currentChar = players[i].charAt(j);
+					if (currentChar >= '0' && currentChar <= '9')
+						break;
+				}
+				playerWallets[i] = Integer.parseInt(players[i].substring(j));
+			}
+			
+			//System.out.println(Arrays.toString(playerWallets));
+			
+			return playerWallets;
+		}
+
+	
+// ---------- checks if horse is already in the race ---------
+	// sequential search
+	
+	public static boolean alreadyInRace(int horse, int[] horsesInRace){
+			
+		for (int i = 0; i < horsesInRace.length; i++){
+			if (horsesInRace[i] == horse){
+				return true;
+			}
+		}
+				
+		return false;
+	}
+		
+// ---- checks if invalid input ----------
 	public int getvalidInput(int min, int max, Scanner keyboard){ // pass in range (0, wallet)
 		boolean isValid = false;
 		int x = 0;
