@@ -108,6 +108,7 @@ public class HorseRacingProject {
 		}
 			
 		return horsesInRace; // ***** Question: Why won't it take it in? 
+							 // ***** Answer: Because indexes are ints silly. Not String. :D
 								
 		// randomizer
 		// how to get horse name: horses[horsesInRace[0]]
