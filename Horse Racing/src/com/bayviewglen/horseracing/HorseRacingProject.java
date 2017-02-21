@@ -2,6 +2,7 @@ package com.bayviewglen.horseracing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class HorseRacingProject {
@@ -12,9 +13,11 @@ public class HorseRacingProject {
 		
 		introMessage();
 		String[] horses = getHorses();
-		String[] playerNames = getPlayerNames();
+		getPlayers();
+		String[] playerNames = getPlayerNames(players);
 		int[] playerWallets = getPlayerWallets();
 		
+				
 		// playerNames array
 		// playerWallets array
 		
@@ -28,49 +31,36 @@ public class HorseRacingProject {
 		
 		updatePlayerData(playerNames, playerWallets);
 		closingMessage();
-		
-		/* first attempt
-		String[] horsesInRace = {""};
 	
-		System.out.println("Howdy! Please enter the amount of horses you would like in this race: ");
-		int numSelectedHorses = keyboard.nextInt();
-		
-		boolean validNumHorses = false;
-		while (!validNumHorses){
-			validNumHorses = true;
-			if (numSelectedHorses < 5 || numSelectedHorses > 8){
-				validNumHorses = false;
-				System.out.println("You need a different amount of horses. Please enter an amount between 5 - 8 horses: ");
-			}
-		}
-				
-		System.out.println("Cool! So y'all will be betting on " + numSelectedHorses + " in this race.");
-		
-		horsesSelection(horses, numSelectedHorses); // making array for randomly selected horses in race
-		*/
-	}
-
-	public static void closingMessage() {
-		System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
-		System.out.println("Thanks for playing!! ");
-		
 	}
 
 	public static void introMessage() {
 		System.out.println("Howdy everyone! Who's ready for the horse race and some betting?");
-		
-	}
-
-	public static void updatePlayerData(String[] playerNames, int[] playerWallets) {
-		// TODO Auto-generated method stub
+		System.out.println("Let's start!!");
 		
 	}
 
 	public static boolean promptForGameOver() {
-		// TODO Auto-generated method stub
+		//System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
+		System.out.println("Would you like to continue playing another round? ");
+		System.out.println("If yes, please enter \"1\". If no, please enter \"2\". ");
+		
+		Scanner keyboard = null; //check
+		int userPrompt = keyboard.nextInt();
+		
+		// catch if user enters int other than 1 or 2
+		
+		if (userPrompt == 1){
+			return true;
+		} else if (userPrompt == 2){
+			return false;
+		}
+		
 		return false;
 	}
 
+// ----------------- doRace Method ----------------------
+	
 	public static void doRace(String[] horses, String[] playerNames, int[] playerWallets) {
 		// horsesInRace contains the index of the horses from the master horse array		
 		int[] horsesInRace = getHorsesInRace(horses);
@@ -87,6 +77,13 @@ public class HorseRacingProject {
 		
 	}
 
+// -------------- updatePlayerData Method --------------------
+	
+	public static void updatePlayerData(String[] playerNames, int[] playerWallets) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	public static int startRace(int[] horsesInRace) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -101,6 +98,7 @@ public class HorseRacingProject {
 		int numHorsesInRace = 0;
 		int minNumHorsesInRace = 5;
 		int maxNumHorsesInRace = 8;
+		
 		numHorsesInRace = (int)(Math.random() * (maxNumHorsesInRace - minNumHorsesInRace) + minNumHorsesInRace);
 		
 		String[] horsesInRace = new String[numHorsesInRace];
@@ -109,7 +107,7 @@ public class HorseRacingProject {
 			horsesInRace[i] = horses[(int)(Math.random() * horses.length)+1];
 		}
 			
-		return horsesInRace;
+		return horsesInRace; // ***** Question: Why won't it take it in? 
 								
 		// randomizer
 		// how to get horse name: horses[horsesInRace[0]]
@@ -120,12 +118,27 @@ public class HorseRacingProject {
 		return null;
 	}
 
-	public static String[] getPlayerNames() {
-		// TODO Auto-generated method stub
-		return null;
+	public static String[] getPlayerNames(String[] players) {
+		String[] playerNames = new String[players.length];
+		
+		for (int i=0; i<players.length; i++){
+			int j;
+			for (j=0; j<players[i].length(); j++){
+				char currentChar = players[i].charAt(j);
+				if (currentChar >= '0' && currentChar <= '9')
+					break;
+			}
+			playerNames[i] = players[i].substring(0, j);
+		}
+		
+		System.out.println("playerNames" + Arrays.toString(playerNames));
+		
+		return playerNames;
+		// **** Question: why was there nothing inputed in? Why return null? Why doesn't it take it in above?
+		
 	}
 
-// ----
+/* ---- don't need -----
 	
 	public static String[] horsesSelection(String[] horses, int numSelectedHorses){
 		
@@ -138,6 +151,7 @@ public class HorseRacingProject {
 		return selectedHorses;
 		
 	}
+*/ 
 	
 // ---------- checks if horse is already in the race ---------
 	// sequential search
@@ -169,6 +183,8 @@ public class HorseRacingProject {
 			e.printStackTrace(); 
 		}
 		
+		// System.out.println("here " + Arrays.toString(horses));
+		
 		return horses;
 	}
 	
@@ -181,13 +197,15 @@ public class HorseRacingProject {
 			int numPlayers = Integer.parseInt(keyboard.nextLine());
 			players = new String[numPlayers];
 			
-			for (int i = 0; i<numPlayers; i++){
+			for (int i=0; i<numPlayers; i++){
 				players[i] = keyboard.nextLine();
 			}
 		
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		//System.out.println("players " + Arrays.toString(players));
 		
 		return players;
 		
@@ -208,6 +226,12 @@ public class HorseRacingProject {
 		}
 		
 		return x;
+	}
+	
+// ------------- closingMessage Method ------------
+	public static void closingMessage() {
+		System.out.println("Thanks for playing!! ");
+		
 	}
 	
 	
