@@ -11,7 +11,10 @@ public class HorseRacingProject {
 		
 		Scanner keyboard = new Scanner(System.in);
 		
-		introMessage();
+		introMessage(keyboard);
+		
+		System.out.println();
+		
 		String[] horses = getHorses();
 		String[] players = getPlayers();
 		String[] playerNames = getPlayerNames(players);
@@ -34,12 +37,50 @@ public class HorseRacingProject {
 	
 	}
 
-	public static void introMessage() {
-		System.out.println("Howdy everyone! Who's ready for the horse race and some betting?");
-		System.out.println("Let's start!!");
+	public static void introMessage(Scanner keyboard) {
+		System.out.println("Howdy everyone! Who's ready for some horse racing and betting?");
+		System.out.print("Enter 0 to begin: ");
+		String userPrompt = keyboard.nextLine();
+				
+		if (checkInvalidInputforIntro(userPrompt, keyboard).equals("0")){
+			System.out.println("Let's start!!");
+		}
+	}
+	
+	// ---------------- check for invalid startRace prompt ------------------ (mine)
+			
+	private static String checkInvalidInputforIntro(String userPrompt, Scanner keyboard) {
+		boolean invalid = false; // check if user didn't enter 0
+		
+		while (!invalid){
+			if (userPrompt.equals("0")){
+				invalid = false;
+			} else {
+				System.out.println("You must enter 0:");
+			}
+		}
+		
+		/*
+		while(!isValid){
+			try{
+				if (userPrompt.equals("0")) 
+					isValid = true;
+			} catch(Exception ex){
+				
+			}
+		}
+		*/
+		
+		return userPrompt;
 		
 	}
-
+	
+	// ---------------- startRace Method --------------------------
+	
+	public static int startRace(int[] horsesInRace) {
+		return 0; 
+	}
+	
 	public static boolean promptForGameOver() {
 		//System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
 		System.out.println("Would you like to continue playing another round? ");
@@ -65,6 +106,10 @@ public class HorseRacingProject {
 		// horsesInRace contains the index of the horses from the master horse array		
 		int[] horsesInRace = getHorsesInRace(horses);
 		
+		System.out.println("These are the horses participating in today's race... ");
+		System.out.println();
+		
+				
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
 		int winningHorse = startRace(horsesInRace);
@@ -84,19 +129,13 @@ public class HorseRacingProject {
 		
 	}
 
-// ---------------- startRace Method --------------------------
-	
-	public static int startRace(int[] horsesInRace) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public static int[][] getPlayerBets(String[] playerNames, int[] playerWallets, int[] horsesInRace) {
 		// check that you can't bet more than you have
 		return null;
 	}
 
-// ------------------ getHorsesInRace (selecting horses to compete in the race -----------
+// ------------------ getHorsesInRace (selecting horses to compete in the race) -----------
 	
 	public static int[] getHorsesInRace(String[] horses) {
 		int numHorsesInRace = 0;
@@ -224,8 +263,10 @@ public class HorseRacingProject {
 		return false;
 	}
 		
-// ---- checks if invalid input ----------
-	public int getvalidInput(int min, int max, Scanner keyboard){ // pass in range (0, wallet)
+
+	
+	// ---- checks if invalid input ----------
+	public int getvalidInputforWallet(int min, int max, Scanner keyboard){ // pass in range (0, wallet)
 		boolean isValid = false;
 		int x = 0;
 		while(!isValid){
