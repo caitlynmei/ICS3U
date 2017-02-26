@@ -29,7 +29,7 @@ public class HorseRacingProject {
 		boolean gameOver = false;
 		while (!gameOver){
 			doRace(horses, playerNames, playerWallets);
-			gameOver = promptForGameOver();
+			gameOver = promptForGameOver(keyboard);
 		}
 		
 		updatePlayerData(playerNames, playerWallets);
@@ -39,22 +39,40 @@ public class HorseRacingProject {
 
 	public static void introMessage(Scanner keyboard) {
 		System.out.println("Howdy everyone! Who's ready for some horse racing and betting?");
-		System.out.print("Enter 0 to begin: ");
-		String userPrompt = keyboard.nextLine();
-				
+		System.out.print("Enter (0) to begin: ");
+		String userPromptIntro = "";
+		
+		boolean invalid = false; // check if user didn't enter 0
+		while (!invalid){
+			userPromptIntro = keyboard.nextLine();
+			if (userPromptIntro.equals("0")){
+				invalid = true;
+			} else {
+				System.out.print("You must enter 0: ");
+			}
+		}
+		
+		if (userPromptIntro.equals("0")){
+			System.out.println();
+			System.out.println("Great! Let's start!!");
+		}
+		
+		/* for not working method below
 		if (checkInvalidInputforIntro(userPrompt, keyboard).equals("0")){
 			System.out.println("Let's start!!");
 		}
+		*/
+		
 	}
 	
-	// ---------------- check for invalid startRace prompt ------------------ (mine)
+	/* ---------------- check for invalid startRace prompt ------------------ (mine)
 			
 	private static String checkInvalidInputforIntro(String userPrompt, Scanner keyboard) {
 		boolean invalid = false; // check if user didn't enter 0
 		
 		while (!invalid){
 			if (userPrompt.equals("0")){
-				invalid = false;
+				invalid = true;
 			} else {
 				System.out.println("You must enter 0:");
 			}
@@ -69,11 +87,12 @@ public class HorseRacingProject {
 				
 			}
 		}
-		*/
+		//
 		
 		return userPrompt;
 		
 	}
+	*/
 	
 	// ---------------- startRace Method --------------------------
 	
@@ -81,23 +100,30 @@ public class HorseRacingProject {
 		return 0; 
 	}
 	
-	public static boolean promptForGameOver() {
+	public static boolean promptForGameOver(Scanner keyboard) { // ***got to fix this later
 		//System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
 		System.out.println("Would you like to continue playing another round? ");
-		System.out.println("If yes, please enter \"1\". If no, please enter \"2\". ");
+		System.out.print("If yes, please enter (1). If no, please enter (2): ");
 		
-		Scanner keyboard = null; //check
-		int userPrompt = keyboard.nextInt();
+		String userPromptGameOver = "";
 		
-		// catch if user enters int other than 1 or 2
-		
-		if (userPrompt == 1){
-			return true;
-		} else if (userPrompt == 2){
-			return false;
+		boolean invalid = false; // check if user entered something other than 1 or 2
+		while (!invalid){
+			userPromptGameOver = keyboard.nextLine();
+			if (userPromptGameOver.equals("1") || userPromptGameOver.equals("2")){
+				invalid = true;
+			} else {
+				System.out.print("You must enter (1) for playing another round or (2) to end the game: ");
+			}
 		}
 		
-		return false;
+		if (userPromptGameOver.equals("1")){
+			System.out.println("Great! Get ready for another round!");
+			return true;
+		} else if (userPromptGameOver.equals("2")){
+			System.out.println("Alright! Thanks for playing!! :)");
+			return false;
+		}
 	}
 
 // ----------------- doRace Method ----------------------
