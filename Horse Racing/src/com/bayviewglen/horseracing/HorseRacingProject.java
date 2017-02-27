@@ -133,9 +133,26 @@ public class HorseRacingProject {
 		int[] horsesInRace = getHorsesInRace(horses);
 		
 		System.out.println("These are the horses participating in today's race... ");
-		System.out.println();
+		System.out.println("\n\n");
 		
-				
+		// print chart with horses in this round
+		for (int i=0; i<horsesInRace.length; i++){
+			System.out.println("-|---------------|-----------");
+			System.out.printf(i+1 + "| %-13s | %9d \n", playerNames[i], playerWallets[i]); // change for horsesInRace
+		}
+		
+		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
+		System.out.println("#|Player Names   |    Wallet");
+		
+		// print chart with player names and wallets
+		for (int i=0; i<playerNames.length; i++){
+			System.out.println("-|---------------|-----------");
+			System.out.printf(i+1 + "| %-13s | %9d \n", playerNames[i], playerWallets[i]);
+		}
+		
+		System.out.println();
+		System.out.print("Please choose a player (enter your number): ");
+		
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
 		int winningHorse = startRace(horsesInRace);
@@ -177,7 +194,7 @@ public class HorseRacingProject {
 			horsesInRace[i] = (int)((Math.random() * horsesLength) + 1);
 		}
 		
-		System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
+		//System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
 		
 		return horsesInRace; // ***** Question: Why won't it take it in? 
 							 // ***** Answer: Because indexes are ints silly. Not String. :D
@@ -269,7 +286,7 @@ public class HorseRacingProject {
 				playerWallets[i] = Integer.parseInt(players[i].substring(j));
 			}
 			
-			//System.out.println(Arrays.toString(playerWallets));
+			System.out.println(Arrays.toString(playerWallets));
 			
 			return playerWallets;
 		}
