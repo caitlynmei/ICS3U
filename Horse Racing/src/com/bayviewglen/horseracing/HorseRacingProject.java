@@ -34,6 +34,8 @@ public class HorseRacingProject {
 		
 		updatePlayerData(playerNames, playerWallets);
 		closingMessage();
+		
+		keyboard.close();
 	
 	}
 
@@ -62,6 +64,8 @@ public class HorseRacingProject {
 			System.out.println("Let's start!!");
 		}
 		*/
+		
+		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
 		
 	}
 	
@@ -118,12 +122,13 @@ public class HorseRacingProject {
 		}
 		
 		if (userPromptGameOver.equals("1")){
-			System.out.println("Great! Get ready for another round!");
-			return true;
-		} else if (userPromptGameOver.equals("2")){
-			System.out.println("Alright! Thanks for playing!! :)");
+			System.out.println();
+			System.out.println("Great! Get ready for another round!\n\n");
 			return false;
+		} else if (userPromptGameOver.equals("2")){
+			return true;
 		}
+		return true;
 	}
 
 // ----------------- doRace Method ----------------------
@@ -133,30 +138,32 @@ public class HorseRacingProject {
 		int[] horsesInRace = getHorsesInRace(horses);
 				
 		System.out.println();
-		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
-		System.out.println("#|Player Names        |    Wallet");
+		System.out.println("#|Player Names          |     Wallet");
 		
 		// print chart with player names and wallets
 		for (int i=0; i<playerNames.length; i++){
-			System.out.println("-|--------------------|-----------");
-			System.out.printf(i+1 + "| %-18s | %9d \n", playerNames[i], playerWallets[i]);
+			System.out.println("-|----------------------|------------");
+			System.out.printf(i+1 + "| %-20s | %10d \n", playerNames[i], playerWallets[i]);
 		}
 		
 		System.out.println();
 		System.out.print("Please choose a player (enter your number): ");
 		
-
-		System.out.println("These are the horses participating in today's race... ");
-		System.out.println("\n");
+		// stuff for taking in each player's choice and bet and wallet stuff
 		
-		System.out.println("#|Horse Names         |");
+		System.out.println();
+		System.out.println("These are the horses participating in today's race... ");
+		System.out.println("");
+		
+		System.out.println("#|Horse Names           |");
 		
 		// print chart with horses in this round
 		for (int i=0; i<horsesInRace.length; i++){
-			System.out.println("-|--------------------|-");
-			System.out.printf(i+1 + "| %-18s | \n", horses[horsesInRace[i]]); 
-			// gives me names for the horse 2 lines down
+			System.out.println("-|----------------------|-");
+			System.out.printf(i+1 + "| %-20s | \n", horses[horsesInRace[i]]); 
 		}
+		
+		System.out.println();
 		
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
@@ -250,6 +257,8 @@ public class HorseRacingProject {
 		}
 			
 		//System.out.println("here " + Arrays.toString(horses));
+		// System.out.println("should be 86th " + horses[85]);
+		// ^ remember, should be length - 1 for last index
 		
 		return horses;
 	}
@@ -291,7 +300,7 @@ public class HorseRacingProject {
 				playerWallets[i] = Integer.parseInt(players[i].substring(j));
 			}
 			
-			System.out.println(Arrays.toString(playerWallets));
+			System.out.println("playerWallet stuff" + Arrays.toString(playerWallets));
 			
 			return playerWallets;
 		}
@@ -302,7 +311,7 @@ public class HorseRacingProject {
 	
 	public static boolean alreadyInRace(int horse, int[] horsesInRace){
 			
-		for (int i = 0; i < horsesInRace.length; i++){
+		for (int i = 0; i < horsesInRace.length-1; i++){
 			if (horsesInRace[i] == horse){
 				return true;
 			}
@@ -332,9 +341,7 @@ public class HorseRacingProject {
 	
 // ------------- closingMessage Method ------------
 	public static void closingMessage() {
-		System.out.println("Thanks for playing!! ");
-		
+		System.out.println("Alright! Thanks for playing!! :)");
 	}
-	
-	
+		
 }
