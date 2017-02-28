@@ -131,27 +131,32 @@ public class HorseRacingProject {
 	public static void doRace(String[] horses, String[] playerNames, int[] playerWallets) {
 		// horsesInRace contains the index of the horses from the master horse array		
 		int[] horsesInRace = getHorsesInRace(horses);
-		
-		System.out.println("These are the horses participating in today's race... ");
-		System.out.println("\n\n");
-		
-		// print chart with horses in this round
-		for (int i=0; i<horsesInRace.length; i++){
-			System.out.println("-|---------------|-----------");
-			System.out.printf(i+1 + "| %-13s | %9d \n", playerNames[i], playerWallets[i]); // change for horsesInRace
-		}
-		
+				
+		System.out.println();
 		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
-		System.out.println("#|Player Names   |    Wallet");
+		System.out.println("#|Player Names        |    Wallet");
 		
 		// print chart with player names and wallets
 		for (int i=0; i<playerNames.length; i++){
-			System.out.println("-|---------------|-----------");
-			System.out.printf(i+1 + "| %-13s | %9d \n", playerNames[i], playerWallets[i]);
+			System.out.println("-|--------------------|-----------");
+			System.out.printf(i+1 + "| %-18s | %9d \n", playerNames[i], playerWallets[i]);
 		}
 		
 		System.out.println();
 		System.out.print("Please choose a player (enter your number): ");
+		
+
+		System.out.println("These are the horses participating in today's race... ");
+		System.out.println("\n");
+		
+		System.out.println("#|Horse Names         |");
+		
+		// print chart with horses in this round
+		for (int i=0; i<horsesInRace.length; i++){
+			System.out.println("-|--------------------|-");
+			System.out.printf(i+1 + "| %-18s | \n", horses[horsesInRace[i]]); 
+			// gives me names for the horse 2 lines down
+		}
 		
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
@@ -194,7 +199,7 @@ public class HorseRacingProject {
 			horsesInRace[i] = (int)((Math.random() * horsesLength) + 1);
 		}
 		
-		//System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
+		System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
 		
 		return horsesInRace; // ***** Question: Why won't it take it in? 
 							 // ***** Answer: Because indexes are ints silly. Not String. :D
@@ -244,7 +249,7 @@ public class HorseRacingProject {
 			e.printStackTrace(); 
 		}
 			
-		// System.out.println("here " + Arrays.toString(horses));
+		//System.out.println("here " + Arrays.toString(horses));
 		
 		return horses;
 	}
