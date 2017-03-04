@@ -2,6 +2,8 @@ package com.bayviewglen.horseracing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class HorseRacingProject {
 	public static void main(String[] args) {
 		
 		Scanner keyboard = new Scanner(System.in);
-		
+				
 		introMessage(keyboard);
 		
 		System.out.println();
@@ -44,11 +46,11 @@ public class HorseRacingProject {
 		System.out.print("Enter (0) to begin: ");
 		String userPromptIntro = "";
 		
-		boolean invalid = false; // check if user didn't enter 0
-		while (!invalid){
+		boolean isvalid = false; // check if user didn't enter 0
+		while (!isvalid){
 			userPromptIntro = keyboard.nextLine();
 			if (userPromptIntro.equals("0")){
-				invalid = true;
+				isvalid = true;
 			} else {
 				System.out.print("You must enter 0: ");
 			}
@@ -100,7 +102,10 @@ public class HorseRacingProject {
 	
 	// ---------------- startRace Method --------------------------
 	
-	public static int startRace(int[] horsesInRace) {
+	public static int startHorseRace(int[] horsesInRace) {
+		
+		
+		
 		return 0; 
 	}
 	
@@ -111,11 +116,11 @@ public class HorseRacingProject {
 		
 		String userPromptGameOver = "";
 		
-		boolean invalid = false; // check if user entered something other than 1 or 2
-		while (!invalid){
+		boolean isvalid = false; // check if user entered something other than 1 or 2
+		while (!isvalid){
 			userPromptGameOver = keyboard.nextLine();
 			if (userPromptGameOver.equals("1") || userPromptGameOver.equals("2")){
-				invalid = true;
+				isvalid = true;
 			} else {
 				System.out.print("You must enter (1) for playing another round or (2) to end the game: ");
 			}
@@ -136,7 +141,7 @@ public class HorseRacingProject {
 	public static void doRace(String[] horses, String[] playerNames, int[] playerWallets) {
 		// horsesInRace contains the index of the horses from the master horse array		
 		int[] horsesInRace = getHorsesInRace(horses);
-				
+		
 		System.out.println();
 		System.out.println("#|Player Names          |     Wallet");
 		
@@ -167,7 +172,7 @@ public class HorseRacingProject {
 		
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
-		int winningHorse = startRace(horsesInRace);
+		int winningHorse = startHorseRace(horsesInRace);
 		
 		payOutBets(playerBets, playerWallets, playerNames, winningHorse);
 	}
@@ -180,31 +185,45 @@ public class HorseRacingProject {
 // -------------- updatePlayerData Method --------------------
 	
 	public static void updatePlayerData(String[] playerNames, int[] playerWallets) {
-		// TODO Auto-generated method stub
+		
+		try { 
+			FileWriter fw = new FileWriter(new File("input/players.dat"));
+			fw.close();
+		} catch (IOException e){
+			e.printStackTrace();
+		}
 		
 	}
-
 
 	public static int[][] getPlayerBets(String[] playerNames, int[] playerWallets, int[] horsesInRace) {
 		// check that you can't bet more than you have
 		return null;
 	}
-
+	
 // ------------------ getHorsesInRace (selecting horses to compete in the race) -----------
 	
 	public static int[] getHorsesInRace(String[] horses) {
 		int numHorsesInRace = 0;
 		int minNumHorsesInRace = 5;
-		int maxNumHorsesInRace = 8;
+		int maxNumHorsesInRace = 9;
 		int horsesLength = horses.length;
 		
 		numHorsesInRace = (int)(Math.random() * (maxNumHorsesInRace - minNumHorsesInRace) + minNumHorsesInRace);
 		
 		int[] horsesInRace = new int[numHorsesInRace]; // holds indices of chosen horses in horse array
+		boolean isValidHorse = false; // to check if the index generated from randomizer is not repeated
+		int currentHorseIndex = 0;
 		
 		for (int i=0; i<numHorsesInRace; i++){
-			horsesInRace[i] = (int)((Math.random() * horsesLength) + 1);
+			currentHorseIndex = (int)(Math.random() * horsesLength);
+			horsesInRace[i] = currentHorseIndex; 
+						
+			if (alreadyInRace(i, currentHorseIndex, horsesInRace) == true){
+				i--;
+			}		
 		}
+						
+		//horsesInRace[i] = (int)((Math.random() * horsesLength)); old stuff
 		
 		System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
 		
@@ -215,18 +234,17 @@ public class HorseRacingProject {
 		// how to get horse name: horses[horsesInRace[0]]
 	}
 
-
 // -------------------- getPlayers Method ---------------------------
 	
 	public static String[] getPlayers(){
 		String[] players = null;
 		try {
-			Scanner keyboard = new Scanner(new File("Input/players.dat"));
-			int numPlayers = Integer.parseInt(keyboard.nextLine());
+			Scanner scannerFile = new Scanner(new File("Input/players.dat"));
+			int numPlayers = Integer.parseInt(scannerFile.nextLine());
 			players = new String[numPlayers];
 			
 			for (int i=0; i<numPlayers; i++){
-				players[i] = keyboard.nextLine();
+				players[i] = scannerFile.nextLine();
 			}
 		
 		} catch (FileNotFoundException e) {
@@ -244,26 +262,39 @@ public class HorseRacingProject {
 	public static String[] getHorses() {
 		String[] horses = null;
 		try {
-			Scanner keyboard = new Scanner(new File("Input/horses.dat"));
-			int numHorses = Integer.parseInt(keyboard.nextLine()); // take string and turn it into int
+			Scanner scannerFile = new Scanner(new File("Input/horses.dat"));
+			int numHorses = Integer.parseInt(scannerFile.nextLine()); // take string and turn it into int
 			horses = new String[numHorses];
 			
 			for (int i = 0; i<numHorses; i++){
-				horses[i] = keyboard.nextLine();
+				horses[i] = scannerFile.nextLine();
 			}
-				
+					
 		} catch (FileNotFoundException e) { // in case file isn't there
 			e.printStackTrace(); 
 		}
 			
-		//System.out.println("here " + Arrays.toString(horses));
+		System.out.println("here " + Arrays.toString(horses));
 		// System.out.println("should be 86th " + horses[85]);
 		// ^ remember, should be length - 1 for last index
 		
 		return horses;
 	}
 
-
+	// ---------- checks if horse is already in the race ---------
+	// sequential search
+		
+	public static boolean alreadyInRace(int currentIndex, int horse, int[] horsesInRace){
+				
+		for (int i = 0; i < horsesInRace.length-1; i++){
+			if (horsesInRace[i] == horse && i != currentIndex){
+				return true; 
+			} 
+		}
+					
+		return false;
+	}
+	
 	// ---------------- getPlayerNames -------------------------
 		
 		public static String[] getPlayerNames(String[] players) {
@@ -304,23 +335,6 @@ public class HorseRacingProject {
 			
 			return playerWallets;
 		}
-
-	
-// ---------- checks if horse is already in the race ---------
-	// sequential search
-	
-	public static boolean alreadyInRace(int horse, int[] horsesInRace){
-			
-		for (int i = 0; i < horsesInRace.length-1; i++){
-			if (horsesInRace[i] == horse){
-				return true;
-			}
-		}
-				
-		return false;
-	}
-		
-
 	
 	// ---- checks if invalid input ----------
 	public int getvalidInputforWallet(int min, int max, Scanner keyboard){ // pass in range (0, wallet)
