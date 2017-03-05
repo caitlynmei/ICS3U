@@ -22,13 +22,8 @@ public class HorseRacingProject {
 	
 		String[] horses = getHorses();
 		String[] players = getPlayers();
-		String[] playerNames = getPlayerNames(players);
-		int[] playerWallets = getPlayerWallets(players);
-		
-				
-		// playerNames array
-		// playerWallets array
-		
+		String[] playerNames = getPlayerNames(players); // playerNames array
+		int[] playerWallets = getPlayerWallets(players); // playerWallets array
 		// or a 2D array with name / wallet (stored in strings, convert to int)
 		
 		boolean gameOver = false;
@@ -106,9 +101,17 @@ public class HorseRacingProject {
 	// ---------------- startRace Method --------------------------
 	
 	public static int startHorseRace(int[] horsesInRace) {
+		/*
+		int[] horseNumInRace = new int[horsesInRace.length]; // array containing the number in race (horse position in racetrack)
+		for (int i=1; i<=horsesInRace.length; i++){
+			horseNumInRace[i-1] = i;
+		}
 		
-		
-		
+		for (int i=0; i<horsesInRace.length; i++){
+			System.out.println("-|----------------------|------------");
+			System.out.printf(i+1 + "| %-20s | %30d \n", horsesInRace[i], horseNumInRace[i]);
+		}
+		*/
 		return 0; 
 	}
 	
@@ -173,9 +176,12 @@ public class HorseRacingProject {
 		System.out.println("Players will take turns entering a chosen horse number and the amount they want to bet in this race.");
 		System.out.println();
 		
-		boolean playerTurnOver = false;
-		int userBettingAmount = 0;
-		int userBettingHorseNumber = 0;
+		boolean playerTurnOver = false; // when a player's turn is over
+		int userBettingAmount = 0; // holds the amount of money a player is betting
+		int userBettingHorseNumber = 0;	// holds the number of horse player is betting on
+		
+		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
+		int[][] playerBets = getPlayerBets(userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);
 		
 		for (int i=1; i<=playerNames.length; ++i){
 			while (!playerTurnOver){
@@ -231,15 +237,32 @@ public class HorseRacingProject {
 					
 				} else if (userAnswerToBetting.equals("2")){ // of user says "no", doesn't want to bet
 					System.out.println("\nOkay " + playerNames[i-1] + ", see you next round!\n");
+					userBettingAmount = 0;
+					userBettingHorseNumber = 0;
 					++i;
 					playerTurnOver = false || i == 7;
 				}
 			}
 			System.out.println();	
 		}
-	
-		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
-		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
+		
+		int[] horseNumInRace = new int[horsesInRace.length]; // array containing the number in race (horse position in racetrack)
+		for (int i=1; i<=horsesInRace.length; i++){
+			horseNumInRace[i-1] = i;
+		}
+		
+		final int numSpacesInRace = 88;
+		for (int i=0; i<numSpacesInRace; i++){
+			for (int k=0; k<horsesInRace.length; k++){
+				
+			}
+		}
+		for (int j=0; j<horsesInRace.length; j++){
+			System.out.println("-|---------------------|------------------------------------------------------------------------------------------|-");
+			System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[j]], horseNumInRace[j]);
+		}
+		System.out.println("-|---------------------|------------------------------------------------------------------------------------------|-"); // 2, 88 
+		
 		int winningHorse = startHorseRace(horsesInRace);
 		
 		payOutBets(playerBets, playerWallets, playerNames, winningHorse);
@@ -265,9 +288,26 @@ public class HorseRacingProject {
 		*/
 	}
 
-	public static int[][] getPlayerBets(String[] playerNames, int[] playerWallets, int[] horsesInRace) {
+	public static int[][] getPlayerBets(int userBettingAmount, int userBettingHorseNumber, String[] playerNames, int[] playerWallets, int[] horsesInRace) {
 		// check that you can't bet more than you have
-		return null;
+		final int numColumnsInPlayerBets = 2;
+		
+		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
+		//int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
+		
+		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
+		
+		for (int row=0; row < playerBets.length; row++){
+			for (int column=0; column < playerBets[0].length; column++){
+				if (column == 0){
+					playerBets[row][column] = userBettingAmount;
+				} else if (column == 1){
+					playerBets[row][column] = horsesInRace[userBettingHorseNumber];
+				}
+			}
+		}
+		System.out.println("This is the playerBets arr " + Arrays.deepToString(playerBets));
+		return playerBets;
 	}
 	
 // ------------------ getHorsesInRace (selecting horses to compete in the race) -----------
