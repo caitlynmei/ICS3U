@@ -167,66 +167,77 @@ public class HorseRacingProject {
 			System.out.println("-|----------------------|-");
 			System.out.printf(i+1 + "| %-20s | \n", horses[horsesInRace[i]]); 
 		}
-		
-		System.out.println();
+		System.out.println("-|----------------------|-\n");
 		
 		System.out.println("Okay, so now we're going to start betting. ");
 		System.out.println("Players will take turns entering a chosen horse number and the amount they want to bet in this race.");
 		System.out.println();
 		
-		boolean userBettingDecision = false;
-		boolean validUserPromptToSeeList = true;
-		String userPromptToSeeList = "";
+		boolean playerTurnOver = false;
 		int userBettingAmount = 0;
 		int userBettingHorseNumber = 0;
 		
-		for (int i=1; i<=playerNames.length; i++){
-			System.out.println("Player " + i + ": ");
-			System.out.print(playerNames[i-1] + ", would you like to bet? Enter (1) for yes or (2) for no: ");
-			
-			userBettingDecision = getValidUserBettingDecision(keyboard);
-			if (userBettingDecision = true){
-				System.out.print(playerNames[i-1] + ", you have $" + playerWallets[i-1] + ". How much would you like to bet? (enter amount): $");
-				userBettingAmount = getvalidInputforWallet(minWalletAmount, playerWallets[i-1], keyboard);
+		for (int i=1; i<=playerNames.length; ++i){
+			while (!playerTurnOver){
+				System.out.println("Player " + i + ": ");
+				System.out.print(playerNames[i-1] + ", would you like to bet? Enter (1) for yes or (2) for no: ");
 				
-				System.out.print("Which horse will you be betting on? (enter (0) to see the list of horses in this race): "); 
-				//validUserPromptToSeeList = getValidSeeListInput(keyboard);
-				while (!validUserPromptToSeeList){
-					userPromptToSeeList = keyboard.nextLine();
-					if (userPromptToSeeList.equals("0")){
-						validUserPromptToSeeList = true;
+				String userAnswerToBetting = "";
+				boolean inValid = true; // check if user didn't enter 1 or 2
+				while (inValid){
+					userAnswerToBetting = keyboard.nextLine();
+					if (userAnswerToBetting.equals("1") || userAnswerToBetting.equals("2")){
+						inValid = false;
 					} else {
-						System.out.print("You must enter (0) to see the list of horses in this race: ");
+						System.out.print("You must enter (1) for yes or (2) for no: ");
 					}
 				}
-				
-				if (userPromptToSeeList.equals("0")){
-					// printing chart with horses in this round
-					for (int j=0; i<horsesInRace.length; j++){
-						System.out.println("-|----------------------|-");
-						System.out.printf(j+1 + "| %-20s | \n", horses[horsesInRace[j]]); 
-					}
-				} 
-				
-				System.out.print("Please choose a horse number: ");
-				userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
-				System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horsesInRace[userBettingHorseNumber] + ".");
+					
+				if (userAnswerToBetting.equals("1")){  // for "yes, I want to bet"
+					System.out.println("Great!");
+								
+					System.out.print(playerNames[i-1] + ", you have $" + playerWallets[i-1] + ". How much would you like to bet? (enter amount): $");
+					userBettingAmount = getvalidInputforWallet(minWalletAmount, playerWallets[i-1], keyboard);
 						
-			} else { // of user says "no", doesn't want to bet
-				i++;
-				System.out.println();
+					System.out.print("Which horse will you be betting on? (enter (0) to see the list of horses in this race): "); 
+					String userPromptToSeeList = ""; // for player's prompt to see the list of horses
+					boolean validUserPromptToSeeList = true; // to check if player entered (0)
+					while (validUserPromptToSeeList){
+						userPromptToSeeList = keyboard.nextLine();
+						if (userPromptToSeeList.equals("0")){
+							validUserPromptToSeeList = false; 
+						} else {
+							System.out.print("You must enter (0) to see the list of horses in this race: ");
+						}
+					}
+					
+					if (userPromptToSeeList.equals("0")){
+						// printing chart with horses in this round
+						int j;
+						for (j=0; j<horsesInRace.length; j++){
+							System.out.println("-|----------------------|-");
+							System.out.printf(j+1 + "| %-20s | \n", horses[horsesInRace[j]]); 
+						}
+						System.out.println("-|----------------------|-");
+						
+						System.out.println();	
+						System.out.print("Please choose a horse number: ");
+						userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
+						System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber-1]] + ".\n\n");
+										
+					} 
+					playerTurnOver = false;	
+					++i;
+					
+				} else if (userAnswerToBetting.equals("2")){ // of user says "no", doesn't want to bet
+					System.out.println("\nOkay " + playerNames[i-1] + ", see you next round!\n");
+					++i;
+					playerTurnOver = false || i == 7;
+				}
 			}
-			
+			System.out.println();	
 		}
 	
-		
-		// ability to choose next player
-		//System.out.print("Please choose a player (enter your number): ");
-		//int playerNumber = keyboard.nextInt(); // might need to make a checker
-		
-		// stuff for taking in each player's choice and bet and wallet stuff
-		
-			
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
 		int[][] playerBets = getPlayerBets(playerNames, playerWallets, horsesInRace);
 		int winningHorse = startHorseRace(horsesInRace);
@@ -234,33 +245,7 @@ public class HorseRacingProject {
 		payOutBets(playerBets, playerWallets, playerNames, winningHorse);
 	}
 
-	public static boolean getValidUserBettingDecision(Scanner keyboard) {
-		// yes or no to  betting
-		String userAnswerToBetting = "";
-		boolean inValid = false; // check if user didn't enter 1 or 2
-		
-		while (!inValid){
-			userAnswerToBetting = keyboard.nextLine();
-			if (userAnswerToBetting.equals("1") || userAnswerToBetting.equals("2")){
-				inValid = false;
-			} else {
-				System.out.print("You must enter (1) for yes or (2) for no: ");
-			}
-		}
-			
-		if (userAnswerToBetting.equals("1")){
-			System.out.println();
-			System.out.println("Great!");
-			return true; // for "yes, I want to bet"
-		} else if (userAnswerToBetting.equals("2")){
-			System.out.println();
-			System.out.println("Okay, see you next round!");
-			return false; // for "no, I don't want to bet"
-		}
-		
-		return false;
-	}
-
+	
 	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int winningHorse) {
 		// TODO Auto-generated method stub
 		
@@ -421,6 +406,35 @@ public class HorseRacingProject {
 			return playerWallets;
 		}
 	
+		// ----- to check and return the player's decision to bet or not to bet -------
+		/*
+		public static boolean getValidUserBettingDecision(Scanner keyboard) {
+			// yes or no to  betting
+			String userAnswerToBetting = "";
+			boolean inValid = false; // check if user didn't enter 1 or 2
+			
+			while (!inValid){
+				userAnswerToBetting = keyboard.nextLine();
+				if (userAnswerToBetting.equals("1") || userAnswerToBetting.equals("2")){
+					inValid = false;
+				} else {
+					System.out.print("You must enter (1) for yes or (2) for no: ");
+				}
+			}
+				
+			if (userAnswerToBetting.equals("1")){
+				System.out.println();
+				System.out.println("Great!");
+				return true; // for "yes, I want to bet"
+			} else if (userAnswerToBetting.equals("2")){
+				return false; // for "no, I don't want to bet"
+			}
+			
+			return false;
+		}
+		*/
+	
+	/*
 	// ----- checks if player has entered valid prompt to see horses in race list -------
 	public static boolean getValidSeeListInput(Scanner keyboard){
 		String userPromptToSeeList = "";
@@ -438,7 +452,8 @@ public class HorseRacingProject {
 		return isValid;
 		
 	}
-				
+	*/
+		
 	// --------- checks if player has entered a valid amount of betting money -------
 	public static int getvalidInputforWallet(int minWalletAmount, int maxWalletAmount, Scanner keyboard){ // pass in range (0, wallet)
 		boolean isValid = false;
@@ -450,7 +465,7 @@ public class HorseRacingProject {
 				if (userBettingAmount >= minWalletAmount && userBettingAmount <= maxWalletAmount) 
 					isValid = true;
 			} catch(Exception ex){
-		
+				System.out.print("Please enter a valid amount: "); // maybe fix later
 			}
 		}
 		
@@ -461,6 +476,18 @@ public class HorseRacingProject {
 	public static int getValidHorseNumberInput(int minHorseChoice, int maxHorseChoice, Scanner keyboard){
 		boolean isValid = false;
 		
+		
+		int userBettingHorseNumber = 0;
+		while(!isValid){
+			userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
+			if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice){
+				isValid = true;
+			} else {
+				System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "):");
+			}
+		}
+		
+		/*
 		int userBettingHorseNumber = 0;
 		while(!isValid){
 			try{
@@ -471,6 +498,7 @@ public class HorseRacingProject {
 		
 			}
 		}
+		*/
 		
 		return userBettingHorseNumber;
 	}
