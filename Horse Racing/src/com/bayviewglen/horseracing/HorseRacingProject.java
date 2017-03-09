@@ -101,8 +101,8 @@ public class HorseRacingProject {
 	
 	public static int startHorseRace(int[] horsesInRace, String[] horses) {
 		
-		int winningHorse = (int)(Math.random() * horsesInRace.length);
-		final int numSpacesInRace = 88;
+		int winningHorse = (int)(Math.random() * horsesInRace.length); // winning horses randomizer
+		final int numSpacesInRace = 80;
 		
 		// array containing the number in race (horse position in race track)
 		int[] horseDisplayInRace = new int[horsesInRace.length]; 
@@ -110,25 +110,62 @@ public class HorseRacingProject {
 			horseDisplayInRace[i-1] = i;
 		}
 		
+		int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
+		for (int i=0; i<horsesInRace.length; i++){
+			if (horsesInRace[i] == winningHorse){
+				stepsInRace[i] = 8; // winning horse will have the most steps
+			} else if (horsesInRace[i] == 1){
+				stepsInRace[i] = (int)(Math.random() * 5) + 1;
+			} else if (horsesInRace[i] == 2 || horsesInRace[i] == 8){
+				stepsInRace[i] = (int)(Math.random() * 4) + 1;
+			} else {
+				stepsInRace[i] = (int)(Math.random() * 2) + 1;
+			}
+		}
+		int count = 0;
+		int tempSteps = 0;
 		boolean horseRaceOver = false; // when the horse race is over
-		while(!horseRaceOver){
-			for (int i=0; i<numSpacesInRace; i++){
-				for (int horsePosition = 0; horsePosition <horsesInRace.length; horsePosition++){
-					if (horsePosition == 0){
-						System.out.println("have the random times inside");
-					}
+	
+		// printing race visualization
+		for (int i=0; i<horsesInRace.length; i++){
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+			System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[i]], horseDisplayInRace[i]);
+		}
+		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); // 2, 80 
+				
+		while (!horseRaceOver){
+			for (int i=0; i<horsesInRace.length; i++){
+				tempSteps = stepsInRace[i] * i;
+				//String s = "%" + (numSpacesInRace - tempSteps) + "d";
+				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+				System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
+				System.out.printf(" |%-20s | %-" + (numSpacesInRace - tempSteps) + "d |\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
+				
+				/*
+				for (int j=0; j<tempSteps; j++){
+					System.out.print(" ");
 				}
+				System.out.print(i+1);
+				System.out.println();
+				*/
 			}
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+			count++;
 			
-			// printing race visualization
-			for (int j=0; j<horsesInRace.length; j++){
-				System.out.println("-|---------------------|------------------------------------------------------------------------------------------|-");
-				System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[j]], horseDisplayInRace[j]);
+			if (count == 10){
+				horseRaceOver = true;
 			}
-			System.out.println("-|---------------------|------------------------------------------------------------------------------------------|-"); // 2, 88 
-			
 		}
 		
+		/*
+		// printing race visualization
+		for (int j=0; j<horsesInRace.length; j++){
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+			System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[j]], horseDisplayInRace[j]);
+		}
+		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); // 2, 80 
+		*/
+	
 		return winningHorse; 
 	}
 	
@@ -517,6 +554,8 @@ public class HorseRacingProject {
 				userBettingAmount = Integer.parseInt(keyboard.nextLine());
 				if (userBettingAmount >= minWalletAmount && userBettingAmount <= maxWalletAmount) 
 					isValid = true;
+				else
+					System.out.print("That is not how much you have in your wallet. Please enter another amount: ");
 			} catch(Exception ex){
 				System.out.print("Please enter a valid amount: "); // maybe fix later
 			}
@@ -539,20 +578,7 @@ public class HorseRacingProject {
 				System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "):");
 			}
 		}
-		
-		/*
-		int userBettingHorseNumber = 0;
-		while(!isValid){
-			try{
-				userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
-				if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice) 
-					isValid = true;
-			} catch(Exception ex){
-		
-			}
-		}
-		*/
-		
+	
 		return userBettingHorseNumber;
 	}
 	
