@@ -104,68 +104,170 @@ public class HorseRacingProject {
 		int winningHorse = (int)(Math.random() * horsesInRace.length); // winning horses randomizer
 		final int numSpacesInRace = 80;
 		
+		
+		// array containing the number in race (horse position in race track)
+		int[] horseDisplayInRace = new int[horsesInRace.length]; 
+		for (int i=1; i<=horsesInRace.length; i++){
+			horseDisplayInRace[i-1] = i;
+		}
+	
+		int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
+		
+		
+		
+		//String[] horseNumInRace = {"1", "2", "3", "4", "5", "6", "7", "8"};
+		for (int i=0; i<horsesInRace.length; i++){
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+			System.out.printf(" |%-20s | %-80d\n", horses[horsesInRace[i]], horseDisplayInRace[i]);
+		}
+		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); // 2, 80 
+		
+		boolean horseRaceOver = false;
+		
+		while (!horseRaceOver){
+			// printing race visualization
+			for (int i=0; i<horsesInRace.length; i++){
+				for (int j=0; j<horsesInRace.length; j++){
+					if (horsesInRace[j] == winningHorse){
+						stepsInRace[j] = stepsInRace[j] + 8; // winning horse will have the most steps
+					} else {
+						stepsInRace[j] = stepsInRace[j] + (int)(Math.random() * 6);
+					}
+				}
+				
+				int steps = stepsInRace[i];
+				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+				System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
+						
+				for (int j=0; j<steps; j++){
+					System.out.print(" ");
+				}
+				System.out.print(i+1);
+				System.out.println();	
+				horseRaceOver = checkRaceOver(stepsInRace, horsesInRace); // when the horse race is over
+			}
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+		}
+		
+		return winningHorse;
+	}
+
+	public static boolean checkRaceOver(int[] stepsInRace, int[] horsesInRace) {
+		boolean horseRaceExit = false;
+		
+		for (int i=0; i<horsesInRace.length; i++){
+			if (stepsInRace[i] >= 50){
+				horseRaceExit = true;
+			}
+		}
+		return horseRaceExit;
+	}
+
+	
+	/*
+	public static int startHorseRace(int[] horsesInRace, String[] horses) {
+		
+		int winningHorse = (int)(Math.random() * horsesInRace.length); // winning horses randomizer
+		final int numSpacesInRace = 80;
+		
+		
 		// array containing the number in race (horse position in race track)
 		int[] horseDisplayInRace = new int[horsesInRace.length]; 
 		for (int i=1; i<=horsesInRace.length; i++){
 			horseDisplayInRace[i-1] = i;
 		}
 		
+		//int[] stepsInRace = getStepsInRace(horsesInRace, winningHorse);
+		
 		int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
+		
 		for (int i=0; i<horsesInRace.length; i++){
 			if (horsesInRace[i] == winningHorse){
 				stepsInRace[i] = 8; // winning horse will have the most steps
-			} else if (horsesInRace[i] == 1){
-				stepsInRace[i] = (int)(Math.random() * 5) + 1;
-			} else if (horsesInRace[i] == 2 || horsesInRace[i] == 8){
-				stepsInRace[i] = (int)(Math.random() * 4) + 1;
 			} else {
-				stepsInRace[i] = (int)(Math.random() * 2) + 1;
+				stepsInRace[i] = (int)(Math.random() * 6) + 1;
 			}
 		}
+		String[] horseNumInRace = {"1", "2", "3", "4", "5", "6", "7", "8"};
+	
 		int count = 0;
+		int steps = 0;
 		int tempSteps = 0;
+		int index = 0;
 		boolean horseRaceOver = false; // when the horse race is over
 	
 		// printing race visualization
 		for (int i=0; i<horsesInRace.length; i++){
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-			System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[i]], horseDisplayInRace[i]);
+			System.out.printf(" |%-20s | %-80d\n", horses[horsesInRace[i]], horseDisplayInRace[i]);
 		}
 		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); // 2, 80 
 				
 		while (!horseRaceOver){
 			for (int i=0; i<horsesInRace.length; i++){
-				tempSteps = stepsInRace[i] * i;
-				//int horsePosition = numSpacesInRace - tempSteps; // ******find a way to save previous spaces
-				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-				System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
-				//System.out.printf(" |%-20s | %" + horsePosition + "d|\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
+					steps = stepsInRace[i] * i;
+					
+					//int horsePosition = numSpacesInRace - tempSteps; // ******find a way to save previous spaces
+					System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+					System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
+					
+					for (int j=0; j<steps; j++){
+						System.out.print(" ");
+					}
+					System.out.print(i+1);
+					System.out.println();	
+					
+					
+					/*
+					String[] track = new String[numSpacesInRace];					
+					track[index] = horseNumInRace[i];
+					for (int j=1; j<numSpacesInRace-1; j++){
+						track[j] = " ";
+					}
 				
-				for (int j=0; j<tempSteps; j++){
-					System.out.print(" ");
-				}
-				System.out.print(i+1);
-				System.out.println();		
+					String temp = track[index];
+					track[steps] = temp;
+					track[index] = track[steps];
+					index = steps;
+															
+					for (int j=0; j<track.length; j++){
+						System.out.print(track[i]);
+					}
+					
+					if (index >= numSpacesInRace-1){
+						int finalSteps = numSpacesInRace - index;
+					}
+					
+					System.out.println();
+					//System.out.printf(" |%-20s | %" + horsePosition + "d|\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
+					*/
+					
+					/*
+					for (int j=0; j<steps; j++){
+						System.out.print(" ");
+					}
+					System.out.print(i+1);
+					System.out.println();
+					*/				
+					/*
+					int horsePosition = numSpacesInRace - tempSteps; // ******find a way to save previous spaces
+					System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+					System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
+					System.out.printf(" |%-20s | %" + horsePosition + "d|\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
+					
+					for (int j=0; j<steps; j++){
+						System.out.print(" ");
+					}
+					System.out.print(i+1);
+					System.out.println();	
+					
+					
 			}
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-			count++;
-			
-			if (count == 10){
-				horseRaceOver = true;
-			}
-		}
-		
-		/*
-		// printing race visualization
-		for (int j=0; j<horsesInRace.length; j++){
-			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-			System.out.printf(" |%-20s | %-88d |\n", horses[horsesInRace[j]], horseDisplayInRace[j]);
-		}
-		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); // 2, 80 
-		*/
-	
+		}	
 		return winningHorse; 
 	}
+	*/
 	
 	// ------------ prompt for gameover ---------- 
 	public static boolean promptForGameOver(Scanner keyboard) { // ***got to fix this later
