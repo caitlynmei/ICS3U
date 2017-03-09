@@ -136,18 +136,16 @@ public class HorseRacingProject {
 		while (!horseRaceOver){
 			for (int i=0; i<horsesInRace.length; i++){
 				tempSteps = stepsInRace[i] * i;
-				//String s = "%" + (numSpacesInRace - tempSteps) + "d";
+				//int horsePosition = numSpacesInRace - tempSteps; // ******find a way to save previous spaces
 				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
 				System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
-				System.out.printf(" |%-20s | %-" + (numSpacesInRace - tempSteps) + "d |\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
+				//System.out.printf(" |%-20s | %" + horsePosition + "d|\n", horses[horsesInRace[i]], horseDisplayInRace[i]); // doesn't work, how to print x amount of spaces
 				
-				/*
 				for (int j=0; j<tempSteps; j++){
 					System.out.print(" ");
 				}
 				System.out.print(i+1);
-				System.out.println();
-				*/
+				System.out.println();		
 			}
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
 			count++;
@@ -285,7 +283,7 @@ public class HorseRacingProject {
 						System.out.println();	
 						System.out.print("Please choose a horse number: ");
 						userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
-						System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber-1]] + ".\n\n");
+						System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber-1]] + ".\n");
 										
 					} 
 					
