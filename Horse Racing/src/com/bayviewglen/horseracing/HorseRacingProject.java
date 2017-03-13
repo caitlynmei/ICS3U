@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class HorseRacingProject {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		Scanner keyboard = new Scanner(System.in);
 				
@@ -57,56 +57,19 @@ public class HorseRacingProject {
 			System.out.println();
 			System.out.println("Great! Let's start!!");
 		}
-		
-		/* for not working method below
-		if (checkInvalidInputforIntro(userPrompt, keyboard).equals("0")){
-			System.out.println("Let's start!!");
-		}
-		*/
-		
+				
 		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
 		
 	}
 	
-	/* ---------------- check for invalid startRace prompt ------------------ (mine)
-			
-	private static String checkInvalidInputforIntro(String userPrompt, Scanner keyboard) {
-		boolean invalid = false; // check if user didn't enter 0
-		
-		while (!invalid){
-			if (userPrompt.equals("0")){
-				invalid = true;
-			} else {
-				System.out.println("You must enter 0:");
-			}
-		}
-		
-		/*
-		while(!isValid){
-			try{
-				if (userPrompt.equals("0")) 
-					isValid = true;
-			} catch(Exception ex){
-				
-			}
-		}
-		//
-		
-		return userPrompt;
-		
-	}
-	*/
-	
 	// ---------------- startRace Method --------------------------
 	
-	public static int[] startHorseRace(int[] horsesInRace, String[] horses) {
+	public static int[] startHorseRace(int[] horsesInRace, String[] horses) throws InterruptedException {
 		
 		final int numSpacesInRace = 80;
-		//final int paddedSpacing = 24; // 23 spaces taken from the printed names in table
-		//int totalSpaces = numSpacesInRace + paddedSpacing; // total spaces in race (plus printed names)
-		
 		int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
 
+		// print initial starting position
 		for (int i=0; i<horsesInRace.length; i++){
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
 			System.out.printf(" |%-20s | %-80d\n", horses[horsesInRace[i]], i+1);
@@ -114,32 +77,31 @@ public class HorseRacingProject {
 		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); 
 		System.out.println("\n\n\n");
 		
-		boolean horseRaceOver = false;
 		// printing race visualization
-		//while (!horseRaceOver){
-			while (true){
- 				for (int j=0; j<horsesInRace.length; j++){
-					stepsInRace[j] = stepsInRace[j] + ((int)(Math.random() * 8) + 1);
-				}
-					
-				displayHorseracingTable(stepsInRace, horses, horsesInRace);
+		boolean horseRaceOver = false;
 				
-				horseRaceOver = checkRaceOver(stepsInRace, horsesInRace, numSpacesInRace); // when the horse race is over
-				
-				if (horseRaceOver == true){
-					break;
-				}
-								
+		while (true){
+ 			for (int j=0; j<horsesInRace.length; j++){
+				stepsInRace[j] = stepsInRace[j] + ((int)(Math.random() * 8) + 1);
 			}
+					
+			displayHorseracingTable(stepsInRace, horses, horsesInRace);
 			
-		//}
+			horseRaceOver = checkRaceOver(stepsInRace, horsesInRace, numSpacesInRace); // when the horse race is over
+				
+			if (horseRaceOver == true){
+				break;
+			}
+		}
 		
-		int[] winningHorses = getWinningHorse(stepsInRace, horsesInRace, numSpacesInRace);
+		int[] winningHorses = getWinningHorse(stepsInRace, horsesInRace, numSpacesInRace); // gets the winning horses in race
 
 		return winningHorses;
 	}
 
-	public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace){
+	// ------------- displays horse racing table method (for visual) ------------------- 
+	
+	public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace) throws InterruptedException{
 		for (int i=0; i<horsesInRace.length; i++){
 			int steps = stepsInRace[i];
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
@@ -151,10 +113,17 @@ public class HorseRacingProject {
 			
 			System.out.print(i+1 + ", " + steps);
 			System.out.println();	
+			
+			
+			Thread.sleep(250);
 		}
 		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-		System.out.println("\n\n\n"); // print more times; do I need it to move slower? 
+		System.out.println("\n\n\n");
+
+		
 	}
+	
+	// ------------------- check if horse race is over method --------------------- 
 	
 	public static boolean checkRaceOver(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace) {
 		boolean horseRaceExit = false;
@@ -168,6 +137,9 @@ public class HorseRacingProject {
 		return horseRaceExit;
 	}
 
+	
+	// ------------------ gets the winning horses in race method ------------------- 
+	
 	public static int[] getWinningHorse(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace){
 		int[] winningHorses = new int[horsesInRace.length];
 		
@@ -180,37 +152,9 @@ public class HorseRacingProject {
 		return winningHorses;
 	}
 		
-	// ------------ prompt for gameover ---------- 
-	public static boolean promptForGameOver(Scanner keyboard) { // ***got to fix this later
-		//System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
-		System.out.println("Would you like to continue playing another round? ");
-		System.out.print("If yes, please enter (1). If no, please enter (2): ");
-		
-		String userPromptGameOver = "";
-		
-		boolean isvalid = false; // check if user entered something other than 1 or 2
-		while (!isvalid){
-			userPromptGameOver = keyboard.nextLine();
-			if (userPromptGameOver.equals("1") || userPromptGameOver.equals("2")){
-				isvalid = true;
-			} else {
-				System.out.print("You must enter (1) for playing another round or (2) to end the game: ");
-			}
-		}
-		
-		if (userPromptGameOver.equals("1")){
-			System.out.println();
-			System.out.println("Great! Get ready for another round!\n\n");
-			return false;
-		} else if (userPromptGameOver.equals("2")){
-			return true;
-		}
-		return true;
-	}
-
-// ----------------- doRace Method ----------------------
+	// ----------------- doRace Method ----------------------
 	
-	public static void doRace(int minWalletAmount, String[] horses, String[] playerNames, int[] playerWallets, Scanner keyboard) {
+	public static void doRace(int minWalletAmount, String[] horses, String[] playerNames, int[] playerWallets, Scanner keyboard) throws InterruptedException {
 		// horsesInRace contains the index of the horses from the master horse array		
 		int[] horsesInRace = getHorsesInRace(horses);
 		final int minHorseChoice = 1; // minimum choice for horse number in race, #1 horse in list (on chart)
@@ -297,10 +241,8 @@ public class HorseRacingProject {
 						System.out.print("Please choose a horse number: ");
 						userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
 						System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber-1]] + ".\n");
-										
+						getUpdatedPlayerBets(playerBets, userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);			
 					} 
-					
-					
 					playerTurnOver = false;	
 					++i;
 					
@@ -308,6 +250,8 @@ public class HorseRacingProject {
 					System.out.println("Okay " + playerNames[i-1] + ", see you next round!\n");
 					userBettingAmount = 0;
 					userBettingHorseNumber = 0;
+					getUpdatedPlayerBets(playerBets, userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);			
+				
 					++i;
 					playerTurnOver = false || i == 7;
 				}
@@ -320,14 +264,17 @@ public class HorseRacingProject {
 		System.out.println("And let the horse race begin!!!\n");
 		
 		int[] winningHorses = startHorseRace(horsesInRace, horses);
-		System.out.println("The winner(s) of the horse race is/are: ");
+		System.out.println("The winner(s) of the horse race is(are): ");
 		for (int i=0; i<winningHorses.length; i++){
 			if (winningHorses[i] != 0){
-				System.out.println(horses[horsesInRace[winningHorses[i]-1]]);
+				System.out.println("-- " + horses[horsesInRace[winningHorses[i]-1]]);
 			}
 		}
+		System.out.println();
 		System.out.print("Hooray!!");
 		System.out.println("\n\n");
+		
+		System.out.println("And are results are... ");
 		
 		//payOutBets(playerBets, playerWallets, playerNames, winningHorses);
 	}
@@ -337,17 +284,25 @@ public class HorseRacingProject {
 		final int numColumnsInPlayerBets = 2;
 		
 		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
-		//System.out.println("here" + Arrays.deepToString(playerBets));
+		System.out.println("here" + Arrays.deepToString(playerBets));
 		
 		return playerBets;
 	}
 
+	// ******************* 
 	// --------- to fill in PlayerBets array with information each round ------------ 
 	public static int[][] getUpdatedPlayerBets(int[][] playerBets, int userBettingAmount, int userBettingHorseNumber, String[] playerNames, int[] playerWallets, int[] horsesInRace) {
 					
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
-		int[][] updatedPlayerBets= playerBets;
+		int[][] updatedPlayerBets = playerBets;
 		
+		for (int row=0; row < updatedPlayerBets.length; row++){
+			for (int column = 0; column < updatedPlayerBets.length; column++){
+				System.out.println("Do something here...");
+			}
+		}
+		
+		/*
 		for (int row=0; row < updatedPlayerBets.length; row++){
 			for (int column=0; column < updatedPlayerBets[0].length; column++){
 				if (column == 0){
@@ -357,6 +312,8 @@ public class HorseRacingProject {
 				}
 			}
 		}
+		*/
+		
 		System.out.println("This is the playerBets arr " + Arrays.deepToString(updatedPlayerBets));
 		return updatedPlayerBets;
 	}
@@ -377,7 +334,14 @@ public class HorseRacingProject {
 	}
 	
 	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int winningHorse) {
-		// TODO Auto-generated method stub
+		
+		
+		/*
+		if (better wins){
+			System.out.println("Congratulations to " + "person");
+		}
+		 */
+		
 		
 	}
 	
@@ -415,7 +379,7 @@ public class HorseRacingProject {
 		// how to get horse name: horses[horsesInRace[0]]
 	}
 
-// -------------------- getPlayers Method ---------------------------
+	// -------------------- getPlayers Method ---------------------------
 	
 	public static String[] getPlayers(){
 		String[] players = null;
@@ -438,7 +402,7 @@ public class HorseRacingProject {
 		
 	}
 
-// ----------------- getHorses Method -----------------
+	// ----------------- getHorses Method -----------------
 	
 	public static String[] getHorses() {
 		String[] horses = null;
@@ -478,44 +442,44 @@ public class HorseRacingProject {
 	
 	// ---------------- getPlayerNames -------------------------
 		
-		public static String[] getPlayerNames(String[] players) {
-			String[] playerNames = new String[players.length];
+	public static String[] getPlayerNames(String[] players) {
+		String[] playerNames = new String[players.length];
 			
-			for (int i=0; i<players.length; i++){
-				int j;
-				for (j=0; j<players[i].length(); j++){
-					char currentChar = players[i].charAt(j);
-					if (currentChar >= '0' && currentChar <= '9')
-						break;
-				}
-				playerNames[i] = players[i].substring(0, j-1);
+		for (int i=0; i<players.length; i++){
+			int j;
+			for (j=0; j<players[i].length(); j++){
+				char currentChar = players[i].charAt(j);
+				if (currentChar >= '0' && currentChar <= '9')
+					break;
 			}
-			
-			//System.out.println("playerNames" + Arrays.toString(playerNames));
-			
-			return playerNames;
-			
+			playerNames[i] = players[i].substring(0, j-1);
 		}
-		
-		// ------------------ getPlayersWallets ---------------- 
-		
-		public static int[] getPlayerWallets(String[] players) {
-			int[] playerWallets = new int[players.length];	
 			
-			for (int i=0; i<players.length; i++){
-				int j;
-				for (j=0; j<players[i].length(); j++){
-					char currentChar = players[i].charAt(j);
-					if (currentChar >= '0' && currentChar <= '9')
-						break;
-				}
-				playerWallets[i] = Integer.parseInt(players[i].substring(j));
+		//System.out.println("playerNames" + Arrays.toString(playerNames));
+			
+		return playerNames;
+			
+	}
+		
+	// ------------------ getPlayersWallets ---------------- 
+		
+	public static int[] getPlayerWallets(String[] players) {
+		int[] playerWallets = new int[players.length];	
+			
+		for (int i=0; i<players.length; i++){
+			int j;
+			for (j=0; j<players[i].length(); j++){
+				char currentChar = players[i].charAt(j);
+				if (currentChar >= '0' && currentChar <= '9')
+					break;
 			}
-			
-			System.out.println("playerWallet stuff" + Arrays.toString(playerWallets));
-			
-			return playerWallets;
+			playerWallets[i] = Integer.parseInt(players[i].substring(j));
 		}
+			
+		System.out.println("playerWallet stuff" + Arrays.toString(playerWallets));
+			
+		return playerWallets;
+	}
 	
 		// ----- to check and return the player's decision to bet or not to bet -------
 		/*
@@ -566,6 +530,7 @@ public class HorseRacingProject {
 	*/
 		
 	// --------- checks if player has entered a valid amount of betting money -------
+	
 	public static int getvalidInputforWallet(int minWalletAmount, int maxWalletAmount, Scanner keyboard){ // pass in range (0, wallet)
 		boolean isValid = false;
 		
@@ -578,7 +543,7 @@ public class HorseRacingProject {
 				else
 					System.out.print("That is not how much you have in your wallet. Please enter another amount: ");
 			} catch(Exception ex){
-				System.out.print("Please enter a valid amount: "); // maybe fix later
+				System.out.print("Please enter a valid amount: "); 
 			}
 		}
 		
@@ -586,6 +551,7 @@ public class HorseRacingProject {
 	}
 	
 	// ----- checks if player has entered a valid number for betting horse ---------
+	
 	public static int getValidHorseNumberInput(int minHorseChoice, int maxHorseChoice, Scanner keyboard){
 		boolean isValid = false;
 		
@@ -603,7 +569,37 @@ public class HorseRacingProject {
 		return userBettingHorseNumber;
 	}
 	
+	// ------------ prompt for game over method  ---------- 
+	
+	public static boolean promptForGameOver(Scanner keyboard) { // ***got to fix this later
+		//System.out.println("Alright! Good job to whoever bet on " + winningHorse + "!");
+		System.out.println("Would you like to continue playing another round? ");
+		System.out.print("If yes, please enter (1). If no, please enter (2): ");
+		
+		String userPromptGameOver = "";
+			
+		boolean isvalid = false; // check if user entered something other than 1 or 2
+		while (!isvalid){
+			userPromptGameOver = keyboard.nextLine();
+			if (userPromptGameOver.equals("1") || userPromptGameOver.equals("2")){
+				isvalid = true;
+			} else {
+				System.out.print("You must enter (1) for playing another round or (2) to end the game: ");
+			}
+		}
+			
+		if (userPromptGameOver.equals("1")){
+			System.out.println();
+			System.out.println("Great! Get ready for another round!\n\n");
+			return false;
+		} else if (userPromptGameOver.equals("2")){
+			return true;
+		}
+		return true;
+	}
+	
 	// ------------- closingMessage Method ------------
+	
 	public static void closingMessage() {
 		System.out.println("Alright! Thanks for playing!! :)");
 	}
