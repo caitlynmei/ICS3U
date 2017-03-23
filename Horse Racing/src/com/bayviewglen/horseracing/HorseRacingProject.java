@@ -62,96 +62,6 @@ public class HorseRacingProject {
 		
 	}
 	
-	// ---------------- startRace Method --------------------------
-	
-	public static int[] startHorseRace(int[] horsesInRace, String[] horses) throws InterruptedException {
-		
-		final int numSpacesInRace = 80;
-		int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
-
-		// print initial starting position
-		for (int i=0; i<horsesInRace.length; i++){
-			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-			System.out.printf(" |%-20s | %-80d\n", horses[horsesInRace[i]], i+1);
-		}
-		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); 
-		System.out.println("\n\n\n");
-		
-		// printing race visualization
-		boolean horseRaceOver = false;
-				
-		while (true){
- 			for (int j=0; j<horsesInRace.length; j++){
-				stepsInRace[j] = stepsInRace[j] + ((int)(Math.random() * 8) + 1);
-			}
-					
-			displayHorseracingTable(stepsInRace, horses, horsesInRace);
-			
-			horseRaceOver = checkRaceOver(stepsInRace, horsesInRace, numSpacesInRace); // when the horse race is over
-				
-			if (horseRaceOver == true){
-				break;
-			}
-		}
-		
-		int[] winningHorses = getWinningHorse(stepsInRace, horsesInRace, numSpacesInRace); // gets the winning horses in race
-
-		return winningHorses;
-	}
-
-	// ------------- displays horse racing table method (for visual) ------------------- 
-	
-	public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace) throws InterruptedException{
-		for (int i=0; i<horsesInRace.length; i++){
-			int steps = stepsInRace[i];
-			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-			System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
-					
-			for (int j=0; j<steps; j++){
-				System.out.print(" ");
-			}
-			
-			System.out.print(i+1 + ", " + steps);
-			System.out.println();	
-			
-			
-			Thread.sleep(250);
-		}
-		System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
-		System.out.println("\n\n\n");
-
-		
-	}
-	
-	// ------------------- check if horse race is over method --------------------- 
-	
-	public static boolean checkRaceOver(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace) {
-		boolean horseRaceExit = false;
-		
-		for (int i=0; i<horsesInRace.length; i++){
-			if (stepsInRace[i] >= numSpacesInRace){
-				horseRaceExit = true;
-				break;
-			}
-		}
-		return horseRaceExit;
-	}
-
-	
-	// ------------------ gets the winning horses in race method ------------------- 
-	
-	public static int[] getWinningHorse(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace){
-		int[] winningHorses = new int[horsesInRace.length];
-		
-		for (int i=0; i<horsesInRace.length; i++){
-			if (stepsInRace[i] >= numSpacesInRace){
-				winningHorses[i] = i+1;
-			}
-		}
-				
-		return winningHorses;
-	}
-		
 	// ----------------- doRace Method ----------------------
 	
 	public static void doRace(int minWalletAmount, String[] horses, String[] playerNames, int[] playerWallets, Scanner keyboard) throws InterruptedException {
@@ -189,10 +99,14 @@ public class HorseRacingProject {
 		boolean playerTurnOver = false; // when a player's turn is over
 		int userBettingAmount = 0; // holds the amount of money a player is betting
 		int userBettingHorseNumber = 0;	// holds the number of horse player is betting on
-		int[][] playerBets = getPlayerBets(playerNames); // to initialize the 2D array for playerBets
 		
+		int[] playerBetsMoney = new int[playerNames.length];
+		int[] playerBetsHorseNumber = new int [playerNames.length];
+		
+		// initializing 2D array for playerBets
+		final int numColumnsInPlayerBets = 2;
+		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
 		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
-		int[][] playerBetsUpdate = getUpdatedPlayerBets(playerBets, userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);
 		
 		for (int i=1; i<=playerNames.length; ++i){
 			while (!playerTurnOver){
@@ -229,7 +143,7 @@ public class HorseRacingProject {
 					}
 					
 					if (userPromptToSeeList.equals("0")){
-						// printing chart with horses in this round
+						// printing chart with horses from this round
 						int j;
 						for (j=0; j<horsesInRace.length; j++){
 							System.out.println("-|----------------------|-");
@@ -240,24 +154,33 @@ public class HorseRacingProject {
 						System.out.println();	
 						System.out.print("Please choose a horse number: ");
 						userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
+						
 						System.out.println(playerNames[i-1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber-1]] + ".\n");
-						getUpdatedPlayerBets(playerBets, userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);			
+
 					} 
-					playerTurnOver = false;	
+					
+					playerBetsMoney[i-1] = userBettingAmount;
+					playerBetsHorseNumber[i-1] = userBettingHorseNumber;
+					
 					++i;
+					playerTurnOver = false || i == 7;	
 					
 				} else if (userAnswerToBetting.equals("2")){ // of user says "no", doesn't want to bet
 					System.out.println("Okay " + playerNames[i-1] + ", see you next round!\n");
+					
 					userBettingAmount = 0;
 					userBettingHorseNumber = 0;
-					getUpdatedPlayerBets(playerBets, userBettingAmount, userBettingHorseNumber, playerNames, playerWallets, horsesInRace);			
-				
+					playerBetsMoney[i-1] = userBettingAmount;
+					playerBetsHorseNumber[i-1] = userBettingHorseNumber;
+					
 					++i;
 					playerTurnOver = false || i == 7;
 				}
 			}
 			System.out.println();	
 		}
+		
+		playerBets = getPlayerBets(playerBetsMoney, playerBetsHorseNumber, playerNames, playerWallets, horsesInRace);			
 		
 		// ------- printing the race! ----------
 		
@@ -276,46 +199,112 @@ public class HorseRacingProject {
 		
 		System.out.println("And are results are... ");
 		
-		//payOutBets(playerBets, playerWallets, playerNames, winningHorses);
+		payOutBets(playerBets, playerWallets, playerNames, winningHorses);
+		
 	}
 	
-	// --------- to initialize an array with playerBets ------------
-	public static int[][] getPlayerBets(String[] playerNames) {
-		final int numColumnsInPlayerBets = 2;
-		
-		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
-		System.out.println("here" + Arrays.deepToString(playerBets));
-		
-		return playerBets;
-	}
+	// ---------------- startRace Method --------------------------
+		public static int[] startHorseRace(int[] horsesInRace, String[] horses) throws InterruptedException {
+			
+			final int numSpacesInRace = 80;
+			int[] stepsInRace = new int[horsesInRace.length]; // array holding the number of steps each horse takes (speed)
 
-	// ******************* 
-	// --------- to fill in PlayerBets array with information each round ------------ 
-	public static int[][] getUpdatedPlayerBets(int[][] playerBets, int userBettingAmount, int userBettingHorseNumber, String[] playerNames, int[] playerWallets, int[] horsesInRace) {
-					
-		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
-		int[][] updatedPlayerBets = playerBets;
-		
-		for (int row=0; row < updatedPlayerBets.length; row++){
-			for (int column = 0; column < updatedPlayerBets.length; column++){
-				System.out.println("Do something here...");
+			// print initial starting position
+			for (int i=0; i<horsesInRace.length; i++){
+				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+				System.out.printf(" |%-20s | %-80d\n", horses[horsesInRace[i]], i+1);
 			}
-		}
-		
-		/*
-		for (int row=0; row < updatedPlayerBets.length; row++){
-			for (int column=0; column < updatedPlayerBets[0].length; column++){
-				if (column == 0){
-					updatedPlayerBets[row][column] = userBettingAmount;
-				} else if (column == 1){
-					updatedPlayerBets[row][column] = horsesInRace[userBettingHorseNumber];
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-"); 
+			System.out.println("\n\n\n");
+			
+			// printing race visualization
+			boolean horseRaceOver = false;
+					
+			while (true){
+	 			for (int j=0; j<horsesInRace.length; j++){
+					stepsInRace[j] = stepsInRace[j] + ((int)(Math.random() * 8) + 1);
+				}
+						
+				displayHorseracingTable(stepsInRace, horses, horsesInRace);
+				
+				horseRaceOver = checkRaceOver(stepsInRace, horsesInRace, numSpacesInRace); // when the horse race is over
+					
+				if (horseRaceOver == true){
+					break;
 				}
 			}
+			
+			int[] winningHorses = getWinningHorse(stepsInRace, horsesInRace, numSpacesInRace); // gets the winning horses in race
+
+			return winningHorses;
 		}
-		*/
+
+		// ------------- displays horse racing table method (for visual) ------------------- 
 		
-		System.out.println("This is the playerBets arr " + Arrays.deepToString(updatedPlayerBets));
-		return updatedPlayerBets;
+		public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace) throws InterruptedException{
+			for (int i=0; i<horsesInRace.length; i++){
+				int steps = stepsInRace[i];
+				System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+				System.out.printf(" |%-20s |", horses[horsesInRace[i]]);
+						
+				for (int j=0; j<steps; j++){
+					System.out.print(" ");
+				}
+				
+				System.out.print(i+1 + ", " + steps);
+				System.out.println();	
+				
+				
+				Thread.sleep(250);
+			}
+			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
+			System.out.println("\n\n\n");
+
+			
+		}
+		
+		// ------------------- check if horse race is over method --------------------- 
+		
+		public static boolean checkRaceOver(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace) {
+			boolean horseRaceExit = false;
+			
+			for (int i=0; i<horsesInRace.length; i++){
+				if (stepsInRace[i] >= numSpacesInRace){
+					horseRaceExit = true;
+					break;
+				}
+			}
+			return horseRaceExit;
+		}
+
+		
+		// ------------------ gets the winning horses in race method ------------------- 
+		
+		public static int[] getWinningHorse(int[] stepsInRace, int[] horsesInRace, int numSpacesInRace){
+			int[] winningHorses = new int[horsesInRace.length];
+			
+			for (int i=0; i<horsesInRace.length; i++){
+				if (stepsInRace[i] >= numSpacesInRace){
+					winningHorses[i] = i+1;
+				}
+			}
+					
+			return winningHorses;
+		}
+		
+	public static int[][] getPlayerBets(int[] playerBetsMoney, int[] playerBetsHorseNumber, String[] playerNames, int[] playerWallets, int[] horsesInRace) {
+		// 2D array with column 0 = betAmount; column 1 = horseIndex(from horseInRace)
+		final int numColumnsInPlayerBets = 2;
+		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
+				
+		for (int row=0; row < playerBets.length; row++){
+			for (int column = 0; column < playerBets[0].length; column++){
+				playerBets[row][0] = playerBetsMoney[row];
+				playerBets[row][1] = playerBetsHorseNumber[row];
+			}
+		}
+		System.out.println("This is the playerBets arr " + Arrays.deepToString(playerBets));	
+		return playerBets;
 	}
 	
 	// -------------- updatePlayerData Method --------------------
@@ -333,7 +322,7 @@ public class HorseRacingProject {
 		
 	}
 	
-	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int winningHorse) {
+	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int[] winningHorses) {
 		
 		
 		/*
