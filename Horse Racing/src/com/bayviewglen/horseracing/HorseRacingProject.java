@@ -36,6 +36,79 @@ public class HorseRacingProject {
 		keyboard.close();
 	}
 
+	// ------------- get Players Array Method -------------
+	public static String[] getPlayers() {
+		String[] players = null;
+		try {
+			Scanner scannerFile = new Scanner(new File("Input/players.dat"));
+			int numPlayers = Integer.parseInt(scannerFile.nextLine());
+			players = new String[numPlayers];
+
+			for (int i = 0; i < numPlayers; i++) {
+				players[i] = scannerFile.nextLine();
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return players;
+	}
+
+	// ------------- get Horses Array Method -----------
+	public static String[] getHorses() {
+		String[] horses = null;
+		try {
+			Scanner scannerFile = new Scanner(new File("Input/horses.dat"));
+			int numHorses = Integer.parseInt(scannerFile.nextLine()); // take a string and turn it into an int
+			horses = new String[numHorses];
+
+			for (int i = 0; i < numHorses; i++) {
+				horses[i] = scannerFile.nextLine();
+			}
+
+		} catch (FileNotFoundException e) { // in case file isn't there
+			e.printStackTrace();
+		}
+
+		return horses;
+	}
+
+	// -------------- get Player Names array -------------------
+	public static String[] getPlayerNames(String[] players) {
+		String[] playerNames = new String[players.length];
+
+		for (int i = 0; i < players.length; i++) {
+			int j;
+			for (j = 0; j < players[i].length(); j++) {
+				char currentChar = players[i].charAt(j);
+				if (currentChar >= '0' && currentChar <= '9')
+					break;
+			}
+			playerNames[i] = players[i].substring(0, j - 1);
+		}
+
+		return playerNames;
+	}
+
+	// ------------ get Players Wallets array ------------
+	public static int[] getPlayerWallets(String[] players) {
+		int[] playerWallets = new int[players.length];
+
+		for (int i = 0; i < players.length; i++) {
+			int j;
+			for (j = 0; j < players[i].length(); j++) {
+				char currentChar = players[i].charAt(j);
+				if (currentChar >= '0' && currentChar <= '9')
+					break;
+			}
+			playerWallets[i] = Integer.parseInt(players[i].substring(j));
+		}
+
+		return playerWallets;
+	}
+
+	
 	public static void introMessage(Scanner keyboard) {
 		System.out.println("Howdy everyone! Who's ready for some horse racing and betting?");
 		System.out.print("Enter (0) to begin: ");
@@ -204,37 +277,35 @@ public class HorseRacingProject {
 		System.out.println();
 		System.out.println("here: " + Arrays.deepToString(playerBets));
 	}
-
+	
 	// ------- getHorsesInRace (selecting horses to compete in the race) --------
-		public static int[] getHorsesInRace(String[] horses) {
-			int numHorsesInRace = 0;
-			int minNumHorsesInRace = 5;
-			int maxNumHorsesInRace = 9;
-			int horsesLength = horses.length;
+	public static int[] getHorsesInRace(String[] horses) {
+		int numHorsesInRace = 0;
+		int minNumHorsesInRace = 5;
+		int maxNumHorsesInRace = 9;
+		int horsesLength = horses.length;
 
-			numHorsesInRace = (int) (Math.random() * (maxNumHorsesInRace - minNumHorsesInRace) + minNumHorsesInRace);
+		numHorsesInRace = (int) (Math.random() * (maxNumHorsesInRace - minNumHorsesInRace) + minNumHorsesInRace);
 
-			int[] horsesInRace = new int[numHorsesInRace]; // holds indices of  chosen horses in horse array									
-			boolean isValidHorse = false; // to check if the index generated from randomizer is not repeated
-			int currentHorseIndex = 0;
+		int[] horsesInRace = new int[numHorsesInRace]; // holds indices of  chosen horses in horse array									
+		boolean isValidHorse = false; // to check if the index generated from randomizer is not repeated
+		int currentHorseIndex = 0;
 
-			for (int i = 0; i < numHorsesInRace; i++) {
-				currentHorseIndex = (int) (Math.random() * horsesLength);
-				horsesInRace[i] = currentHorseIndex;
+		for (int i = 0; i < numHorsesInRace; i++) {
+			currentHorseIndex = (int) (Math.random() * horsesLength);
+			horsesInRace[i] = currentHorseIndex;
 
-				if (alreadyInRace(i, currentHorseIndex, horsesInRace) == true) {
-					i--;
-				}
+			if (alreadyInRace(i, currentHorseIndex, horsesInRace) == true) {
+				i--;
 			}
-
-			System.out.println("HorsesInRace int array " + Arrays.toString(horsesInRace));
-
-			return horsesInRace;
-
-			// Brainstorming from a while ago:
-			// ***** Question: Why won't it take it in? - me
-			// ***** Answer: Because indexes are ints silly. Not String. :D - Wesley
 		}
+
+		return horsesInRace;
+
+		// Brainstorming from a while ago:
+		// ***** Question: Why won't it take it in? - me
+		// ***** Answer: Because indexes are ints silly. Not String. :D - Wesley
+	}
 		
 	// ---------- checks if horse is already in the race ---------
 	// ---> sequential search
@@ -246,6 +317,44 @@ public class HorseRacingProject {
 		}
 
 		return false;
+	}
+	
+	// ------ checks if player has entered a valid amount of betting money -------
+	public static int getvalidInputforWallet(int minWalletAmount, int maxWalletAmount, Scanner keyboard) { 
+		// checks to see if money was in the range from $0 to total amount in wallet
+		boolean isValid = false;
+
+		int userBettingAmount = 0;
+		while (!isValid) {
+			try {
+				userBettingAmount = Integer.parseInt(keyboard.nextLine());
+				if (userBettingAmount >= minWalletAmount && userBettingAmount <= maxWalletAmount)
+					isValid = true;
+				else
+					System.out.print("That is not how much you have in your wallet. Please enter another amount: ");
+			} catch (Exception ex) {
+				System.out.print("Please enter a valid amount: ");
+			}
+		}
+
+		return userBettingAmount;
+	}
+
+	// ----- checks if player has entered a valid number for betting horse -----
+	public static int getValidHorseNumberInput(int minHorseChoice, int maxHorseChoice, Scanner keyboard) {
+		boolean isValid = false;
+
+		int userBettingHorseNumber = 0;
+		while (!isValid) {
+			userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
+			if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice) {
+				isValid = true;
+			} else {
+				System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "):");
+			}
+		}
+
+		return userBettingHorseNumber;
 	}
 	
 	// ---------------- startRace Method --------------------------
@@ -285,8 +394,7 @@ public class HorseRacingProject {
 	}
 
 	// ------ displays horse racing table method (for visual) ------- 
-	public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace)
-			throws InterruptedException {
+	public static void displayHorseracingTable(int[] stepsInRace, String[] horses, int[] horsesInRace) throws InterruptedException {
 		for (int i = 0; i < horsesInRace.length; i++) {
 			int steps = stepsInRace[i];
 			System.out.println("-|---------------------|----------------------------------------------------------------------------------|-");
@@ -333,8 +441,7 @@ public class HorseRacingProject {
 
 	// ------- getting player bets method ------------ 
 	public static int[][] getPlayerBets(int[] playerBetsMoney, int[] playerBetsHorseNumber, String[] playerNames, int[] playerWallets, int[] horsesInRace) {
-		// 2D array with column 0 = betting amount, column 1 = betting horse
-		// number
+	// 2D array with column 0 = betting amount, column 1 = betting horse number
 		final int numColumnsInPlayerBets = 2;
 		int[][] playerBets = new int[playerNames.length][numColumnsInPlayerBets];
 
@@ -344,14 +451,12 @@ public class HorseRacingProject {
 				playerBets[row][1] = playerBetsHorseNumber[row];
 			}
 		}
-		System.out.println("This is the playerBets arr " + Arrays.deepToString(playerBets));
 		return playerBets;
 	}
 
 	// --------- paying out bets (math) method ------------ 
 	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int[] winningHorses) {
-		// 2D array playerBets columns: 0 is the betting amount, 1 is the
-		// betting horse number
+	// 2D array playerBets columns: 0 is the betting amount, 1 is the betting horse number
 
 		for (int i = 0; i < playerBets.length; i++) {
 			if (playerBets[i][1] == winningHorses[i]) {
@@ -375,120 +480,6 @@ public class HorseRacingProject {
 		 * e.printStackTrace(); }
 		 */
 
-	}
-
-	// ------------- get Players Array Method -------------
-	public static String[] getPlayers() {
-		String[] players = null;
-		try {
-			Scanner scannerFile = new Scanner(new File("Input/players.dat"));
-			int numPlayers = Integer.parseInt(scannerFile.nextLine());
-			players = new String[numPlayers];
-
-			for (int i = 0; i < numPlayers; i++) {
-				players[i] = scannerFile.nextLine();
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("players " + Arrays.toString(players));
-
-		return players;
-	}
-
-	// ------------- get Horses Array Method -----------
-	public static String[] getHorses() {
-		String[] horses = null;
-		try {
-			Scanner scannerFile = new Scanner(new File("Input/horses.dat"));
-			int numHorses = Integer.parseInt(scannerFile.nextLine()); // take a string and turn it into an int
-			horses = new String[numHorses];
-
-			for (int i = 0; i < numHorses; i++) {
-				horses[i] = scannerFile.nextLine();
-			}
-
-		} catch (FileNotFoundException e) { // in case file isn't there
-			e.printStackTrace();
-		}
-
-		return horses;
-	}
-
-	// -------------- get Player Names array -------------------
-	public static String[] getPlayerNames(String[] players) {
-		String[] playerNames = new String[players.length];
-
-		for (int i = 0; i < players.length; i++) {
-			int j;
-			for (j = 0; j < players[i].length(); j++) {
-				char currentChar = players[i].charAt(j);
-				if (currentChar >= '0' && currentChar <= '9')
-					break;
-			}
-			playerNames[i] = players[i].substring(0, j - 1);
-		}
-
-		return playerNames;
-	}
-
-	// ------------ get Players Wallets array ------------
-	public static int[] getPlayerWallets(String[] players) {
-		int[] playerWallets = new int[players.length];
-
-		for (int i = 0; i < players.length; i++) {
-			int j;
-			for (j = 0; j < players[i].length(); j++) {
-				char currentChar = players[i].charAt(j);
-				if (currentChar >= '0' && currentChar <= '9')
-					break;
-			}
-			playerWallets[i] = Integer.parseInt(players[i].substring(j));
-		}
-
-		System.out.println("playerWallet stuff" + Arrays.toString(playerWallets));
-
-		return playerWallets;
-	}
-
-	// ------ checks if player has entered a valid amount of betting money -------
-	public static int getvalidInputforWallet(int minWalletAmount, int maxWalletAmount, Scanner keyboard) { 
-		// checks to see if money was in the range from $0 to total amount in wallet
-		boolean isValid = false;
-
-		int userBettingAmount = 0;
-		while (!isValid) {
-			try {
-				userBettingAmount = Integer.parseInt(keyboard.nextLine());
-				if (userBettingAmount >= minWalletAmount && userBettingAmount <= maxWalletAmount)
-					isValid = true;
-				else
-					System.out.print("That is not how much you have in your wallet. Please enter another amount: ");
-			} catch (Exception ex) {
-				System.out.print("Please enter a valid amount: ");
-			}
-		}
-
-		return userBettingAmount;
-	}
-
-	// ----- checks if player has entered a valid number for betting horse -----
-	public static int getValidHorseNumberInput(int minHorseChoice, int maxHorseChoice, Scanner keyboard) {
-		boolean isValid = false;
-
-		int userBettingHorseNumber = 0;
-		while (!isValid) {
-			userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
-			if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice) {
-				isValid = true;
-			} else {
-				System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "):");
-			}
-		}
-
-		return userBettingHorseNumber;
 	}
 
 	// ------------ prompt for Game Over method ----------
