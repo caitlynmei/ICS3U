@@ -47,7 +47,6 @@ public class HorseRacingProject {
 			for (int i = 0; i < numPlayers; i++) {
 				players[i] = scannerFile.nextLine();
 			}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -66,7 +65,6 @@ public class HorseRacingProject {
 			for (int i = 0; i < numHorses; i++) {
 				horses[i] = scannerFile.nextLine();
 			}
-
 		} catch (FileNotFoundException e) { // in case file isn't there
 			e.printStackTrace();
 		}
