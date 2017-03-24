@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class HorseRacingProject {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, FileNotFoundException {
 
 		Scanner keyboard = new Scanner(System.in);
 
@@ -29,8 +30,7 @@ public class HorseRacingProject {
 			doRace(minWalletAmount, horses, playerNames, playerWallets, keyboard);
 			gameOver = promptForGameOver(keyboard);
 		}
-
-		updatePlayerData(playerNames, playerWallets);
+	
 		closingMessage();
 
 		keyboard.close();
@@ -128,17 +128,17 @@ public class HorseRacingProject {
 			System.out.println();
 			System.out.println("Great! Let's start!!");
 		}
-
-		System.out.println("Y\'all going to start with $1000 in your wallets. \n");
 	}
 
 	// ----------------- doRace Method ----------------------
-	public static void doRace(int minWalletAmount, String[] horses, String[] playerNames, int[] playerWallets, Scanner keyboard) throws InterruptedException {
+	public static void doRace(int minWalletAmount, String[] horses, String[] playerNames, int[] playerWallets, Scanner keyboard) throws InterruptedException, FileNotFoundException {
 		// horsesInRace contains the index of the horses from the master horse array
 		int[] horsesInRace = getHorsesInRace(horses);
 		final int minHorseChoice = 1; // minimum choice for horse number in race, #1 horse in list (on chart)
 		final int maxHorseChoice = horsesInRace.length; // maximum choice for horse number in race
-
+		
+		System.out.println("This is the chart each players wallet (a.k.a money available) ... ");
+		
 		System.out.println();
 		System.out.println("#|Player Names          |     Wallet");
 		// print chart with player names and wallets
@@ -162,6 +162,7 @@ public class HorseRacingProject {
 
 		System.out.println("Okay, so now we're going to start betting. ");
 		System.out.println("Players will take turns entering a chosen horse number and the amount they want to bet in this race.");
+		System.out.println("Y\'all start with $1000 in your wallets (this applies only for the very first round). \n");
 		System.out.println();
 
 		boolean playerTurnOver = false; // when a player's turn is over
@@ -221,7 +222,7 @@ public class HorseRacingProject {
 						System.out.print("Please choose a horse number: ");
 						userBettingHorseNumber = getValidHorseNumberInput(minHorseChoice, maxHorseChoice, keyboard);
 
-						System.out.println(playerNames[i - 1] + ", you have placed a $" + userBettingAmount + " on the number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber - 1]] + ".\n");
+						System.out.println(playerNames[i - 1] + ", you have placed a $" + userBettingAmount + " on horse number " + userBettingHorseNumber + ", " + horses[horsesInRace[userBettingHorseNumber - 1]] + ".\n");
 					}
 
 					playerBetsMoney[i - 1] = userBettingAmount;
@@ -254,18 +255,18 @@ public class HorseRacingProject {
 		System.out.println("The winner(s) of the horse race is(are): ");
 		for (int i = 0; i < winningHorses.length; i++) {
 			if (winningHorses[i] != 0) {
-				System.out.println("-- " + horses[horsesInRace[winningHorses[i] - 1]]);
+				System.out.println("--> " + horses[horsesInRace[winningHorses[i] - 1]]);
 			}
 		}
 		System.out.println();
-		System.out.print("Hooray!!");
+		System.out.print("If you bet on the winning horse, hooray!!");
 		System.out.println();
 		
 		// to pay out the betting money (adding or subtracting money to playerWallets)
 		payOutBets(playerBets, playerWallets, playerNames, winningHorses); 
 
-		System.out.println("And are final results are... ");
-		System.out.println("\n\n");
+		System.out.println("\nAnd are final results are... ");
+		System.out.println();
 		System.out.println("#|Player Names          |     Wallet");
 
 		// print 'new' chart with player names and wallets
@@ -275,7 +276,10 @@ public class HorseRacingProject {
 		}
 
 		System.out.println();
-		System.out.println("here: " + Arrays.deepToString(playerBets));
+		// System.out.println("here: " + Arrays.deepToString(playerBets)); -- checking for errors 
+		
+		// update player data in the players.dat file 
+		updatePlayerData(playerNames, playerWallets);
 	}
 	
 	// ------- getHorsesInRace (selecting horses to compete in the race) --------
@@ -302,9 +306,9 @@ public class HorseRacingProject {
 
 		return horsesInRace;
 
-		// Brainstorming from a while ago:
-		// ***** Question: Why won't it take it in? - me
-		// ***** Answer: Because indexes are ints silly. Not String. :D - Wesley
+		// Brainstorming from a while ago, problem is now fixed:
+		// ***** Question: Why won't it take it in? -me
+		// ***** Answer: Because indexes are ints silly. Not String. :D -Wesley
 	}
 		
 	// ---------- checks if horse is already in the race ---------
@@ -346,11 +350,15 @@ public class HorseRacingProject {
 
 		int userBettingHorseNumber = 0;
 		while (!isValid) {
-			userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
-			if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice) {
-				isValid = true;
-			} else {
-				System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "):");
+			try {
+				userBettingHorseNumber = Integer.parseInt(keyboard.nextLine());
+				if (userBettingHorseNumber >= minHorseChoice && userBettingHorseNumber <= maxHorseChoice) {
+					isValid = true;
+				} else {
+					System.out.print("Please enter a number for one of the horses shown in the table (1 - " + maxHorseChoice + "): ");
+				}
+			} catch (Exception ex) {
+				System.out.print("Please enter a valid horse number: ");
 			}
 		}
 
@@ -404,7 +412,7 @@ public class HorseRacingProject {
 				System.out.print(" ");
 			}
 
-			System.out.print(i + 1 + ", " + steps);
+			System.out.print(i + 1); // + ", " + steps); <-- for checking the number of steps each horse travelled 
 			System.out.println();
 
 			Thread.sleep(250);
@@ -435,7 +443,7 @@ public class HorseRacingProject {
 				winningHorses[i] = i + 1;
 			}
 		}
-
+		
 		return winningHorses;
 	}
 
@@ -461,25 +469,26 @@ public class HorseRacingProject {
 		for (int i = 0; i < playerBets.length; i++) {
 			if (playerBets[i][1] == winningHorses[i]) {
 				playerWallets[i] += playerBets[i][0];
-				System.out.println("Congratulations to " + playerNames[i] + " for betting on the winning horse!!");
-				System.out.println("You have earned " + playerWallets[i] + "!");
-				System.out.println(Arrays.toString(playerWallets));
+				//System.out.println("Congratulations to " + playerNames[i] + " for betting on the winning horse!!");
 			} else {
 				playerWallets[i] -= playerBets[i][0];
-				System.out.println(Arrays.toString(playerWallets));
 			}
 		}
 	}
 
 	// ------updatePlayerData Method ------
-	public static void updatePlayerData(String[] playerNames, int[] playerWallets) {
-
-		/*
-		 * //Gaby try { FileWriter fw = new FileWriter(new
-		 * File("input/players.dat")); fw.close(); } catch (IOException e){
-		 * e.printStackTrace(); }
-		 */
-
+	public static void updatePlayerData(String[] playerNames, int[] playerWallets) throws FileNotFoundException {
+		final int numPlayers = playerNames.length;
+		try { 
+			PrintWriter pw = new PrintWriter(new File("input/players.dat"));
+			pw.println(numPlayers);
+			for (int i=0; i<playerNames.length; i++){
+				pw.println(playerNames[i] + " " + playerWallets[i]);
+			}
+			pw.close(); 
+		} catch (IOException e){
+			e.printStackTrace(); 
+		}
 	}
 
 	// ------------ prompt for Game Over method ----------
@@ -501,7 +510,7 @@ public class HorseRacingProject {
 
 		if (userPromptGameOver.equals("1")) {
 			System.out.println();
-			System.out.println("Great! Get ready for another round!\n\n");
+			System.out.println("Great! Get ready for another round!");
 			return false;
 		} else if (userPromptGameOver.equals("2")) {
 			return true;
