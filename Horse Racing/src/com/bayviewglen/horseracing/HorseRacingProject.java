@@ -47,7 +47,7 @@ public class HorseRacingProject {
 			for (int i = 0; i < numPlayers; i++) {
 				players[i] = scannerFile.nextLine();
 			}
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { // in case file isn't there
 			e.printStackTrace();
 		}
 
@@ -65,7 +65,7 @@ public class HorseRacingProject {
 			for (int i = 0; i < numHorses; i++) {
 				horses[i] = scannerFile.nextLine();
 			}
-		} catch (FileNotFoundException e) { // in case file isn't there
+		} catch (FileNotFoundException e) { 
 			e.printStackTrace();
 		}
 
@@ -303,10 +303,6 @@ public class HorseRacingProject {
 		}
 
 		return horsesInRace;
-
-		// Brainstorming from a while ago, problem is now fixed:
-		// ***** Question: Why won't it take it in? -me
-		// ***** Answer: Because indexes are ints silly. Not String. :D -Wesley
 	}
 		
 	// ---------- checks if horse is already in the race ---------
