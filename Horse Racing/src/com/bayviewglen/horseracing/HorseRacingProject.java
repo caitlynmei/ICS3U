@@ -49,7 +49,7 @@ public class HorseRacingProject {
 			}
 		} catch (FileNotFoundException e) { // in case file isn't there
 			e.printStackTrace();
-		}
+		} // end catch
 
 		return players;
 	}
@@ -65,7 +65,7 @@ public class HorseRacingProject {
 			for (int i = 0; i < numHorses; i++) {
 				horses[i] = scannerFile.nextLine();
 			}
-		} catch (FileNotFoundException e) { 
+		} catch (FileNotFoundException e) { // in case file isn't there
 			e.printStackTrace();
 		}
 
@@ -227,7 +227,7 @@ public class HorseRacingProject {
 					playerBetsHorseNumber[i - 1] = userBettingHorseNumber;
 
 					++i;
-					playerTurnOver = false || i == 7;
+					playerTurnOver = false || i == playerNames.length + 1;
 
 				} else if (userAnswerToBetting.equals("2")) { // if the player replies "no", I don't want to bet
 					System.out.println("Okay " + playerNames[i - 1] + ", see you next round!\n");
@@ -238,7 +238,7 @@ public class HorseRacingProject {
 					playerBetsHorseNumber[i - 1] = userBettingHorseNumber;
 
 					++i;
-					playerTurnOver = false || i == 7;
+					playerTurnOver = false || i == playerNames.length + 1;
 				}
 			}
 			System.out.println();
@@ -303,7 +303,7 @@ public class HorseRacingProject {
 		}
 
 		return horsesInRace;
-	}
+	} // end getHorsesInRace method
 		
 	// ---------- checks if horse is already in the race ---------
 	// ---> sequential search
