@@ -19,7 +19,7 @@ public class HorseRacingProject {
 		System.out.println();
 
 		// initializing variables
-		final int minWalletAmount = 0; // minimum amount of money in a player's wallet $0
+		final int minWalletAmount = 1; // minimum amount of money from a player's wallet to bet with $1
 		String[] horses = getHorses();
 		String[] players = getPlayers();
 		String[] playerNames = getPlayerNames(players); // playerNames array
@@ -329,7 +329,7 @@ public class HorseRacingProject {
 				if (userBettingAmount >= minWalletAmount && userBettingAmount <= maxWalletAmount)
 					isValid = true;
 				else
-					System.out.print("That is not how much you have in your wallet. Please enter another amount: ");
+					System.out.print("Please enter an amount that is in your wallet and please don't bet with $0 (it's not fun): ");
 			} catch (Exception ex) {
 				System.out.print("Please enter a valid amount: ");
 			}
@@ -420,7 +420,7 @@ public class HorseRacingProject {
 		boolean horseRaceExit = false;
 
 		for (int i = 0; i < horsesInRace.length; i++) {
-			if (stepsInRace[i] >= numSpacesInRace) {
+			if (stepsInRace[i] >= numSpacesInRace + 1) {
 				horseRaceExit = true;
 				break;
 			}
@@ -436,8 +436,7 @@ public class HorseRacingProject {
 			if (stepsInRace[i] >= numSpacesInRace) {
 				winningHorses[i] = i + 1;
 			}
-		}
-		
+		}		
 		return winningHorses;
 	}
 
@@ -459,15 +458,19 @@ public class HorseRacingProject {
 	// --------- paying out bets (math) method ------------ 
 	public static void payOutBets(int[][] playerBets, int[] playerWallets, String[] playerNames, int[] winningHorses) {
 	// 2D array playerBets columns: 0 is the betting amount, 1 is the betting horse number
-
-		for (int i = 0; i < playerBets.length; i++) {
-			if (playerBets[i][1] == winningHorses[i]) {
-				playerWallets[i] += playerBets[i][0];
-				//System.out.println("Congratulations to " + playerNames[i] + " for betting on the winning horse!!");
-			} else {
-				playerWallets[i] -= playerBets[i][0];
+		
+		for (int i = 0; i < playerBets.length; i++){
+			if (playerBets[i][0] != 0){
+				for (int j = 0; j < playerNames.length; j++) {
+					if (playerBets[j][1] == winningHorses[j]) {
+						playerWallets[j] += playerBets[j][0];
+					} else {
+						playerWallets[j] -= playerBets[j][0];
+					}
+				}
 			}
 		}
+		
 	}
 
 	// ------updatePlayerData Method ------
